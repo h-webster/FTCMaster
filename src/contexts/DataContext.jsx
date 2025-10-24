@@ -1,0 +1,25 @@
+import React, { createContext, useState, useContext } from 'react';
+
+const DataContext = createContext();
+
+export const DataProvider = ({ children }) => {
+    const [teamData, setTeamData] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const [loadingExtras, setLoadingExtras] = useState(false);
+    const [loadingStatus, setLoadingStatus] = useState('');
+    const [error, setError] = useState(null);
+
+    return (
+        <DataContext.Provider value={{ teamData, setTeamData, loading, setLoading, loadingExtras, setLoadingExtras, loadingStatus, setLoadingStatus, error, setError }}>
+            {children}
+        </DataContext.Provider>
+    );
+}
+
+export const useData = () => {
+    const context = useContext(DataContext);
+    if (context === undefined) {
+        throw new Error('useData must be used within a DataProvider');
+    }
+    return context;
+}

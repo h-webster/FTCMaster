@@ -1,0 +1,36 @@
+.header {
+    width: 100vw;
+    height: 10vh;
+    top: 0;
+    position: fixed;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: flex-start;
+    background-color: rgb(223, 223, 24);
+    left: 0;
+    z-index: 999;
+    color: black;
+}
+.display {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding-left: 1%;
+    width: 30%;
+    height: 100%;
+}
+.big-img {
+    height: 90%;
+    width: auto;
+}
+.big-text {
+    font-size: 180%;
+    margin-right: 20px;
+}
+
+.home-btn {
+    background-color: rgb(255, 255, 46);
+    width: 150px;
+    color: black;
+}
