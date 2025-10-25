@@ -3,6 +3,9 @@ const mongoose = require('mongoose');
 
 const router = express.Router();
 
+const { insertTeams } = require('../utils/batchInsert');
+const { IndexTeam } = require('../schemas/mongoSchema');
+
 let cachedDb = null;
 
 async function connectToDatabase() {
@@ -39,3 +42,37 @@ router.use(async (req, res, next) => {
         res.status(500).json({ message: 'Database connection failed' });
     }
 });
+
+router.post('/allteams', async (req, res) => {
+    try {
+        const { teams } = req.body;
+
+        if (!Array.isArray(teams) || teams.length == 0) {
+            return res.status(400).json({ error: 'Teams array is required' });
+        }
+
+        await insertTeams(teams);
+        res.json({
+            message: 'Teams updated successfully',
+            count: teams.length
+        });
+    } catch (error) {
+        console.error('All team save failed:', error);
+        res.status(500).json({ message: 'Database connection failed' });
+    }
+})
+
+router.delete('/allteams', async (req, res) => {
+  try {
+    const result = await IndexTeam.deleteMany({});
+    res.json({
+        message: 'Teams deleted successfully',
+        deletedCount: result.deletedCount
+    });
+  } catch (error) {
+    console.error('All team clear failed:', error);
+    res.status(500).json({ error: error.message});
+  }
+})
+
+module.exports = router;

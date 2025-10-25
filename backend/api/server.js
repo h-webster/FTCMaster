@@ -1,16 +1,19 @@
 const express = require('express');
 const cors = require('cors');
-const mongoRoutes = require('./routes/mongoRoutes');
-const ftceventsRoutes = require('./routes/ftceventsRoutes');
+const path = require('path');
+const fs = require('fs');
 
 let PORT;
 
+
 if (process.env.NODE_ENV !== 'production') {
-    require('dotenv').config();
-    process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
-    PORT = process.env.PORT || 5000;
+  require('dotenv').config();
+  process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+  PORT = process.env.PORT || 5000;
 }
 
+const mongoRoutes = require('./routes/mongoRoutes');
+const ftceventsRoutes = require('./routes/ftceventsRoutes');
 const app = express();
 
 // Middleware
