@@ -1,17 +1,34 @@
 import Header from './Header.jsx';
 import './TeamEntryForm.css';
 import Admin from './Admin.jsx';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useData } from '../contexts/DataContext.jsx';
+import { getTeamList } from '../api/TeamList.jsx';
+import { createAutocomplete, runSearch } from '../TeamSearch.js';
 
 
 export default function TeamEntryForm() {
     const { loadingTeamList, setLoadingTeamList, teamList, setTeamList } = useData();
+    const [ searchResults, setSearchResults ] = useState([]);
+    const [ inputFocused, setInputFocused ] = useState(false);
 
     useEffect(() => {
-        if ()
+        if (teamList == undefined || teamList.length == 0) {
+            setLoadingTeamList(true);
+            const fetchTeams = async () => {
+                const data = await getTeamList();
+                setTeamList(data);
+                createAutocomplete(data);
+                setLoadingTeamList(false);
+            }
+            fetchTeams();
+        }
     }, []);
-
+    const inputChange = (e) => {
+        const value = e.target.value;
+        setSearchResults(runSearch(value));
+        console.log(searchResults);
+    }
     return (
         <div className="team-entry-screen">
             <Header />
@@ -19,17 +36,27 @@ export default function TeamEntryForm() {
                 <h1>FTCMaster</h1>
                 <label htmlFor="team-name">Enter Team Number/Name:</label>
                 <div className='input-container'>
-                    <input type="text" id="team-name" name="team-name"/>
-                    <div className='search-results'>
-                        <div className='result'>
-                            <h2 className='number'>2939</h2>
-                            <h2 className='name'>Rundle Robotics Cascade</h2>
+                    <input type="text" id="team-name" name="team-name" onChange={inputChange} onFocus={() => setInputFocused(true)} onBlur={() => setInputFocused(false)} />
+                    { inputFocused &&
+                        <div className='search-results'>
+                            { loadingTeamList ? (
+                                <div className='result'>
+                                    <h2 className='name'>Loading...</h2>
+                                </div>
+                            ) : searchResults.length == 0 ? (
+                                <div className='result'>
+                                    <h2 className='name'>No results.</h2>
+                                </div>
+                            ) : (
+                                searchResults.map((result) => (
+                                    <div className='result' key={result.number}>
+                                        <h2 className='number'>{result.number}</h2>
+                                        <h2 className='name'>{result.name} <span className='location'>{result.location}</span></h2>
+                                    </div>
+                                ))
+                            )}
                         </div>
-                        <div className='result'>
-                            <h2 className='number'>2939</h2>
-                            <h2 className='name'>Rundle Radsscs Cascade <span className='location'>Virginia Beach, VA, USA</span></h2>
-                        </div>
-                    </div>
+                    }
                 </div>
             </form>
             { process.env.NODE_ENV != 'production' && (

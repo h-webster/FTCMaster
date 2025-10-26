@@ -75,4 +75,15 @@ router.delete('/allteams', async (req, res) => {
   }
 })
 
+router.get('/teamlist', async (req, res) => {
+    try {
+        const result = await IndexTeam.find({});
+
+        res.json(result);
+    } catch (error) {
+        console.error('Team list retrieval failed:', error);
+        res.status(500).json({ error: error.message});
+    }
+})
+
 module.exports = router;

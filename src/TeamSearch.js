@@ -173,7 +173,8 @@ class FastTeamAutocomplete {
                 results.push({
                     name: team.name,
                     number: team.number,
-                    score: score
+                    score: score,
+                    location: team.location
                 });
             }
         }
