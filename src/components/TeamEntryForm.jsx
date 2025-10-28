@@ -8,7 +8,7 @@ import { createAutocomplete, runSearch } from '../TeamSearch.js';
 
 
 export default function TeamEntryForm() {
-    const { loadingTeamList, setLoadingTeamList, teamList, setTeamList } = useData();
+    const { loadingTeamList, setLoadingTeamList, teamList, setTeamList, loading, setLoading, setLoadingStatus } = useData();
     const [ searchResults, setSearchResults ] = useState([]);
     const [ inputFocused, setInputFocused ] = useState(false);
 
@@ -24,10 +24,17 @@ export default function TeamEntryForm() {
             fetchTeams();
         }
     }, []);
+
     const inputChange = (e) => {
         const value = e.target.value;
         setSearchResults(runSearch(value));
         console.log(searchResults);
+    }
+
+    const resultClick = (number) => {
+        setLoading(true);
+        setLoadingStatus(`Loading team ${number}...`);
+        console.log(`Clicked team ${number}`);
     }
     return (
         <div className="team-entry-screen">
@@ -39,7 +46,7 @@ export default function TeamEntryForm() {
                     <input type="text" id="team-name" name="team-name" onChange={inputChange} onFocus={() => setInputFocused(true)} onBlur={() => setInputFocused(false)} />
                     { inputFocused &&
                         <div className='search-results'>
-                            { loadingTeamList ? (
+                            { loadingTeamList || !searchResults ? (
                                 <div className='result'>
                                     <h2 className='name'>Loading...</h2>
                                 </div>
@@ -49,9 +56,10 @@ export default function TeamEntryForm() {
                                 </div>
                             ) : (
                                 searchResults.map((result) => (
-                                    <div className='result' key={result.number}>
+                                    <div className='result' key={result.number} onMouseDown={() => resultClick(result.number)}>
                                         <h2 className='number'>{result.number}</h2>
-                                        <h2 className='name'>{result.name} <span className='location'>{result.location}</span></h2>
+                                        <h2 className='name'>{result.name}</h2>
+                                        <h2 className='location'>{result.location}</h2>
                                     </div>
                                 ))
                             )}

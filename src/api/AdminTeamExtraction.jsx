@@ -1,12 +1,13 @@
 import { useData } from "../contexts/DataContext";
 const API_BASE_URL = process.env.NODE_ENV === 'production' ? 'https://backend-six-sooty-74.vercel.app' : 'http://localhost:5000/api';
 
-export const useAdminExtraction = () => {
-    const { setLoading } = useData();
+export const useAdminTeamExtraction = () => {
+    const { setLoading, setLoadingStatus } = useData();
 
     const massTeamExtraction = async () => {
         const teams = [];
         setLoading(true);
+        setLoadingStatus("Starting mass team extraction...");
         try {
             // TODO - Change this to update instead of clear
             console.log("Clearing team list...");

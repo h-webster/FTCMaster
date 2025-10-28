@@ -69,6 +69,7 @@ input {
     margin: 0;
     width: 100%;
     padding: 5px;
+    padding-left: 10px;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
@@ -86,6 +87,7 @@ input {
 .result .number {
     color: #4caf50;
     font-size: 18px;
+    width: 10%;
     margin-right: 15px;
     margin-left: 5px;
 }
@@ -93,7 +95,7 @@ input {
 .result .name {
     color: #646464;
     font-size: 20px;
-    max-width: 80%;           /* keeps text within result box */
+    width: 50%;
     overflow: hidden;
     text-overflow: ellipsis;  /* adds "..." */
     white-space: nowrap;      /* keeps single line */
@@ -101,6 +103,10 @@ input {
 
 .location {
     color: #424242;
+    width: 40%;
     font-size: 13px;
+    overflow: hidden;
+    text-overflow: ellipsis;  /* adds "..." */
+    white-space: nowrap;      /* keeps single line */
 }
 

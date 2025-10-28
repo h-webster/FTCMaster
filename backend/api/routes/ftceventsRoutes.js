@@ -43,4 +43,26 @@ router.get('/allteams/:page', async (req, res) => {
     }
 });
 
+router.get('/events', async (req, res) => {
+    const username = process.env.FTC_USERNAME;
+    const token = process.env.FTC_TOKEN;
+    const url = `https://ftc-api.firstinspires.org/v2.0/2024/events`;
+
+    try {
+        const response = await fetch(url, {
+            headers: {
+                "Authorization": "Basic " + base64Auth,
+            },
+            // follow redirects (default) but using HTTPS avoids the common redirect -> auth drop
+        });
+
+        const data = await response.json();
+        res.json(data);
+        
+    } catch (error) {
+        console.error("Error fetching event data:", error);
+        res.status(500).json({ message: "Error fetching event data", error: error.message });
+    }
+})
+
 module.exports = router;
