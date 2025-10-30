@@ -1,4 +1,6 @@
-import { useAdminExtraction } from "../api/AdminTeamExtraction";
+import { useAdminTeamExtraction } from "../api/AdminTeamExtraction";
+import { useAdminEventExtraction } from "../api/AdminEventExtraction";
+import './Admin.css';
 export default function Admin() {
     const { massTeamExtraction } = useAdminTeamExtraction();
     const { massEventExtraction } = useAdminEventExtraction();
@@ -14,9 +16,9 @@ export default function Admin() {
     }
 
     return (
-        <>
+        <div className="admin-buttons">
             <button onClick={fetchTeamSearch}>Fetch Team Search</button>
-            <button onClick={fetch}
-        </>
+            <button onClick={fetchEventSearch}>Fetch Event Search</button>
+        </div>
     );
 }

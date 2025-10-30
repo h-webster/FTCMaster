@@ -2,6 +2,8 @@ const express = require('express');
 
 const router = express.Router();
 
+const year = 2024;
+
 router.get('/allteams/:page', async (req, res) => {
     const page = req.params.page;
     const username = process.env.FTC_USERNAME;
@@ -13,7 +15,7 @@ router.get('/allteams/:page', async (req, res) => {
     }
     
     // Use HTTPS to avoid redirects that can strip Authorization headers
-    const url = `https://ftc-api.firstinspires.org/v2.0/2024/teams?page=${page}`;
+    const url = `https://ftc-api.firstinspires.org/v2.0/${year}/teams?page=${page}`;
     
     // Debug the exact values
     console.log('Username raw:', JSON.stringify(username));
@@ -46,7 +48,9 @@ router.get('/allteams/:page', async (req, res) => {
 router.get('/events', async (req, res) => {
     const username = process.env.FTC_USERNAME;
     const token = process.env.FTC_TOKEN;
-    const url = `https://ftc-api.firstinspires.org/v2.0/2024/events`;
+    const url = `https://ftc-api.firstinspires.org/v2.0/${year}/events`;
+    const authString = `${username}:${token}`;
+    const base64Auth = Buffer.from(authString).toString("base64");
 
     try {
         const response = await fetch(url, {

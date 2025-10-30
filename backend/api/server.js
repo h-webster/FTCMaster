@@ -5,15 +5,17 @@ const fs = require('fs');
 
 let PORT;
 
-
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config();
   process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
   PORT = process.env.PORT || 5000;
 }
 
-const mongoRoutes = require('./routes/mongoRoutes');
+//const mongoRoutes = require('./routes/mongoRoutes');
 const ftceventsRoutes = require('./routes/ftceventsRoutes');
+const eventRoutes = require('./routes/eventRoutes');
+const teamRoutes = require('./routes/teamRoutes');
+
 const app = express();
 
 // Middleware
@@ -27,14 +29,16 @@ app.use(cors({
 }));
 app.use(express.json({ limit: '50mb' }));
 
-app.use('/api', mongoRoutes);
+// Routes (each route file handles its own database connection)
+//app.use('/api', mongoRoutes);
 app.use('/api', ftceventsRoutes);
+app.use('/api', eventRoutes);
+app.use('/api', teamRoutes);
 
 if (process.env.NODE_ENV !== 'production') {
   app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
   }); 
 }
-
 
 module.exports = app;

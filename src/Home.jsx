@@ -11,7 +11,6 @@ export default function Home() {
     
     const { teamExtraction } = useTeamGetting();
     useEffect(() => {
-        console.log(loadingStatus);
         if (loadingStatus.includes("Loading team")) {
             const match = loadingStatus.match(/\d+/);
             if (match) {

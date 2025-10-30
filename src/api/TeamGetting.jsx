@@ -2,6 +2,8 @@ const API_BASE_URL = process.env.NODE_ENV === 'production' ? 'https://backend-si
 export const useTeamGetting = () => {
     const teamExtraction = async (teamNumber) => {
         console.log(`Getting team ${teamNumber}...`);
+
+        // must have return what number the team data is to see if it matches with teamNumber param as multiple requests can be made at once
     }
 
     return { teamExtraction };
