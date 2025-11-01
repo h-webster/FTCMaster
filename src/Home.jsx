@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import { useData } from './contexts/DataContext';
 import LoadingScreen from './components/LoadingScreen';
 import TeamEntryForm from './components/TeamEntryForm';
-import { useTeamGetting } from './api/TeamGetting.jsx';
+import { useTeamGetting } from './api/getting/TeamGetting';
 import { useNavigate } from 'react-router-dom';
 export default function Home() {
     const { loading, loadingStatus } = useData();

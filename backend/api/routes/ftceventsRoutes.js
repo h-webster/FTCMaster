@@ -69,4 +69,33 @@ router.get('/events', async (req, res) => {
     }
 })
 
+router.get('/events/:id', async (req, res) => {
+    const eventId = req.params.id;
+    if (!eventId) {
+        console.error("Event ID is missing");
+        return res.status(400).json({ message: "Event ID is required" });
+    }
+    const username = process.env.FTC_USERNAME;
+    const token = process.env.FTC_TOKEN;
+    const url = `https://ftc-api.firstinspires.org/v2.0/${year}/teams?eventCode=${eventId}`;
+    const authString = `${username}:${token}`;
+    const base64Auth = Buffer.from(authString).toString("base64");
+
+    try {
+        const response = await fetch(url, {
+            headers: {
+                "Authorization": "Basic " + base64Auth,
+            },
+            // follow redirects (default) but using HTTPS avoids the common redirect -> auth drop
+        });
+
+        const data = await response.json();
+        res.json(data);
+        
+    } catch (error) {
+        console.error("Error fetching event data:", error);
+        res.status(500).json({ message: "Error fetching event data", error: error.message });
+    }
+})
+
 module.exports = router;

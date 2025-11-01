@@ -19,20 +19,29 @@ const insertTeams = async (teams) => {
 }
 
 const insertEvents = async (events) => {
+    console.log("Dropping existing indexes...");
+
+    const indexes = await IndexEvent.collection.getIndexes();
+    for (const indexName in indexes) {
+        if (indexName !== '_id_') {
+            try {
+                await IndexEvent.collection.dropIndex(indexName);
+                console.log(`Dropped index: ${indexName}`);
+            } catch (error) {
+                console.log(`Could not drop index ${indexName}:`, error.message);
+            }
+        }
+    }
+    
     await IndexEvent.insertMany(events, { ordered: false });
     console.log(`Inserted ${events.length} events`);
 
-    console.log("Indexing event codes...");
-
-    try {
-        await IndexEvent.collection.dropIndex('code_1');
-    } catch (error) {
-        // Index doesn't exist, that's fine
-    }
+    console.log("Indexing event codes and team fields...");
     
+    // Create indexes - make team indexes NON-UNIQUE
     await IndexEvent.collection.createIndex({ code: 1 });
-    console.log('Created index on event code');
+    
+    console.log('Created all indexes');
 }
-
 
 module.exports = { insertTeams, insertEvents };
