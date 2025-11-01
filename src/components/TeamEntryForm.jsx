@@ -3,7 +3,7 @@ import './TeamEntryForm.css';
 import Admin from './Admin.jsx';
 import React, { useEffect, useState } from 'react';
 import { useData } from '../contexts/DataContext.jsx';
-import { getTeamList } from '../api/TeamList.jsx';
+import { getTeamList } from '../api/Getting/TeamList.jsx';
 import { createAutocomplete, runSearch } from '../TeamSearch.js';
 
 

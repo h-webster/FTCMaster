@@ -26,3 +26,17 @@ export const getEventByCode = async (code) => {
         throw error;
     }
 }
+
+export async function getEventsByTeamNumber(teamNumber) {
+    console.log(`Getting all events from ${teamNumber}`);
+    try {
+        const response = await fetch(`${API_BASE_URL}/eventlist/${teamNumber}`);
+        const data = await response.json();
+        console.log("Got events!");
+        console.log(JSON.stringify(data));
+        return data;
+    } catch (error) {
+        console.error('Error fetching event data:', error);
+        throw error;
+    }
+}

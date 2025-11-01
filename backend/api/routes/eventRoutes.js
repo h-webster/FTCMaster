@@ -53,4 +53,17 @@ router.get('/eventlist', async (req, res) => {
     }
 });
 
+router.get('/eventlist/:team', async (req, res) => {
+    try {
+        const teamNumber = parseInt(req.params.team);
+        const events = await IndexEvent.find({
+            "teams.number": teamNumber
+        });
+        res.json(events);
+    } catch (error) {
+        console.error('Error fetching events:', error);
+        throw error;
+    }
+});
+
 module.exports = router;
