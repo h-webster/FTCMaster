@@ -3,9 +3,10 @@ const mongoose = require('mongoose');
 const indexTeamSchema = new mongoose.Schema({
     name: {type: String, required: true },
     number: {type: Number, required: true, unique: true },
-    location: {type: String, default: 'Unknown'}
+    location: {type: String, default: 'Unknown'},
+    rookieYear: {type: Number, default: -1}
 });
-
+ 
 const indexEventSchema = new mongoose.Schema({
     name: {type: String},
     code: {type: String, unique: true },
@@ -24,5 +25,7 @@ const IndexEvent = mongoose.model('AllEvents', indexEventSchema);
 
 module.exports = {
     IndexTeam,
-    IndexEvent
+    IndexEvent,
+    indexEventSchema,
+    indexTeamSchema
 };

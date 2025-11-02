@@ -1,6 +1,7 @@
 const express = require('express');
 const { insertTeams } = require('../utils/batchInsert');
 const { IndexTeam } = require('../schemas/massSchema');
+const { Team } = require('../schemas/teamSchema');
 const databaseMiddleware = require('../middleware/database'); // Import shared middleware
 
 const router = express.Router();
@@ -28,6 +29,23 @@ router.post('/allteams', async (req, res) => {
     }
 });
 
+router.post('/teamcache', async (req, res) => {
+    try {
+        const teamData = req.body;
+        
+        // Check if team already exists
+        const existingTeam = await Team.findOne({ number: teamData.number });
+        if (existingTeam) {
+            return res.status(409).json({ error: "Team already exists" });
+        }
+
+        const savedTeam = await Team.create(teamData);
+        res.status(201).json(team);
+    } catch (error) {
+        console.error('team save failed:', error);
+        res.status(500).json({error: error.message});
+    }
+})
 // DELETE
 router.delete('/allteams', async (req, res) => {
     try {
@@ -52,5 +70,17 @@ router.get('/teamlist', async (req, res) => {
         res.status(500).json({ error: error.message});
     }
 });
+
+router.get('/teamcache/:number', async (req, res) => {
+    try {
+        const teamNumber = parseInt(req.params.number);
+        const team = await Team.findOne({ number: teamNumber });
+        res.json(team);
+    } catch (error) {
+        console.error('Error fetching team cache:', error);
+        throw error;
+    }
+});
+
 
 module.exports = router;

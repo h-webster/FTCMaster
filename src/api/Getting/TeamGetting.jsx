@@ -1,16 +1,29 @@
 import { useEffect, useState } from "react";
 import { useData } from "../../contexts/DataContext";
 import { getTeamList } from "./TeamList";
+import { getTeam } from "./TeamCache";
 import { getEventsByTeamNumber } from "./Events";
 
 export const useTeamGetting = () => {
     const { teamList, setTeamList, setTeamData } = useData();
     const [teamNumber, setTeamNumber] = useState(0);
+    const [teamCache, setTeamCache] = useState();
     const [events, setEvents] = useState(['null']);
-    // steps: teamNumber -> teamList -> events -> setTeamData
+    // steps: teamNumber -> check cache -> teamList -> events -> setTeamData
     const teamExtraction = async (teamNum) => {
         console.log(`Getting team ${teamNum}...`);
         setTeamNumber(teamNum);
+    }
+    const teamCachePull = async () => {
+        const team = await getTeam(teamNumber);
+        if (team == null) {
+            console.log("Team not found in cache!");
+            await teamListPull();
+        } else {
+            console.log("Team found in cache!");
+            console.log(JSON.stringify(team));
+            setTeamData(team);
+        }
     }
     const teamListPull = async () => {
         if (teamList == undefined || teamList.length == 0) {
@@ -33,12 +46,12 @@ export const useTeamGetting = () => {
         setTeamData(newTeamData);
     }
     useEffect(() => {
-        if (teamNumber != 0 || teamNumber != undefined) {
-            teamListPull();
+        if (teamNumber != 0 && teamNumber != undefined) {
+            teamCachePull();
         }
     }, [teamNumber])
     useEffect(() => {
-        if (teamList != undefined && teamList.length > 0) {
+        if (teamList != undefined && teamList.length > 0 && teamNumber != 0) {
             eventsPull();
         }
     }, [teamList])
