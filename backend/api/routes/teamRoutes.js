@@ -63,11 +63,24 @@ router.delete('/allteams', async (req, res) => {
 // GET
 router.get('/teamlist', async (req, res) => {
     try {
+        console.log('Teamlist endpoint called'); // Debug log
+        
+        // Check if database connection is available
+        if (!req.db) {
+            console.error('No database connection in request');
+            return res.status(500).json({ error: 'Database connection not available' });
+        }
+
         const result = await IndexTeam.find({});
+        console.log(`Found ${result.length} teams`); // Debug log
         res.json(result);
     } catch (error) {
         console.error('Team list retrieval failed:', error);
-        res.status(500).json({ error: error.message});
+        // Make sure to return the response
+        return res.status(500).json({ 
+            error: 'Database query failed',
+            details: process.env.NODE_ENV === 'production' ? 'Internal server error' : error.message
+        });
     }
 });
 
