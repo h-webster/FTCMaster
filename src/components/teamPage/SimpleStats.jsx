@@ -7,6 +7,7 @@ export default function SimpleStats() {
     return (
         <div className='simple-stats'>
             <h3>Location: {teamData.info.location}</h3>
+            <h3>Rookie Year: {teamData.info.rookieYear}</h3>
         </div>
     );
 }

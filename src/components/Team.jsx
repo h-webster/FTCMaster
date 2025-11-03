@@ -1,11 +1,11 @@
 import { useData } from "../contexts/DataContext";
 import LoadingScreen from "./LoadingScreen";
 import React, {useEffect} from 'react';
-import { useTeamGetting } from "../api/Getting/TeamGetting";
+import { useTeamGetting } from "../api/pulling/TeamGetting";
 import { useParams } from "react-router-dom";
 import './Team.css';
 import Header from "./Header";
-import { saveTeam } from "../api/Getting/TeamCache";
+import { saveTeam } from "../api/pulling/TeamCache";
 import TeamInfo from "./teamPage/TeamInfo";
 export default function Team() {
     const { loading, setLoading, teamData} = useData();
