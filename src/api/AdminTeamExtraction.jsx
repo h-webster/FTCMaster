@@ -9,11 +9,6 @@ export const useAdminTeamExtraction = () => {
         setLoading(true);
         setLoadingStatus("Starting mass team extraction...");
         try {
-            // TODO - Change this to update instead of clear
-            console.log("Clearing team list...");
-            await clearAllTeams();
-            console.log("Done clearing all teams!");
-
             console.log("Getting first team page...");
             let firstTry = await getTeam(1);
             const pages = firstTry.pageTotal;
@@ -33,6 +28,11 @@ export const useAdminTeamExtraction = () => {
                 console.log(`Done extracting page ${i}/${pages}!`);
             }
             console.log("Done mass api call!");
+            
+            console.log("Clearing team list...");
+            await clearAllTeams();
+            console.log("Done clearing all teams!");
+
 
             console.log("Inserting teams into DB...");
             await insertTeamsToDB(teams);
@@ -50,7 +50,8 @@ export const useAdminTeamExtraction = () => {
             const newTeam = {
                 number: team.teamNumber,
                 name: team.nameShort,
-                location: team.displayLocation
+                location: team.displayLocation,
+                rookieYear: team.rookieYear
             };
             teams.push(newTeam);
         }

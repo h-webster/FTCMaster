@@ -40,7 +40,7 @@ router.post('/teamcache', async (req, res) => {
         }
 
         const savedTeam = await Team.create(teamData);
-        res.status(201).json(team);
+        res.status(201).json(savedTeam);
     } catch (error) {
         console.error('team save failed:', error);
         res.status(500).json({error: error.message});

@@ -9,7 +9,7 @@ const indexTeamSchema = new mongoose.Schema({
  
 const indexEventSchema = new mongoose.Schema({
     name: {type: String},
-    code: {type: String, unique: true },
+    code: {type: String},
     typeName: {type: String,  default: 'Unknown' },
     dateStart: {type: String,  default: 'Unknown' },
     dateEnd: {type: String,  default: 'Unknown' },

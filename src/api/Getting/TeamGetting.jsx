@@ -9,7 +9,7 @@ export const useTeamGetting = () => {
     const [teamNumber, setTeamNumber] = useState(0);
     const [teamCache, setTeamCache] = useState();
     const [events, setEvents] = useState(['null']);
-    // steps: teamNumber -> check cache -> teamList -> events -> setTeamData
+    // steps: teamNumber -> check cache -> teamList -> teamInfo -> events -> setTeamData
     const teamExtraction = async (teamNum) => {
         console.log(`Getting team ${teamNum}...`);
         setTeamNumber(teamNum);
@@ -30,7 +30,7 @@ export const useTeamGetting = () => {
             const data = await getTeamList();
             setTeamList(data);
         } else {
-            await getEvents();
+            await eventsPull();
         }
     }
     const eventsPull = async () => {
@@ -38,9 +38,12 @@ export const useTeamGetting = () => {
         setEvents(eventData);
     }
     const finalizeTeamData = () => {
+        console.log(JSON.stringify(teamList));
+        const teamInfo = teamList.find(team => team.number == teamNumber);
         const newTeamData = {
             version: 1,
             number: teamNumber,
+            info: teamInfo,
             events: events
         }
         setTeamData(newTeamData);

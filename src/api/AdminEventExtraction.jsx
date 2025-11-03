@@ -14,10 +14,7 @@ export const useAdminEventExtraction = () => {
         setLoading(true);
         setLoadingStatus("Starting mass event extraction...");
         try {
-            // TODO - Change this to update instead of clear
-            console.log("Clearing event list...");
-            await clearAllEvents();
-            console.log("Done clearing all events!");
+            // TODO - Change this to update instead of clear 
             console.log("Getting all events...");
             let allEvents = await getEvents();
             events = allEvents.events;
@@ -37,14 +34,18 @@ export const useAdminEventExtraction = () => {
                     const newTeam = {
                         number: team.teamNumber,
                         name: team.nameShort,
-                        location: team.displayLocation
+                        location: team.displayLocation,
+                        rookieYear: team.rookieYear
                     }
                     teams.push(newTeam);
                 }
                 event.teams = teams;
                 console.log(`Done processing team listings for event: ${event.code} ${i}/${events.length}!`);
             }
-
+            
+            console.log("Clearing event list...");
+            await clearAllEvents();
+            console.log("Done clearing all events!");
             console.log("Inserting events into database...");
             await insertEvents(events);
             console.log("Done inserting events into database!");

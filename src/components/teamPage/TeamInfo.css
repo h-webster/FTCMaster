@@ -1,0 +1,28 @@
+.team-info {
+    min-width: 600px;
+    width: 60vw;
+    height: 300px;
+    margin: 12vh auto 40px;
+    padding: 24px;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 24px #00000014;
+    color: #222;
+}
+
+.team-header {
+    border-bottom: 2px solid rgba(114, 114, 114, 0.562);
+    margin-bottom: 32px;
+}
+
+.dashboard-content {
+    width: 100%;
+}
+
+.simple-stats {
+    width: 100%;
+    background-color: #f7f7f7;
+    border-radius: 12px;
+    padding: 12px;
+    box-sizing: border-box
+}
