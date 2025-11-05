@@ -13,6 +13,7 @@ export default function TeamEntryForm() {
     const [ inputFocused, setInputFocused ] = useState(false);
 
     useEffect(() => {
+        console.log(teamList);
         if (teamList == undefined || teamList.length == 0) {
             setLoadingTeamList(true);
             const fetchTeams = async () => {

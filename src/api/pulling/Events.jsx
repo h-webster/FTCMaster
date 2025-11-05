@@ -33,7 +33,6 @@ export async function getEventsByTeamNumber(teamNumber) {
         const response = await fetch(`${API_BASE_URL}/eventlist/${teamNumber}`);
         const data = await response.json();
         console.log("Got events!");
-        console.log(JSON.stringify(data));
         return data;
     } catch (error) {
         console.error('Error fetching event data:', error);

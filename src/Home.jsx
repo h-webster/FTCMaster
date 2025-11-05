@@ -11,10 +11,11 @@ export default function Home() {
     
     const { teamExtraction } = useTeamGetting();
     useEffect(() => {
-        if (loadingStatus.includes("Loading team")) {
+        if (loadingStatus.includes("Loading team") && loading) {
             const match = loadingStatus.match(/\d+/);
             if (match) {
                 const teamNumber = match[0];
+                console.log("NAVIGATE");
                 navigate(`/teams/${teamNumber}`);
             }
             else {
@@ -22,7 +23,7 @@ export default function Home() {
             }
             //teamExtraction();
         }
-    }, [loadingStatus]);
+    }, [loadingStatus, loading]);
     
     if (loading) {
         return <LoadingScreen />;

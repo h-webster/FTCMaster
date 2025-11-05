@@ -38,7 +38,6 @@ export const useTeamGetting = () => {
         setEvents(eventData);
     }
     const finalizeTeamData = () => {
-        console.log(JSON.stringify(teamList));
         const teamInfo = teamList.find(team => team.number == teamNumber);
         const newTeamData = {
             version: 1,

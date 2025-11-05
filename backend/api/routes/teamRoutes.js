@@ -36,10 +36,6 @@ router.post('/allteams', async (req, res) => {
             return res.status(400).json({ error: 'Teams array is required' });
         }
 
-        if (!req.db) {
-            return res.status(503).json({ error: 'Database unavailable' });
-        }
-
         await insertTeams(teams);
         res.json({
             message: 'Teams updated successfully',
@@ -51,22 +47,9 @@ router.post('/allteams', async (req, res) => {
     }
 });
 
-// Add a simple test endpoint to verify the router works
-router.get('/test', (req, res) => {
-    res.json({ 
-        message: 'Team router is working!',
-        database: req.db ? 'Connected' : 'Not connected',
-        timestamp: new Date().toISOString()
-    });
-});
-
 // Keep your other routes with similar DB checks...
 router.post('/teamcache', async (req, res) => {
     try {
-        if (!req.db) {
-            return res.status(503).json({ error: 'Database unavailable' });
-        }
-
         const teamData = req.body;
         const existingTeam = await Team.findOne({ number: teamData.number });
         if (existingTeam) {
@@ -84,9 +67,6 @@ router.post('/teamcache', async (req, res) => {
 // DELETE allteams
 router.delete('/allteams', async (req, res) => {
     try {
-        if (!req.db) {
-            return res.status(503).json({ error: 'Database unavailable' });
-        }
 
         const result = await IndexTeam.deleteMany({});
         res.json({
@@ -101,10 +81,6 @@ router.delete('/allteams', async (req, res) => {
 
 router.get('/teamcache/:number', async (req, res) => {
     try {
-        if (!req.db) {
-            return res.status(503).json({ error: 'Database unavailable' });
-        }
-
         const teamNumber = parseInt(req.params.number);
         const team = await Team.findOne({ number: teamNumber });
         res.json(team);
