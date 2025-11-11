@@ -98,4 +98,32 @@ router.get('/events/:id', async (req, res) => {
     }
 })
 
+router.get('/rankings/:code', async (req, res) => {
+    const code = req.params.code;
+    if (!code) {
+        console.error("Event code is missing");
+        return res.status(400).json({ message: "Event code is required" });
+    }
+    const username = process.env.FTC_USERNAME;
+    const token = process.env.FTC_TOKEN;
+    const url = `https://ftc-api.firstinspires.org/v2.0/${year}/rankings/${code}`;
+    const authString = `${username}:${token}`;
+    const base64Auth = Buffer.from(authString).toString("base64");
+
+    try {
+        const response = await fetch(url, {
+            headers: {
+                "Authorization": "Basic " + base64Auth,
+            },
+        });
+
+        const data = await response.json();
+        res.json(data);
+
+    } catch (error) {
+        console.error("Error fetching rankings data:", error);
+        res.status(500).json({ message: "Error fetching rankings data", error: error.message });
+    }
+})
+
 module.exports = router;
