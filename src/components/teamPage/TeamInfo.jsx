@@ -2,6 +2,7 @@ import { useData } from "../../contexts/DataContext";
 import React from "react";
 import './TeamInfo.css';
 import SimpleStats from "./SimpleStats";
+import Matches from "./Matches";
 
 export default function TeamInfo() {
     const { teamData } = useData();
@@ -12,6 +13,7 @@ export default function TeamInfo() {
             </div>
             <div className="dashboard-content">
                 <SimpleStats/>
+                <Matches/>
             </div>
         </div>
     );

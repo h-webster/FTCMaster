@@ -57,7 +57,7 @@ router.get('/eventlist/:team', async (req, res) => {
     try {
         const teamNumber = parseInt(req.params.team);
         const events = await IndexEvent.find({
-            "teams.number": teamNumber
+            "rankings.number": teamNumber
         });
         res.json(events);
     } catch (error) {

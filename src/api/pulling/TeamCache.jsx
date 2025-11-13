@@ -31,3 +31,18 @@ export const saveTeam = async (teamData) => {
         throw error;
     }          
 }
+
+export const clearCache = async () => {
+    console.log("Clearing team cache...");
+    try {
+        const response = await fetch(`${API_BASE_URL}/teamcache`, {
+            method: 'DELETE',
+        });
+        const data = await response.json();
+        console.log("Cleared team cache!");
+        return data;
+    } catch (error) {
+        console.error('Error clearing team cache:', error);
+        throw error;
+    }
+}

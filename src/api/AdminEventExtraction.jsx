@@ -18,17 +18,21 @@ export const useAdminEventExtraction = () => {
             console.log("Getting all events...");
             let allEvents = await getEvents();
             events = allEvents.events;
-            console.log(JSON.stringify(events));
             console.log("Done getting all events!");
 
-            console.log("Inserting teams into event team listings...");
+            console.log("Inserting team rankings into event rankings listings...");
             let i = 0;
+
+            // this process takes a long time so to speed up
+            // get list of all events on mongodb and
+            // only get rankings, qual scores, playoff scores, and matches if dateend + 1 day is passed
+            // and if datestart minus 1 day is not passed then don't get
             for (const event of events) {
                 i += 1;
                 console.log(`Getting team listings for event: ${event.code}... ${i}/${events.length}`);
-                const eventData = await getEventTeamListings(event.code);
-                console.log(`Got team listings for event: ${event.code}!`);
-                console.log(JSON.stringify(eventData));
+                const eventListingsData = await getEventTeamListings(event.code);
+                console.log("Event Listings Data: " + JSON.stringify(eventListingsData));
+                console.log("Got team listings for event: " + event.code);
                 const teams = [];
                 for (const team of eventData.teams) {
                     const newTeam = {
@@ -41,8 +45,84 @@ export const useAdminEventExtraction = () => {
                 }
                 event.teams = teams;
                 console.log(`Done processing team listings for event: ${event.code} ${i}/${events.length}!`);
+
+
+                // skip getting rankings, qual scores, playoff scores, and matches if dateend + 1 day is passed
+                // and if datestart minus 1 day is not passed then don't get
+                const now = new Date();
+
+                const startDate = new Date(event.dateStart);
+                const dayBefore = new Date(startDate);
+                dayBefore.setDate(dayBefore.getDate() - 1);
+                if (now < dayBefore) {
+                    console.log("Hasn't started yet skipping");
+                    event.rankings = [];
+                    event.qualScores = [];
+                    event.playoffScores = [];
+                    event.matches = [];
+                    continue;
+                }
+
+                console.log(`Getting team rankings for event: ${event.code}... ${i}/${events.length}`);
+                const eventData = await getEventRankings(event.code);
+                console.log(`Got team rankings for event: ${event.code}!`);
+                console.log(JSON.stringify(eventData));
+                const rankings = [];
+                for (const team of eventData.rankings) {
+                    const newTeam = {
+                        number: team.teamNumber,
+                        name: team.teamName,
+                        rank: team.rank,
+                        wins: team.wins,
+                        losses: team.losses,
+                        ties: team.ties,
+                        rankScore: team.sortOrder1,
+                        tieBreaker: team.sortOrder2,
+                        npMax: team.sortOrder4,
+                        played: team.matchesPlayed
+                    }
+                    rankings.push(newTeam);
+                }
+                event.rankings = rankings;
+                console.log(`Done processing team rankings for event: ${event.code} ${i}/${events.length}!`);
+                
+                console.log(`Getting qualification scores for event: ${event.code}... ${i}/${events.length}`);
+                const qualScoresData = await getEventScores(event.code, "qual");
+                console.log("Qualification Scores Data: " + JSON.stringify(qualScoresData));
+                console.log("Got qual scores for event: " + event.code);
+                // no need for further processing, just assign (schema is the same)
+                event.qualScores = qualScoresData.matchScores;
+
+                console.log(`Getting playoff scores for event: ${event.code}... ${i}/${events.length}`);
+                const playoffScoresData = await getEventScores(event.code, "playoff");
+                console.log("Playoff Scores Data: " + JSON.stringify(playoffScoresData));
+                console.log("Got playoff scores for event: " + event.code);
+                // no need for further processing, just assign (schema is the same)
+                event.playoffScores = playoffScoresData.matchScores;
+                
+                console.log(`Getting matches for event: ${event.code}... ${i}/${events.length}`);
+                const matchesData = await getEventMatches(event.code);
+                console.log("Matches Data: " + JSON.stringify(matchesData));
+                console.log("Got matches for event: " + event.code);
+                const matches = [];
+                for (const match of matchesData.matches) {
+                    const newMatch = {
+                        tournamentLevel: match.tournamentLevel,
+                        series: match.series,
+                        matchNumber: match.matchNumber,
+                        scoreRedFinal: match.scoreRedFinal,
+                        scoreBlueFinal: match.scoreBlueFinal,
+                        scoreRedFoul: match.scoreRedFoul,
+                        scoreBlueFoul: match.scoreBlueFoul,
+                        scoreRedAuto: match.scoreRedAuto,
+                        scoreBlueAuto: match.scoreBlueAuto,
+                        teams: match.teams
+                    }
+                    matches.push(newMatch);
+                }
+                event.matches = matches;
+                console.log(`Done processing matches for event: ${event.code} ${i}/${events.length}!`);
             }
-            
             console.log("Clearing event list...");
             await clearAllEvents();
             console.log("Done clearing all events!");
@@ -136,5 +216,69 @@ export const useAdminEventExtraction = () => {
             throw error;    
         }
     }
+
+    const getEventRankings = async (eventCode) => {
+        try {
+            const response = await fetch(`${API_BASE_URL}/rankings/${eventCode}`);
+            if (!response.ok) {
+                let text;
+                try {
+                    text = await response.text();
+                } catch (e) {
+                    text = '<no response body>';
+                }
+                console.error(`Backend returned ${response.status}:`, text);
+                throw new Error(`Backend error ${response.status}: ${text}`);
+            }
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.error("Error fetching event team listings:", error);
+            throw error;
+        }
+    }
+
+    const getEventMatches = async (eventCode) => {
+        try {
+            const response = await fetch(`${API_BASE_URL}/matches/${eventCode}`);
+            if (!response.ok) {
+                let text;
+                try {
+                    text = await response.text();
+                } catch (e) {
+                    text = '<no response body>';
+                }
+                console.error(`Backend returned ${response.status}:`, text);
+                throw new Error(`Backend error ${response.status}: ${text}`);
+            }
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.error("Error fetching event team listings:", error);
+            throw error;
+        }
+    }
+
+    const getEventScores = async (eventCode, level) => {
+        try {
+            const response = await fetch(`${API_BASE_URL}/scores/${eventCode}/${level}`);
+            if (!response.ok) {
+                let text;
+                try {
+                    text = await response.text();
+                } catch (e) {
+                    text = '<no response body>';
+                }
+                console.error(`Backend returned ${response.status}:`, text);
+                throw new Error(`Backend error ${response.status}: ${text}`);
+            }
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.error("Error fetching event scores:", error);
+            throw error;
+        }
+    }
+
     return { massEventExtraction };
 }

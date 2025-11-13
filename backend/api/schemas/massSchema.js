@@ -6,24 +6,11 @@ const indexTeamSchema = new mongoose.Schema({
     location: {type: String, default: 'Unknown'},
     rookieYear: {type: Number, default: -1}
 });
- 
-const indexEventSchema = new mongoose.Schema({
-    name: {type: String},
-    code: {type: String},
-    typeName: {type: String,  default: 'Unknown' },
-    dateStart: {type: String,  default: 'Unknown' },
-    dateEnd: {type: String,  default: 'Unknown' },
-    venue: {type:String,  default: 'Unknown'},
-    city: {type:String, default: 'Unknown'},
-    stateprov: {type:String, default: 'Unknown'},
-    country: {type:String, default: 'Unknown'},
-    teams: { type: [indexTeamSchema], default: [] },
-    rankings: { type: [indexRankingSchema], default: [] }
-});
 
 const indexRankingSchema = new mongoose.Schema({
     rank: {type: Number, required: true },
     number: {type: Number, required: true },
+    name: {type: String, required: true},
     wins: {type: Number, required: true },
     losses: {type: Number, required: true },
     ties: {type: Number, required: true },
@@ -32,6 +19,82 @@ const indexRankingSchema = new mongoose.Schema({
     npMax: {type: Number, required: true }, // sort order 4 (Non-penalty max score) i think
     played: {type: Number, required: true }
 });
+
+const indexScoresSchema = new mongoose.Schema({
+    matchLevel: { type: String, required: true },
+    matchSeries: { type: Number, required: true },
+    matchNumber: { type: Number, required: true },
+    randomization: { type: Number, required: true },
+    alliances: { type: [{
+        alliance: { type: String, required: true },
+        team: { type: Number, required: true },
+        autoClassifiedArtifacts: { type: Number, required: true },
+        autoOverflowArtifacts: { type: Number, required: true },
+        autoClassifierState: { type: [String], required: true },
+        robot1Auto: { type: Boolean, required: true },
+        robot2Auto: { type: Boolean, required: true },
+        autoLeavePoints: { type: Number, required: true },
+        autoArtifactPoints: { type: Number, required: true },
+        autoPatternPoints: { type: Number, required: true },
+        teleopClassifiedArtifacts: { type: Number, required: true },
+        teleopOverflowArtifacts: { type: Number, required: true },
+        teleopDepotArtifacts: { type: Number, required: true },
+        teleopClassifierState: { type: [String], required: true },
+        robot1Teleop: { type: String, required: true },
+        robot2Teleop: { type: String, required: true },
+        teleopArtifactPoints: { type: Number, required: true },
+        teleopDepotPoints: { type: Number, required: true },
+        teleopPatternPoints: { type: Number, required: true },
+        teleopBasePoints: { type: Number, required: true },
+        autoPoints: { type: Number, required: true },
+        teleopPoints: { type: Number, required: true },
+        foulPointsCommitted: { type: Number, required: true },
+        preFoulTotal: { type: Number, required: true },
+        movementRP: { type: Boolean, required: true },
+        goalRP: { type: Boolean, required: true },
+        patternRP: { type: Boolean, required: true },
+        totalPoints: { type: Number, required: true },
+        majorFouls: { type: Number, required: true },
+        minorFouls: { type: Number, required: true }
+    }], required: true }
+});
+
+const indexMatchesSchema = new mongoose.Schema({
+    tournamentLevel: {type: String, required: true},
+    series: {type: Number, required: true},
+    matchNumber: {type: Number, required: true},
+    scoreRedFinal: {type: Number, required: true},
+    scoreBlueFinal: {type: Number, required: true},
+    scoreRedFoul: {type: Number, required: true},
+    scoreBlueFoul: {type: Number, required: true},
+    scoreRedAuto: {type: Number, required: true},
+    scoreBlueAuto: {type: Number, required: true},
+    teams: [{
+        teamNumber: {type: Number, required: true},
+        station: {type: String, required: true},
+        dq: {type: Boolean, required: true},
+        onField: {type: Boolean, required: true}
+    }],
+});
+
+const indexEventSchema = new mongoose.Schema({
+    name: {type: String},
+    code: {type: String},
+    done: {type: Boolean, default: false},
+    typeName: {type: String,  default: 'Unknown' },
+    dateStart: {type: String,  default: 'Unknown' },
+    dateEnd: {type: String,  default: 'Unknown' },
+    venue: {type:String,  default: 'Unknown'},
+    city: {type:String, default: 'Unknown'},
+    stateprov: {type:String, default: 'Unknown'},
+    country: {type:String, default: 'Unknown'},
+    teams: { type: [indexTeamSchema], default: [] },
+    rankings: { type: [indexRankingSchema], default: [] },
+    matches: { type: [indexMatchesSchema], default: [] },
+    qualScores: { type: [indexScoresSchema], default: [] },
+    playoffScores: { type: [indexScoresSchema], default: [] }
+});
+
 
 const IndexTeam = mongoose.model('AllTeams', indexTeamSchema);
 const IndexEvent = mongoose.model('AllEvents', indexEventSchema);

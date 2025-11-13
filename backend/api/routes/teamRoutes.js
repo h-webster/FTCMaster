@@ -79,6 +79,19 @@ router.delete('/allteams', async (req, res) => {
     }
 });
 
+router.delete('/teamcache', async (req, res) => {
+    try {
+        const result = await Team.deleteMany({});
+        res.json({
+            message: 'Team cache cleared successfully',
+            deletedCount: result.deletedCount
+        });
+    } catch (error) {
+        console.error('Team cache clear failed:', error);
+        res.status(500).json({ error: error.message});
+    }
+});
+
 router.get('/teamcache/:number', async (req, res) => {
     try {
         const teamNumber = parseInt(req.params.number);
