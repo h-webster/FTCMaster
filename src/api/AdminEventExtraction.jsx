@@ -24,31 +24,28 @@ export const useAdminEventExtraction = () => {
             console.log("Done getting all events!");
 
             console.log("Inserting team rankings into event rankings listings...");
-            let i = 0;
+            let i = -1;
 
-            // this process takes a long time so to speed up
-            // get list of all events on mongodb and
-            // only get rankings, qual scores, playoff scores, and matches if dateend + 1 day is passed
-            // and if datestart minus 1 day is not passed then don't get
             for (const event of events) {
+                i += 1;
                 console.log("EVENT: " + event.name);
+                // if event is done then skip
                 let mongoEvent = null;
                 if (i < mongoEventList.length) {
                     mongoEvent = mongoEventList[i];
+                    console.log(mongoEvent);
                     if (mongoEvent.done) {
                         console.log("Already done so skip!");
                         continue;
                     }
                 }
                 event.done = false;
-                i += 1;
-
                 if (i > 50) {
                     break;
                 }
                 console.log(`Getting team listings for event: ${event.code}... ${i}/${events.length}`);
                 const eventListingsData = await getEventTeamListings(event.code);
-                console.log("Event Listings Data: " + JSON.stringify(eventListingsData));
+                //console.log("Event Listings Data: " + JSON.stringify(eventListingsData));
                 console.log("Got team listings for event: " + event.code);
                 const teams = [];
                 for (const team of eventListingsData.teams) {
@@ -118,11 +115,11 @@ export const useAdminEventExtraction = () => {
                 event.playoffScores = playoffScoresData.matchScores;
                 
                 console.log(`Getting matches for event: ${event.code}... ${i}/${events.length}`);
-                const matchesData = await makeRequest(`scores/${event.code}/qual`);
+                const matchesData = await makeRequest(`matches/${event.code}`);
                 //console.log("Matches Data: " + JSON.stringify(matchesData));
                 console.log("Got matches for event: " + event.code);
                 const matches = [];
-                for (const match of matchesData.matchScores) {
+                for (const match of matchesData.matches) {
                     const newMatch = {
                         tournamentLevel: match.tournamentLevel,
                         series: match.series,
@@ -139,7 +136,7 @@ export const useAdminEventExtraction = () => {
                 }
                 event.matches = matches;
                 console.log(`Done processing matches for event: ${event.code} ${i}/${events.length}!`);
-                console.log("SENDING: " + JSON.stringify(event));
+                //console.log("SENDING: " + JSON.stringify(event));
                 const endDate = new Date(event.dateEnd);
                 const dayAfter = new Date(endDate);
                 dayAfter.setDate(dayAfter.getDate() - 1);
