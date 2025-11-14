@@ -5,7 +5,7 @@ import { faCalendar, faRankingStar } from '@fortawesome/free-solid-svg-icons';
 import './Matches.css';
 
 export default function Matches() {
-    const { teamData } = useData();
+    const { teamData} = useData();
 
     return (
         <div className='matches'>
@@ -42,48 +42,7 @@ export default function Matches() {
                                     <>
                                         <tr><td colSpan={4} className="quals-display">Qualifications</td></tr>
                                         {e.qualMatches.map((m, jdx) => (
-                                            <tr key={jdx}>
-                                                <td>{m.matchNumber}</td>
-                                                <td><span className="redScore">{m.scoreRedFinal}</span>-<span className="blueScore">{m.scoreBlueFinal}</span>
-                                                { (m.alliance == "Red" && m.scoreRedFinal > m.scoreBlueFinal) || (m.alliance == "Blue" && m.scoreBlueFinal > m.scoreRedFinal) ? (
-                                                    <span className='winnerIndicator winIndicator'>👑 Win</span>
-                                                    ) : (m.scoreRedFinal == m.scoreBlueFinal) ? (
-                                                    <span className='winnerIndicator tieIndicator'>😬 Tie</span>
-                                                    ) : (
-                                                    <span className='winnerIndicator lossIndicator'>❌ Lose</span>
-                                                )}
-                                                </td>
-                                                <td className="redTeam">
-                                                    {m.teams.filter(team => team.station.startsWith("Red")).map((team, kdx) => {
-                                                        const isCurrentTeam = team.teamNumber == teamData.number;
-                                                        const fontWeight = isCurrentTeam ? 'bold' : 'normal';
-                                                        return (
-                                                            <div key={kdx} className='team'>
-                                                                <p className="teamNumber" style={{ fontWeight }}>
-                                                                    {team.teamNumber}
-                                                                </p>
-                                                                <p className="teamName" style={{ fontWeight }}>
-                                                                    Hello
-                                                                </p>
-                                                            </div>
-                                                        );
-                                                    })}
-                                                </td>
-                                                <td className="blueTeam">
-                                                    {m.teams.filter(team => team.station.startsWith("Blue")).map((team, kdx) => {
-                                                        const isCurrentTeam = team.teamNumber == teamData.number;
-                                                        const fontWeight = isCurrentTeam ? 'bold' : 'normal';
-                                                        <div key={kdx} className='team'>
-                                                            <p className="teamNumber" style={{ fontWeight }}>
-                                                                {team.teamNumber}
-                                                            </p>
-                                                            <p className="teamName" style={{ fontWeight }}>
-                                                                Hello
-                                                            </p>
-                                                        </div>
-                                                    })}
-                                                </td>
-                                            </tr>
+                                            <Match key={jdx} m={m} teamData={teamData} />
                                         ))}
                                     </>
                                 }
@@ -93,5 +52,54 @@ export default function Matches() {
                 );
             })}
         </div>
+    );
+}
+
+const Match = ({m, teamData}) => {
+    return (
+        <tr>
+            <td>{m.matchNumber}</td>
+            <td><span className="redScore">{m.scoreRedFinal}</span>-<span className="blueScore">{m.scoreBlueFinal}</span>
+            { (m.alliance == "Red" && m.scoreRedFinal > m.scoreBlueFinal) || (m.alliance == "Blue" && m.scoreBlueFinal > m.scoreRedFinal) ? (
+                <span className='winnerIndicator winIndicator'>👑 Win</span>
+                ) : (m.scoreRedFinal == m.scoreBlueFinal) ? (
+                <span className='winnerIndicator tieIndicator'>😬 Tie</span>
+                ) : (
+                <span className='winnerIndicator lossIndicator'>❌ Lose</span>
+            )}
+            </td>
+            <td className="redTeam">
+                {m.teams.filter(team => team.station.startsWith("Red")).map((team, kdx) => {
+                    const isCurrentTeam = team.teamNumber == teamData.number;
+                    const fontWeight = isCurrentTeam ? 'bold' : 'normal';
+                    return (
+                        <div key={kdx} className='team'>
+                            <p className="teamNumber" style={{ fontWeight }}>
+                                {team.teamNumber}
+                            </p>
+                            <p className="teamName" style={{ fontWeight }}>
+                                {team.name}
+                            </p>
+                        </div>
+                    );
+                })}
+            </td>
+            <td className="blueTeam">
+                {m.teams.filter(team => team.station.startsWith("Blue")).map((team, kdx) => {
+                    const isCurrentTeam = team.teamNumber == teamData.number;
+                    const fontWeight = isCurrentTeam ? 'bold' : 'normal';
+                    return (
+                        <div key={kdx} className='team'>
+                            <p className="teamNumber" style={{ fontWeight }}>
+                                {team.teamNumber}
+                            </p>
+                            <p className="teamName" style={{ fontWeight }}>
+                                {team.name}
+                            </p>
+                        </div>
+                    );
+                })}
+            </td>
+        </tr>
     );
 }

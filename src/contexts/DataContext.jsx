@@ -10,9 +10,10 @@ export const DataProvider = ({ children }) => {
     const [loadingExtras, setLoadingExtras] = useState(false);
     const [loadingStatus, setLoadingStatus] = useState('');
     const [error, setError] = useState(null);
+    const [teamMap, setTeamMap] = useState(null);
 
     return (
-        <DataContext.Provider value={{ teamData, setTeamData, loading, setLoading, loadingExtras, setLoadingExtras, loadingStatus, setLoadingStatus, error, setError, loadingTeamList, setLoadingTeamList, teamList, setTeamList }}>
+        <DataContext.Provider value={{ teamData, setTeamData, loading, setLoading, loadingExtras, setLoadingExtras, loadingStatus, setLoadingStatus, error, setError, loadingTeamList, setLoadingTeamList, teamList, setTeamList, teamMap, setTeamMap }}>
             {children}
         </DataContext.Provider>
     );

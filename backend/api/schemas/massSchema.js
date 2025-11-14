@@ -73,8 +73,10 @@ const indexMatchesSchema = new mongoose.Schema({
         teamNumber: {type: Number, required: true},
         station: {type: String, required: true},
         dq: {type: Boolean, required: true},
-        onField: {type: Boolean, required: true}
+        onField: {type: Boolean, required: true},
+        name: {type: String, required: false}
     }],
+    alliance: {type: String, required: false}
 });
 
 const indexEventSchema = new mongoose.Schema({
@@ -92,7 +94,9 @@ const indexEventSchema = new mongoose.Schema({
     rankings: { type: [indexRankingSchema], default: [] },
     matches: { type: [indexMatchesSchema], default: [] },
     qualScores: { type: [indexScoresSchema], default: [] },
-    playoffScores: { type: [indexScoresSchema], default: [] }
+    playoffScores: { type: [indexScoresSchema], default: [] },
+    qualMatches: {type: [indexMatchesSchema], required: false},
+    playoffMatches: {type: [indexMatchesSchema], required: false}
 });
 
 

@@ -1,4 +1,4 @@
-export const Setup = (teamData) => {
+export const Setup = (teamData, teamMap) => {
     for (const event of teamData.events) {
         const qualMatches = event.matches.filter(match => 
             match.tournamentLevel == "QUALIFICATION" &&
@@ -17,8 +17,8 @@ export const Setup = (teamData) => {
                     } else if (station == "Blue1" || station == "Blue2") {
                         qMatch.alliance = "Blue";
                     }
-                    break;
                 }
+                team.name = teamMap.get(team.teamNumber);
             }
         }
 
