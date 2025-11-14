@@ -1,6 +1,6 @@
 .team-info {
-    min-width: 600px;
-    width: 60vw;
+    max-width: 1080px;
+    width: 80vw;
     margin: 12vh auto 40px;
     padding: 24px;
     background: #fff;

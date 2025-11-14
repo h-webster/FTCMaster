@@ -4,6 +4,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    gap: 15px;
 }
 
 .event {
@@ -20,4 +21,41 @@
     text-align: center;
     font-size: 25px;
     margin-top: 0;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fafafa;
+    border-radius: 8px;
+    overflow: hidden;
+    table-layout: fixed;
+    border: 2px solid gray;
+}
+
+table th, table td {
+    padding: 3px;
+    border: 1px solid #cdcccc;
+    text-align: center;
+    overflow: hidden;
+    word-wrap: break-word;
+}
+
+.header-row {
+    border-color: inherit;
+}
+
+
+.header-match {
+    width: 7%;
+}
+.header-score {
+    width: 15%;
+}
+.header-red, .header-blue {
+    width: 39%;
+}
+
+.quals-display {
+    font-weight: bold;
 }

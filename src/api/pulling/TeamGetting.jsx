@@ -3,13 +3,14 @@ import { useData } from "../../contexts/DataContext";
 import { getTeamList } from "./TeamList";
 import { getTeam } from "./TeamCache";
 import { getEventsByTeamNumber } from "./Events";
+import { Setup } from "../SetupTeamData";
 
 export const useTeamGetting = () => {
     const { teamList, setTeamList, setTeamData } = useData();
     const [teamNumber, setTeamNumber] = useState(0);
     const [teamCache, setTeamCache] = useState();
     const [events, setEvents] = useState(['null']);
-    // steps: teamNumber -> check cache -> teamList -> teamInfo -> events -> setTeamData
+    // steps: teamNumber -> check cache -> teamList -> teamInfo -> events -> finalizeTeamData -> setTeamData
     const teamExtraction = async (teamNum) => {
         console.log(`Getting team ${teamNum}...`);
         setTeamNumber(teamNum);
@@ -45,6 +46,7 @@ export const useTeamGetting = () => {
             info: teamInfo,
             events: events
         }
+        Setup(newTeamData);
         setTeamData(newTeamData);
     }
     useEffect(() => {
