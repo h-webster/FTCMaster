@@ -28,7 +28,12 @@ export default function TeamEntryForm() {
 
     const inputChange = (e) => {
         const value = e.target.value;
-        setSearchResults(runSearch(value));
+        let autoComplete = runSearch(value);
+        if (autoComplete == null) {
+            createAutocomplete(teamList);
+        } else {
+            setSearchResults(autoComplete);
+        }
         console.log(searchResults);
     }
 

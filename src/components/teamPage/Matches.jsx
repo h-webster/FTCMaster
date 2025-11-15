@@ -3,9 +3,11 @@ import React from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendar, faRankingStar } from '@fortawesome/free-solid-svg-icons';
 import './Matches.css';
+import { useNavigate } from "react-router-dom";
 
 export default function Matches() {
     const { teamData} = useData();
+    const navigate = useNavigate();
 
     return (
         <div className='matches'>
@@ -42,7 +44,15 @@ export default function Matches() {
                                     <>
                                         <tr><td colSpan={4} className="quals-display">Qualifications</td></tr>
                                         {e.qualMatches.map((m, jdx) => (
-                                            <Match key={jdx} m={m} teamData={teamData} />
+                                            <Match key={jdx} m={m} teamData={teamData} nav={navigate} />
+                                        ))}
+                                    </>
+                                }
+                                {(e.playoffMatches && e.playoffMatches.length > 0) &&
+                                    <>
+                                        <tr><td colSpan={4} className="quals-display">Playoffs</td></tr>
+                                        {e.playoffMatches.map((m, jdx) => (
+                                            <Match key={jdx} m={m} teamData={teamData} nav={navigate} />
                                         ))}
                                     </>
                                 }
@@ -55,7 +65,11 @@ export default function Matches() {
     );
 }
 
-const Match = ({m, teamData}) => {
+const openTeam = (teamNumber, nav) => {
+    nav(`/teams/${teamNumber}`);
+}
+
+const Match = ({m, teamData, nav}) => {
     return (
         <tr>
             <td>{m.matchNumber}</td>
@@ -69,36 +83,40 @@ const Match = ({m, teamData}) => {
             )}
             </td>
             <td className="redTeam">
-                {m.teams.filter(team => team.station.startsWith("Red")).map((team, kdx) => {
-                    const isCurrentTeam = team.teamNumber == teamData.number;
-                    const fontWeight = isCurrentTeam ? 'bold' : 'normal';
-                    return (
-                        <div key={kdx} className='team'>
-                            <p className="teamNumber" style={{ fontWeight }}>
-                                {team.teamNumber}
-                            </p>
-                            <p className="teamName" style={{ fontWeight }}>
-                                {team.name}
-                            </p>
-                        </div>
-                    );
-                })}
+                <div className="teamShow">
+                    {m.teams.filter(team => team.station.startsWith("Red")).map((team, kdx) => {
+                        const isCurrentTeam = team.teamNumber == teamData.number;
+                        const fontWeight = isCurrentTeam ? 'bold' : 'normal';
+                        return (
+                            <button onClick={() => openTeam(team.teamNumber, nav)} key={kdx} className='team'>
+                                <p className="teamNumber" style={{ fontWeight }}>
+                                    {team.teamNumber}
+                                </p>
+                                <p className="teamName" style={{ fontWeight }}>
+                                    {team.name}
+                                </p>
+                            </button>
+                        );
+                    })}   
+                </div> 
             </td>
             <td className="blueTeam">
-                {m.teams.filter(team => team.station.startsWith("Blue")).map((team, kdx) => {
-                    const isCurrentTeam = team.teamNumber == teamData.number;
-                    const fontWeight = isCurrentTeam ? 'bold' : 'normal';
-                    return (
-                        <div key={kdx} className='team'>
-                            <p className="teamNumber" style={{ fontWeight }}>
-                                {team.teamNumber}
-                            </p>
-                            <p className="teamName" style={{ fontWeight }}>
-                                {team.name}
-                            </p>
-                        </div>
-                    );
-                })}
+                <div className="teamShow">
+                    {m.teams.filter(team => team.station.startsWith("Blue")).map((team, kdx) => {
+                        const isCurrentTeam = team.teamNumber == teamData.number;
+                        const fontWeight = isCurrentTeam ? 'bold' : 'normal';
+                        return (
+                            <button onClick={() => openTeam(team.teamNumber, nav)} key={kdx} className='team'>
+                                <p className="teamNumber" style={{ fontWeight }}>
+                                    {team.teamNumber}
+                                </p>
+                                <p className="teamName" style={{ fontWeight }}>
+                                    {team.name}
+                                </p>
+                            </button>
+                        );
+                    })}
+                </div>
             </td>
         </tr>
     );

@@ -6,7 +6,7 @@ import { getEventsByTeamNumber } from "./Events";
 import { Setup } from "../SetupTeamData";
 
 export const useTeamGetting = () => {
-    const { teamList, setTeamList, setTeamData, teamMap, setTeamMap } = useData();
+    const { teamList, setTeamList, setTeamData, teamMap, setTeamMap, setLoadingTeamList } = useData();
     const [teamNumber, setTeamNumber] = useState(0);
     const [teamCache, setTeamCache] = useState();
     const [events, setEvents] = useState(['null']);
@@ -31,7 +31,7 @@ export const useTeamGetting = () => {
             const data = await getTeamList();
             setTeamList(data);
         } else {
-            await eventsPull();
+            teamMapPull();
         }
     }
     const teamMapPull = () => {
@@ -60,6 +60,7 @@ export const useTeamGetting = () => {
     }, [teamNumber])
     useEffect(() => {
         if (teamList != undefined && teamList.length > 0 && teamNumber != 0) {
+            setLoadingTeamList(false);
             teamMapPull();
         }
     }, [teamList])

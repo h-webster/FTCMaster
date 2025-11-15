@@ -41,10 +41,9 @@ table th, table td {
     word-wrap: break-word;
 }
 
-.header-row {
-    border-color: inherit;
+table th {
+    background:#f0f0f0;
 }
-
 
 .header-match {
     width: 7%;
@@ -55,7 +54,55 @@ table th, table td {
 .header-red, .header-blue {
     width: 39%;
 }
-
 .quals-display {
-    font-weight: bold;
+    font-weight: 700;
+    font-size: 1.2em;
+    margin: 5px;
+}
+.redScore {
+    color: red;
+}
+.blueScore {
+    color: blue;
+}
+.winnerIndicator {
+    margin-left: 10%;
+}
+.winnerIndicator {
+    color: #388e3c;
+}
+.lossIndicator {
+    color: #fb5353;
+}
+.redTeam {
+    background-color: #f97d7d;
+}
+.blueTeam {
+    background-color: #8181fb;
+}
+.teamShow {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 0;
+}
+.team {
+    display: flex;
+    justify-content: left;
+    flex-direction: column;
+    max-width: 100%;
+    overflow: hidden;
+    background: none;
+    color: black;
+}
+.team p {
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.teamNumber {
+    font-size: 20px;
+}
+.teamName {
+    font-size: 14px;
 }
