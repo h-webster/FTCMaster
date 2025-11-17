@@ -13,7 +13,25 @@ export const getTeam = async (teamNum) => {
     }
 }
 
+export const checkTeamExists = async (teamNum) => {
+    try {
+        const response = await fetch(`${API_BASE_URL}/teamcache/${teamNum}`);
+        return response.ok;
+    } catch (error) {
+        console.error('Error checking team existence: ', error);
+        return false;
+    }
+}
+
 export const saveTeam = async (teamData) => {
+    console.log("Checking if team exists...");
+
+    const exists = await checkTeamExists(teamData.number);
+
+    if (exists) {
+        console.log("Team already exists in cache, skipping save.");
+        return { message: "Team already exists", existed: true };
+    }
     console.log("Saving team to teamCache...");
     try {
         const response = await fetch(`${API_BASE_URL}/teamcache`, {

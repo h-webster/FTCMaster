@@ -9,7 +9,12 @@ const teamSchema = new mongoose.Schema({
     events: { type: [indexEventSchema], default: [] },
     pointAverage: { type: Number},
     pointAveragePlayoff: {type: Number},
-    points: {type: [Number]}
+    points: {type: [Number]},
+    performance: {
+        wins: {type: Number},
+        losses: {type: Number},
+        ties: {type: Number}
+    }
 });
 
 const Team = mongoose.model('TeamCache', teamSchema);

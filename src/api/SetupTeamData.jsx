@@ -4,6 +4,11 @@ export const Setup = (teamData, teamMap) => {
     let totalPlayoffs = 0;
     let totalQualPoints = 0;
     let totalPlayoffPoints = 0;
+    let performance = {
+        wins: 0,
+        losses: 0,
+        ties: 0
+    };
         
     for (const event of teamData.events) {    
         const qualMatches = event.matches.filter(match => 
@@ -67,11 +72,21 @@ export const Setup = (teamData, teamMap) => {
         totalQuals += qualMatches.length;
         totalPlayoffs += playoffMatches.length;
 
+        for (const rank of event.rankings) {
+            console.log(rank);
+            if (rank.number == teamData.number) {
+                performance.wins = rank.wins;
+                performance.losses = rank.losses;
+                performance.ties = rank.ties;
+            }
+
+        }
     }
 
-    teamData.pointAverage = totalQualPoints / totalQuals;
-    teamData.pointAveragePlayoff = totalPlayoffPoints / totalPlayoffs;
+    teamData.pointAverage = Math.round(totalQualPoints / totalQuals);
+    teamData.pointAveragePlayoff = Math.round(totalPlayoffPoints / totalPlayoffs);
     teamData.points = points;
+    teamData.performance = performance;
     
     return teamData;
 }
