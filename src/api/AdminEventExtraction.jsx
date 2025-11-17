@@ -1,7 +1,7 @@
 
 import { useData } from "../contexts/DataContext";
 const API_BASE_URL = process.env.NODE_ENV === 'production' ? 'https://ftcmasterbackend.vercel.app/api' : 'http://localhost:5000/api';
-
+// to-do remove get function uses and replace with make request calls
 export const useAdminEventExtraction = () => {
     const { setLoading, setLoadingStatus, teamList } = useData();
     const massEventExtraction = async () => {
