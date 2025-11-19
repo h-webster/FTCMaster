@@ -1,4 +1,4 @@
-const { IndexTeam, IndexEvent } = require('../schemas/massSchema');
+const { IndexTeam, IndexEvent, IndexOPR } = require('../schemas/massSchema');
 
 const insertTeams = async (teams) => {
     const batchSize = 1000;
@@ -16,6 +16,16 @@ const insertTeams = async (teams) => {
     }
     await IndexTeam.collection.createIndex({ number: 1 });
     console.log('Created index on team number');
+}
+
+const insertOPRs = async (teams) => {
+    const batchSize = 1000;
+
+    for (let i = 0; i < teams.length; i+= batchSize) {
+        const batch = teams.slice(i, i + batchSize);
+        await IndexOPR.insertMany(batch, { ordered: false });
+        console.log(`Inserted ${Math.min(i + batchSize, teams.length)} / ${teams.length} teams`);
+    }
 }
 
 const insertEvents = async (events) => {

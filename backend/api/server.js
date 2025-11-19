@@ -16,6 +16,7 @@ const ftceventsRoutes = require('./routes/ftceventsRoutes');
 const eventRoutes = require('./routes/eventRoutes');
 const teamRoutes = require('./routes/teamRoutes');
 const ftcscoutRoutes = require('./routes/ftcscoutRoutes');
+const oprRoutes = require('./routes/OPRRoutes');
 
 const app = express();
 
@@ -36,6 +37,7 @@ app.use('/api', ftceventsRoutes);
 app.use('/api', eventRoutes);
 app.use('/api', teamRoutes);
 app.use('/api', ftcscoutRoutes);
+app.use('/api', oprRoutes);
 
 if (process.env.NODE_ENV !== 'production') {
   app.listen(PORT, () => {

@@ -99,14 +99,28 @@ const indexEventSchema = new mongoose.Schema({
     playoffMatches: {type: [indexMatchesSchema], required: false}
 });
 
+const OPRSchema = new mongoose.Schema({
+    value: {type: Number, required: true },
+    rank: {type: Number, required: true }
+});
+const indexOPRSchema = new mongoose.Schema({
+    number: {type: Number, required: true, unique: true },
+    tot: {type: OPRSchema, required: true },
+    auto: {type: OPRSchema, required: true },
+    teleop: {type: OPRSchema, required: true },
+    endgame: {type: OPRSchema, required: true },
+});
+
 
 const IndexTeam = mongoose.model('AllTeams', indexTeamSchema);
 const IndexEvent = mongoose.model('AllEvents', indexEventSchema);
-const IndexRanking = mongoose.model('AllRankings', indexRankingSchema);
+const IndexOPR = mongoose.model('AllOPRs', indexOPRSchema);
 
 module.exports = {
     IndexTeam,
     IndexEvent,
+    IndexOPR,
     indexEventSchema,
-    indexTeamSchema
+    indexTeamSchema,
+    indexOPRSchema
 };
