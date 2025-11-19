@@ -5,7 +5,7 @@ export const getRegionOPR = async (region) => {
     const query = `
         query TeamsSearch($region: RegionOption, $season: Int!) {
             teamsSearch(region: $region) {
-                quickStats(season: $year) {
+                quickStats(season: $season) {
                     season
                     number
                     tot {
@@ -32,7 +32,7 @@ export const getRegionOPR = async (region) => {
 
     const variables = {
         region: region,
-        year: year
+        season: year
     };
 
     const url = `https://api.ftcscout.org/graphql`;
@@ -53,6 +53,9 @@ export const getRegionOPR = async (region) => {
         });
         console.log("done response");
         if (!response.ok) {
+            const errorText = await response.text();
+            console.error("Response status:", response.status);
+            console.error("Response error:", errorText);
             throw new Error(`HTTP error! status: ${response.status}`);
         }
         

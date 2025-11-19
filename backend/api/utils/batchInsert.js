@@ -54,4 +54,4 @@ const insertEvents = async (events) => {
     console.log('Created all indexes');
 }
 
-module.exports = { insertTeams, insertEvents };
+module.exports = { insertTeams, insertEvents, insertOPRs };

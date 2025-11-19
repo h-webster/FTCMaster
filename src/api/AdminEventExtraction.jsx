@@ -318,7 +318,7 @@ export const useAdminEventExtraction = () => {
             const data = await response.json();
             return data;
         } catch (error) {
-            console.error("Error fetching event scores:", error);
+            console.error("Error making request:", error);
             throw error;
         }
     }

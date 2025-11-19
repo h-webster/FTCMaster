@@ -34,7 +34,7 @@ router.post('/oprlist', async (req, res) => {
         if (!Array.isArray(teams) || teams.length == 0) {
             return res.status(400).json({ error: 'Teams array is required' });
         }
-
+        await IndexOPR.deleteMany({});
         await insertOPRs(teams);
         res.json({
             message: 'OPRs updated successfully',

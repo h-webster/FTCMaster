@@ -1,5 +1,5 @@
 import { useData } from "../contexts/DataContext";
-import { getTeamOPR } from "./pulling/OPR";
+import { getTeamOPR, getRegionOPR } from "./pulling/OPR";
 const API_BASE_URL = process.env.NODE_ENV === 'production' ? 'https://ftcmasterbackend.vercel.app/api' : 'http://localhost:5000/api';
 
 const regions = [
@@ -30,12 +30,12 @@ export const useAdminOPRExtraction = () => {
                 let regionOPRData = await getRegionOPR(region);
                 console.log(`Region ${region} OPR data:`);
                 console.log(regionOPRData);
-                let teamsData = regionOPRData.data.teamsSearch;
+                let teamsData = regionOPRData.teamsSearch;
 
                 for (const team of teamsData) {
                     if (team == null || team.quickStats == null) continue;
                     const newTeam = {
-                        number: team.number,
+                        number: team.quickStats.number,
                         tot: team.quickStats.tot,
                         auto: team.quickStats.auto,
                         teleop: team.quickStats.dc,
@@ -44,13 +44,17 @@ export const useAdminOPRExtraction = () => {
                     teams.push(newTeam);
                 }
                 console.log("Done processing region " + region + ". Total teams so far: " + teams.length);
-                if (i > 3) {
+                if (i > 2) {
                     break; // for testing purposes only fetch first 4 regions
                 }
             }
 
             console.log("Clearing existing OPR list...");
-            await 
+            await makeRequest("oprlist", "DELETE");
+            console.log("Done clearing OPR list!");
+            console.log("Inserting opr teams into database...");
+            await insertTeams(teams);
+            console.log("Done inserting opr teams into database!");
         } catch (error) {
             console.error("Error fetching OPR data:", error);
         } finally {
@@ -59,6 +63,7 @@ export const useAdminOPRExtraction = () => {
     }
 
     const insertTeams = async (teams) => {
+        console.log("Teams: " + JSON.stringify(teams));
         try {
             const response = await fetch(`${API_BASE_URL}/oprlist`, {
                 method: 'POST',
@@ -67,6 +72,40 @@ export const useAdminOPRExtraction = () => {
                 },
                 body: JSON.stringify({ teams }),
             });
+            if (!response.ok) {
+                const text = await response.text();
+                throw new Error(`Failed to insert teams: ${response.status} - ${text}`);
+            }
+            
+            const result = await response.json();
+            console.log('Insert result:', result);
+            return result;
+        } catch (error) {
+            console.error("Error inserting events:", error);
+            throw error;
+        }
+    }
+
+    const makeRequest = async (url, method) => {
+        try {
+            const response = await fetch(`${API_BASE_URL}/${url}`,  {
+                method: `${method}`
+            });
+            if (!response.ok) {
+                let text;
+                try {
+                    text = await response.text();
+                } catch (e) {
+                    text = '<no response body>';
+                }
+                console.error(`Backend returned ${response.status}:`, text);
+                throw new Error(`Backend error ${response.status}: ${text}`);
+            }
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.error("Error fetching event scores:", error);
+            throw error;
         }
     }
     return { massOPRExtraction };

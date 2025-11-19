@@ -105,10 +105,10 @@ const OPRSchema = new mongoose.Schema({
 });
 const indexOPRSchema = new mongoose.Schema({
     number: {type: Number, required: true, unique: true },
-    tot: {type: OPRSchema, required: true },
-    auto: {type: OPRSchema, required: true },
-    teleop: {type: OPRSchema, required: true },
-    endgame: {type: OPRSchema, required: true },
+    tot: {type: OPRSchema },
+    auto: {type: OPRSchema },
+    teleop: {type: OPRSchema },
+    endgame: {type: OPRSchema },
 });
 
 
