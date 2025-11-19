@@ -41,17 +41,20 @@ export const useAdminOPRExtraction = () => {
                         teleop: team.quickStats.dc,
                         endgame: team.quickStats.eg
                     };
-                    teams.push(newTeam);
+                    // Check if team with this number already exists
+                    const teamExists = teams.some(existingTeam => existingTeam.number === newTeam.number);
+                    
+                    if (!teamExists) {
+                        teams.push(newTeam);
+                    }
                 }
                 console.log("Done processing region " + region + ". Total teams so far: " + teams.length);
-                if (i > 2) {
-                    break; // for testing purposes only fetch first 4 regions
-                }
+                
             }
-
             console.log("Clearing existing OPR list...");
             await makeRequest("oprlist", "DELETE");
             console.log("Done clearing OPR list!");
+            
             console.log("Inserting opr teams into database...");
             await insertTeams(teams);
             console.log("Done inserting opr teams into database!");
