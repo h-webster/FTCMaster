@@ -1,6 +1,29 @@
 const year = 2025;
 const API_BASE_URL = process.env.NODE_ENV === 'production' ? 'https://ftcmasterbackend.vercel.app/api' : 'http://localhost:5000/api';
 
+export const getOPR = async (teamNum) => {
+    console.log("Getting OPR from mongo");
+    try {
+        const response = await fetch(`${API_BASE_URL}/oprlist/${teamNum}`);
+        if (!response.ok) {
+            let text;
+            try {
+                text = await response.text();
+            } catch (e) {
+                text = '<no response body>';
+            }
+            console.error(`Backend returned ${response.status}:`, text);
+            throw new Error(`Backend error ${response.status}: ${text}`);
+        }
+        const data = await response.json();
+        console.log("Got data!!: " + JSON.stringify(data));
+        return data;
+    } catch (error) {
+        console.error("Error fetching OPR:", error);
+        throw error;
+    }
+}
+
 export const getRegionOPR = async (region) => {
     const query = `
         query TeamsSearch($region: RegionOption, $season: Int!) {

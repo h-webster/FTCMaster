@@ -9,7 +9,7 @@ const router = express.Router();
 router.use(databaseMiddleware);
 
 // GET
-router.get('/oprlist:number', async (req, res) => {
+router.get('/oprlist/:number', async (req, res) => {
     const teamNumber = req.params.number;
 
     if (!teamNumber) {

@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { indexTeamSchema,indexEventSchema } = require('../schemas/massSchema');
+const { indexTeamSchema,indexEventSchema,indexOPRSchema} = require('../schemas/massSchema');
 
 const teamSchema = new mongoose.Schema({
     name: {type: String},
@@ -14,7 +14,8 @@ const teamSchema = new mongoose.Schema({
         wins: {type: Number},
         losses: {type: Number},
         ties: {type: Number}
-    }
+    },
+    opr: { type: indexOPRSchema }
 });
 
 const Team = mongoose.model('TeamCache', teamSchema);

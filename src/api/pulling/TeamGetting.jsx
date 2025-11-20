@@ -4,13 +4,15 @@ import { getTeamList } from "./TeamList";
 import { getTeam } from "./TeamCache";
 import { getEventsByTeamNumber } from "./Events";
 import { Setup } from "../SetupTeamData";
+import { getOPR } from "./OPR";
 
 export const useTeamGetting = () => {
     const { teamList, setTeamList, setTeamData, teamMap, setTeamMap, setLoadingTeamList } = useData();
     const [teamNumber, setTeamNumber] = useState(0);
     const [teamCache, setTeamCache] = useState();
+    const [opr, setOPR] = useState();
     const [events, setEvents] = useState(['null']);
-    // steps: teamNumber -> check cache -> teamList -> teamMap -> teamInfo -> events -> finalizeTeamData -> setTeamData
+    // steps: teamNumber -> check cache -> teamList -> teamMap -> opr -> events -> finalizeTeamData -> setTeamData
     const teamExtraction = async (teamNum) => {
         console.log(`Getting team ${teamNum}...`);
         setTeamNumber(teamNum);
@@ -34,6 +36,11 @@ export const useTeamGetting = () => {
             teamMapPull();
         }
     }
+    const oprPull = async () => {
+        const oprData = await getOPR(teamNumber);
+        console.log(JSON.stringify(oprData));
+        setOPR(oprData);
+    }
     const teamMapPull = () => {
         const teamsMap = new Map(teamList.map(team => [team.number, team.name]));
         setTeamMap(teamsMap);
@@ -48,8 +55,9 @@ export const useTeamGetting = () => {
             version: 1,
             number: teamNumber,
             info: teamInfo,
-            events: events
-        }
+            events: events,
+            opr: opr
+        };
         Setup(newTeamData, teamMap);
         setTeamData(newTeamData);
     }
@@ -66,10 +74,15 @@ export const useTeamGetting = () => {
     }, [teamList])
     useEffect(() => {
         if (teamMap != undefined && teamMap != null) {
-            console.log("TEAM MAP SET");
-            eventsPull();
+            oprPull();
         }
     }, [teamMap])
+    useEffect(() => {
+        console.log(opr);
+        if (opr !== undefined) {
+            eventsPull();
+        }
+    }, [opr])
     useEffect(() => {
         if (events.length != 1) {
             finalizeTeamData();
