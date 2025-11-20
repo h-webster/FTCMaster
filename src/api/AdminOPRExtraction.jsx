@@ -19,10 +19,6 @@ export const useAdminOPRExtraction = () => {
     const { setLoading, setLoadingStatus } = useData();
     const massOPRExtraction = async () => {
         setLoading(true);
-        setLoadingStatus("Getting OPR count...");
-        let countData = await getOPRCount(); 
-        let count = countData.teamByNumber.quickStats.count;
-        await makeRequest("extra", "putasdasd");adasdasdas
         setLoadingStatus("Starting mass OPR extraction...");
         
         let teams = [];
@@ -43,6 +39,7 @@ export const useAdminOPRExtraction = () => {
                         tot: team.quickStats.tot,
                         auto: team.quickStats.auto,
                         teleop: team.quickStats.dc,
+                        count: team.quickStats.count,
                         endgame: team.quickStats.eg
                     };
                     // Check if team with this number already exists

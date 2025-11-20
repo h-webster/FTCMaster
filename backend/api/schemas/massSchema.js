@@ -109,6 +109,7 @@ const indexOPRSchema = new mongoose.Schema({
     auto: {type: OPRSchema },
     teleop: {type: OPRSchema },
     endgame: {type: OPRSchema },
+    count: {type: Number }
 });
 
 
