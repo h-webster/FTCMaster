@@ -1,5 +1,5 @@
 import { useData } from "../contexts/DataContext";
-import { getTeamOPR, getRegionOPR } from "./pulling/OPR";
+import { getTeamOPR, getRegionOPR, getOPRCount } from "./pulling/OPR";
 const API_BASE_URL = process.env.NODE_ENV === 'production' ? 'https://ftcmasterbackend.vercel.app/api' : 'http://localhost:5000/api';
 
 const regions = [
@@ -19,6 +19,10 @@ export const useAdminOPRExtraction = () => {
     const { setLoading, setLoadingStatus } = useData();
     const massOPRExtraction = async () => {
         setLoading(true);
+        setLoadingStatus("Getting OPR count...");
+        let countData = await getOPRCount(); 
+        let count = countData.teamByNumber.quickStats.count;
+        await makeRequest("extra", "putasdasd");adasdasdas
         setLoadingStatus("Starting mass OPR extraction...");
         
         let teams = [];

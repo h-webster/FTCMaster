@@ -24,6 +24,26 @@ export const getOPR = async (teamNum) => {
     }
 }
 
+export const getOPRCount = async () => {
+    const query = `
+        query TeamsSearch($season: Int!, $number: Int!) {
+            teamByNumber(number: $number) {
+                quickStats(season: $season) {
+                    count
+                }
+            }
+        }
+    `;
+
+    const variables = {
+        season: year,
+        number: 27820
+    };
+    
+    const data = await makeGraphQLRequest(query, variables);
+    return data;
+}
+
 export const getRegionOPR = async (region) => {
     const query = `
         query TeamsSearch($region: RegionOption, $season: Int!) {
@@ -47,7 +67,6 @@ export const getRegionOPR = async (region) => {
                         value
                         rank
                     }
-                    count
                 }
             }
         }
@@ -58,44 +77,8 @@ export const getRegionOPR = async (region) => {
         season: year
     };
 
-    const url = `https://api.ftcscout.org/graphql`;
-    
-    try {
-        console.log(`Fetching OPR data for region ${region} in year ${year}...`);
-        const response = await fetch(url, {
-            method: "POST",
-            headers: { 
-                "Content-Type": "application/json",
-                // Some GraphQL APIs may require additional headers
-                // "Accept": "application/json"
-            },
-            body: JSON.stringify({
-                query: query,
-                variables: variables
-            })
-        });
-        console.log("done response");
-        if (!response.ok) {
-            const errorText = await response.text();
-            console.error("Response status:", response.status);
-            console.error("Response error:", errorText);
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        
-        const data = await response.json();
-        
-        // Check for GraphQL errors
-        if (data.errors) {
-            console.error("GraphQL errors:", data.errors);
-            return null;
-        }
-        
-        return data.data;
-        
-    } catch (error) {
-        console.error("Error fetching OPR data:", error);
-        return null;
-    }
+    const data = await makeGraphQLRequest(query, variables);
+    return data;
 }
 
 export const getTeamOPR = async (teamNum) => {
@@ -149,6 +132,47 @@ export const getTeamOPR = async (teamNum) => {
         });
         console.log("done response");
         if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        
+        // Check for GraphQL errors
+        if (data.errors) {
+            console.error("GraphQL errors:", data.errors);
+            return null;
+        }
+        
+        return data.data;
+        
+    } catch (error) {
+        console.error("Error fetching OPR data:", error);
+        return null;
+    }
+}
+
+const makeGraphQLRequest = async (query, variables) => {
+    const url = `https://api.ftcscout.org/graphql`;
+    
+    try {
+        console.log(`Sending GraphQL Request...`);
+        const response = await fetch(url, {
+            method: "POST",
+            headers: { 
+                "Content-Type": "application/json",
+                // Some GraphQL APIs may require additional headers
+                // "Accept": "application/json"
+            },
+            body: JSON.stringify({
+                query: query,
+                variables: variables
+            })
+        });
+        console.log("done response");
+        if (!response.ok) {
+            const errorText = await response.text();
+            console.error("Response status:", response.status);
+            console.error("Response error:", errorText);
             throw new Error(`HTTP error! status: ${response.status}`);
         }
         

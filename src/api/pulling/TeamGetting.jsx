@@ -24,7 +24,7 @@ export const useTeamGetting = () => {
             await teamListPull();
         } else {
             console.log("Team found in cache!");
-            console.log(JSON.stringify(team));
+            console.log(team);
             setTeamData(team);
         }
     }
