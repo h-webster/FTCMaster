@@ -50,6 +50,7 @@ export const getRegionOPR = async (region) => {
             teamsSearch(region: $region) {
                 quickStats(season: $season) {
                     season
+                    count
                     number
                     tot {
                         value

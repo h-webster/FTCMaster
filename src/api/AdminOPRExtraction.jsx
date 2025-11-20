@@ -49,6 +49,7 @@ export const useAdminOPRExtraction = () => {
                         teams.push(newTeam);
                     }
                 }
+                
                 console.log("Done processing region " + region + ". Total teams so far: " + teams.length);
                 
             }

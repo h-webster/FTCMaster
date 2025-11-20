@@ -8,19 +8,19 @@ export const OPRStats = ({ data }) => {
                 <div className="quick-stat">
                     {/* TOP PRIORITY MAKE COUNT AUTOMATIC*/}
                     <h3 className='quick-stat-title'>Total NP: {data.opr.tot.value.toFixed(2)}</h3>
-                    <p className='quick-stat-desc'>{Ordinalize(data.opr.tot.rank)} / -1</p>
+                    <p className='quick-stat-desc'>{Ordinalize(data.opr.tot.rank)} / {data.opr.count}</p>
                 </div>
                 <div className="quick-stat">
                     <h3 className='quick-stat-title'>Auto: {data.opr.auto.value.toFixed(2)}</h3>
-                    <p className='quick-stat-desc'>{Ordinalize(data.opr.auto.rank)} / -1</p>
+                    <p className='quick-stat-desc'>{Ordinalize(data.opr.auto.rank)} / {data.opr.count}</p>
                 </div>
                 <div className="quick-stat">
                     <h3 className='quick-stat-title'>Teleop: {data.opr.teleop.value.toFixed(2)}</h3>
-                    <p className='quick-stat-desc'>{Ordinalize(data.opr.teleop.rank)} / -1</p>
+                    <p className='quick-stat-desc'>{Ordinalize(data.opr.teleop.rank)} / {data.opr.count}</p>
                 </div>
                 <div className="quick-stat">
                     <h3 className='quick-stat-title'>Endgame: {data.opr.endgame.value.toFixed(2)}</h3>
-                    <p className='quick-stat-desc'>{Ordinalize(data.opr.endgame.rank)} / -1</p>
+                    <p className='quick-stat-desc'>{Ordinalize(data.opr.endgame.rank)} / {data.opr.count}</p>
                 </div>
             </div>
         </div>
