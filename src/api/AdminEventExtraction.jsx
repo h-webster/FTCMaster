@@ -40,9 +40,6 @@ export const useAdminEventExtraction = () => {
                     }
                 }
                 event.done = false;
-                if (i > 50) {
-                    break;
-                }
                 console.log(`Getting team listings for event: ${event.code}... ${i}/${events.length}`);
                 const eventListingsData = await getEventTeamListings(event.code);
                 //console.log("Event Listings Data: " + JSON.stringify(eventListingsData));
