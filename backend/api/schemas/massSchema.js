@@ -69,6 +69,8 @@ const indexMatchesSchema = new mongoose.Schema({
     scoreBlueFoul: {type: Number, required: true},
     scoreRedAuto: {type: Number, required: true},
     scoreBlueAuto: {type: Number, required: true},
+    blueRP: {type: Number, required: true},
+    redRP: {type: Number, required: true},
     teams: [{
         teamNumber: {type: Number, required: true},
         station: {type: String, required: true},
@@ -96,7 +98,8 @@ const indexEventSchema = new mongoose.Schema({
     qualScores: { type: [indexScoresSchema], default: [] },
     playoffScores: { type: [indexScoresSchema], default: [] },
     qualMatches: {type: [indexMatchesSchema], required: false},
-    playoffMatches: {type: [indexMatchesSchema], required: false}
+    playoffMatches: {type: [indexMatchesSchema], required: false},
+    rp:a sdjasndhasbndjasdbajsdbnj
 });
 
 const OPRSchema = new mongoose.Schema({

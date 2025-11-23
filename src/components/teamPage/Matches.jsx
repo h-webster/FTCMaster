@@ -1,7 +1,7 @@
 import { useData } from "../../contexts/DataContext";
 import React from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCalendar, faRankingStar } from '@fortawesome/free-solid-svg-icons';
+import { faCalendar, faRankingStar, faTrophy } from '@fortawesome/free-solid-svg-icons';
 import './Matches.css';
 import { useNavigate } from "react-router-dom";
 
@@ -11,7 +11,10 @@ export default function Matches() {
 
     return (
         <div className='matches'>
-            {teamData.events.map((e, idx) => {
+            {teamData.events
+            .sort((a, b) => new Date(b.dateStart) - new Date(a.dateStart))
+            .map((e, idx) => {
+
                 const teamRank = e.rankings.find(team => team.number == teamData.number);
                 return (
                     <div className="event" key={idx}>
@@ -28,7 +31,10 @@ export default function Matches() {
                         })}
                         </h3>
                         { e.done &&
-                            <h3 className='event-small'><FontAwesomeIcon icon={faRankingStar} /> Qualification Position: {teamRank?.rank || 'N/A'}/{e.rankings.length}</h3>
+                            <>
+                                <h3 className='event-small'><FontAwesomeIcon icon={faRankingStar} /> Qualification Position: {teamRank?.rank || 'N/A'}/{e.rankings.length}</h3>
+                                <h3 className="event-small"><FontAwesomeIcon icon={faTrophy} /> Ranking Score (RS): {teamRank?.rankScore || 'N/A'}</h3>
+                            </>
                         }
                         <table className='matches-table'>
                             <thead>
