@@ -44,26 +44,50 @@ table th, table td {
 table th {
     background:#f0f0f0;
 }
-
 .header-match {
-    width: 7%;
+    width: 5%;
 }
 .header-score {
-    width: 15%;
+    width: 19%;
 }
 .header-red, .header-blue {
-    width: 39%;
+    width: 38%;
 }
 .quals-display {
     font-weight: 700;
     font-size: 1.2em;
     margin: 5px;
 }
+.score {
+    display: flex;
+    padding: 5px;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+}
 .redScore {
     color: red;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 }
 .blueScore {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
     color: blue;
+}
+.sep {
+    margin: 10px;
+}
+.ranking-points {
+    margin: 0;
+    display: flex;
+    gap: 1px;
+}
+.ranking-points * {
+    width: 8px;
+    height: auto;
 }
 .winnerIndicator {
     margin-left: 10%;

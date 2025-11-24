@@ -99,7 +99,7 @@ const indexEventSchema = new mongoose.Schema({
     playoffScores: { type: [indexScoresSchema], default: [] },
     qualMatches: {type: [indexMatchesSchema], required: false},
     playoffMatches: {type: [indexMatchesSchema], required: false},
-    rp:a sdjasndhasbndjasdbajsdbnj
+    rp: {type: Number }
 });
 
 const OPRSchema = new mongoose.Schema({

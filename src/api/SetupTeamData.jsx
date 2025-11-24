@@ -34,8 +34,9 @@ export const Setup = (teamData, teamMap) => {
             }
             // RP
             let scoreDetails = event.qualScores.find(qualScore => qualScore.matchNumber == qMatch.matchNumber);
-            let blueAlliance = scoreDetails.find(alliance => alliance.alliance == "Blue") || null;
-            let redAlliance = scoreDetails.find(alliance => alliance.alliance == "Red") || null;
+            console.log(scoreDetails);
+            let blueAlliance = scoreDetails.alliances.find(alliance => alliance.alliance == "Blue") || null;
+            let redAlliance = scoreDetails.alliances.find(alliance => alliance.alliance == "Red") || null;
 
             if (blueAlliance == null || redAlliance == null) {
                 console.warn("Invalid blue alliance or red alliance");
@@ -74,7 +75,10 @@ export const Setup = (teamData, teamMap) => {
             totalQualPoints += point;
             points.push(point);
         }
-        event.rp = totalRP / qualMatches.length;
+        console.log("Qual matches processed: " + qualMatches.length);
+        console.log("Total RP so far: " + totalRP + " calc: " + (Number(totalRP) / qualMatches.length).toFixed(2));
+        event.rp = (Number(totalRP) / qualMatches.length).toFixed(2);
+
 
         const playoffMatches = event.matches.filter(match => 
             match.tournamentLevel == "PLAYOFF" &&

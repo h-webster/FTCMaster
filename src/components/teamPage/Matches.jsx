@@ -1,7 +1,7 @@
 import { useData } from "../../contexts/DataContext";
 import React from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCalendar, faRankingStar, faTrophy } from '@fortawesome/free-solid-svg-icons';
+import { faCalendar, faRankingStar, faTrophy, faCircle } from '@fortawesome/free-solid-svg-icons';
 import './Matches.css';
 import { useNavigate } from "react-router-dom";
 
@@ -33,7 +33,7 @@ export default function Matches() {
                         { e.done &&
                             <>
                                 <h3 className='event-small'><FontAwesomeIcon icon={faRankingStar} /> Qualification Position: {teamRank?.rank || 'N/A'}/{e.rankings.length}</h3>
-                                <h3 className="event-small"><FontAwesomeIcon icon={faTrophy} /> Ranking Score (RS): {teamRank?.rankScore || 'N/A'}</h3>
+                                <h3 className="event-small"><FontAwesomeIcon icon={faTrophy} /> Ranking Score (RS): { e.rp ? Number(e.rp).toFixed(2) : 'N/A'}</h3>
                             </>
                         }
                         <table className='matches-table'>
@@ -50,7 +50,7 @@ export default function Matches() {
                                     <>
                                         <tr><td colSpan={4} className="quals-display">Qualifications</td></tr>
                                         {e.qualMatches.map((m, jdx) => (
-                                            <Match key={jdx} m={m} teamData={teamData} nav={navigate} />
+                                            <Match key={jdx} m={m} event={e} teamData={teamData} nav={navigate} type="qualification" />
                                         ))}
                                     </>
                                 }
@@ -58,7 +58,7 @@ export default function Matches() {
                                     <>
                                         <tr><td colSpan={4} className="quals-display">Playoffs</td></tr>
                                         {e.playoffMatches.map((m, jdx) => (
-                                            <Match key={jdx} m={m} teamData={teamData} nav={navigate} />
+                                            <Match key={jdx} m={m} event={e} teamData={teamData} nav={navigate} type="playoff" />
                                         ))}
                                     </>
                                 }
@@ -75,18 +75,43 @@ const openTeam = (teamNumber, nav) => {
     nav(`/teams/${teamNumber}`);
 }
 
-const Match = ({m, teamData, nav}) => {
+const Match = ({m, teamData, event, nav, type}) => {
+    let scoreDetails = event.qualScores.find(qualScore => qualScore.matchNumber == m.matchNumber);
+    let blueAlliance = scoreDetails.alliances.find(alliance => alliance.alliance == "Blue") || null;
+    let redAlliance = scoreDetails.alliances.find(alliance => alliance.alliance == "Red") || null;
+
     return (
         <tr>
             <td>{m.matchNumber}</td>
-            <td><span className="redScore">{m.scoreRedFinal}</span>-<span className="blueScore">{m.scoreBlueFinal}</span>
-            { (m.alliance == "Red" && m.scoreRedFinal > m.scoreBlueFinal) || (m.alliance == "Blue" && m.scoreBlueFinal > m.scoreRedFinal) ? (
-                <span className='winnerIndicator winIndicator'>👑 Win</span>
-                ) : (m.scoreRedFinal == m.scoreBlueFinal) ? (
-                <span className='winnerIndicator tieIndicator'>😬 Tie</span>
-                ) : (
-                <span className='winnerIndicator lossIndicator'>❌ Lose</span>
-            )}
+            <td>
+                <div className="score">
+                    <div className="redScore">
+                        <span style={{fontWeight: m.alliance === "Red" ? "bold" : "normal"}}>{m.scoreRedFinal}</span>
+                        { type === "qualification" &&
+                            <div className="ranking-points">
+                                {Array.from({ length: m.redRP}).map((_, index) => (
+                                    <FontAwesomeIcon icon={faCircle} style={{color: '#ff1f1fff'}} />
+                                ))}
+                           </div>
+                        }
+                    </div>
+                    <span className="sep">-</span>
+                    <div className="blueScore">
+                        <span style={{fontWeight: m.alliance === "Blue" ? "bold" : "normal"}}>{m.scoreBlueFinal}</span>
+                        <div className="ranking-points">
+                            {Array.from({ length: m.blueRP}).map((_, index) => (
+                                <FontAwesomeIcon icon={faCircle} style={{color: '#1f40ff'}} />
+                            ))}
+                        </div>
+                    </div>
+                    { (m.alliance == "Red" && m.scoreRedFinal > m.scoreBlueFinal) || (m.alliance == "Blue" && m.scoreBlueFinal > m.scoreRedFinal) ? (
+                        <span className='winnerIndicator winIndicator'>👑 Win</span>
+                        ) : (m.scoreRedFinal == m.scoreBlueFinal) ? (
+                        <span className='winnerIndicator tieIndicator'>😬 Tie</span>
+                        ) : (
+                        <span className='winnerIndicator lossIndicator'>❌ Lose</span>
+                    )}
+                </div>
             </td>
             <td className="redTeam">
                 <div className="teamShow">

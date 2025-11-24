@@ -10,7 +10,9 @@ export default function TeamInfo() {
     return (
         <div className='team-info'>
             <div className="team-header">
-                <h1>Team #{teamData.number} - {teamData.info.name}</h1>
+                { (teamData && teamData.info) &&
+                    <h1>Team #{teamData.number} - {teamData.info.name}</h1> 
+                }
             </div>
             <div className="dashboard-content">
                 <SimpleStats/>

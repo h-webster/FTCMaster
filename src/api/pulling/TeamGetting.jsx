@@ -78,7 +78,6 @@ export const useTeamGetting = () => {
         }
     }, [teamMap])
     useEffect(() => {
-        console.log(opr);
         if (opr !== undefined) {
             eventsPull();
         }
