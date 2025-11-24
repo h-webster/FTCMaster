@@ -7,17 +7,26 @@ import './Team.css';
 import Header from "./Header";
 import { saveTeam } from "../api/pulling/TeamCache";
 import TeamInfo from "./teamPage/TeamInfo";
+import { useExtraGetting } from "../api/pulling/ExtraGetting";
 export default function Team() {
-    const { loading, setLoading, teamData} = useData();
+    const { loading, setLoading, teamData, loadingExtras, setLoadingExtras} = useData();
     const { teamNumber } = useParams();
     const { teamExtraction } = useTeamGetting();
+    const { extraDataExtraction } = useExtraGetting();
 
     useEffect(() => {
         // Fetch team data based on team number
         console.log(`Fetching data for team ${teamNumber}...`);
         setLoading(true);
+        setLoadingExtras(true);
         teamExtraction(teamNumber);
     }, [teamNumber]);
+
+    useEffect(() => {
+        if (!loading && loadingExtras) {
+            extraDataExtraction();
+        }
+    }, [loading]);
 
     useEffect(() => {
         if (teamData?.version === 1) { // got team data and need to save into cache

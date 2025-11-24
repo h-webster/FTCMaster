@@ -90,7 +90,7 @@ const Match = ({m, teamData, event, nav, type}) => {
                         { type === "qualification" &&
                             <div className="ranking-points">
                                 {Array.from({ length: m.redRP}).map((_, index) => (
-                                    <FontAwesomeIcon icon={faCircle} style={{color: '#ff1f1fff'}} />
+                                    <FontAwesomeIcon key={index} icon={faCircle} style={{color: '#ff1f1fff'}} />
                                 ))}
                            </div>
                         }
@@ -100,7 +100,7 @@ const Match = ({m, teamData, event, nav, type}) => {
                         <span style={{fontWeight: m.alliance === "Blue" ? "bold" : "normal"}}>{m.scoreBlueFinal}</span>
                         <div className="ranking-points">
                             {Array.from({ length: m.blueRP}).map((_, index) => (
-                                <FontAwesomeIcon icon={faCircle} style={{color: '#1f40ff'}} />
+                                <FontAwesomeIcon key={index} icon={faCircle} style={{color: '#1f40ff'}} />
                             ))}
                         </div>
                     </div>

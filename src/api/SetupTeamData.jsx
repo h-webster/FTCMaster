@@ -77,7 +77,11 @@ export const Setup = (teamData, teamMap) => {
         }
         console.log("Qual matches processed: " + qualMatches.length);
         console.log("Total RP so far: " + totalRP + " calc: " + (Number(totalRP) / qualMatches.length).toFixed(2));
-        event.rp = (Number(totalRP) / qualMatches.length).toFixed(2);
+        if (qualMatches.length > 0) {
+            event.rp = (Number(totalRP) / qualMatches.length).toFixed(2);
+        } else {
+            event.rp = "N/A";
+        }
 
 
         const playoffMatches = event.matches.filter(match => 

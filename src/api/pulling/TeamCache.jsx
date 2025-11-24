@@ -16,7 +16,13 @@ export const getTeam = async (teamNum) => {
 export const checkTeamExists = async (teamNum) => {
     try {
         const response = await fetch(`${API_BASE_URL}/teamcache/${teamNum}`);
-        return response.ok;
+        
+        if (!response.ok) {
+            return false;
+        }
+
+        const team = await response.json();
+        return team !== null;
     } catch (error) {
         console.error('Error checking team existence: ', error);
         return false;
