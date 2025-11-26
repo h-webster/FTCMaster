@@ -1,10 +1,18 @@
 import { useData } from "../../contexts/DataContext";
+import { aiRequest } from "./openApi";
 
 export const useExtraGetting = () => {
-    const { teamData } = useData();
+    const { teamData, setAiRequestStatus } = useData();
     const extraDataExtraction = async (teamNum) => {
         console.log(`Getting extra data for team ${teamNum}...`);
-        formatForAI();
+        let formattedTeamData = formatForAI();
+        let aiResponse = await aiRequest(formattedTeamData);
+        console.log("AI Response: " + JSON.stringify(aiResponse));
+        setAiRequestStatus({
+            number: teamNum,
+            loading: false,
+            data: aiResponse  
+        })
     }
 
     const removeFieldsJSON = (obj, fieldName) => {
@@ -25,13 +33,14 @@ export const useExtraGetting = () => {
         let events = [];
         for (let event of teamData.events) {
             if (event.matches.length > 0) {
-                events.push(...event.matches);
+                events.push(event.matches);
             }
         }
         formatted.events = events;
         let removedFormatted = removeFieldsJSON(formatted, "_id");
         removedFormatted = removeFieldsJSON(removedFormatted, "__v");
         console.log(removedFormatted);
+        return removedFormatted;
     }
     return { extraDataExtraction };
 };

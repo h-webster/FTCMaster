@@ -67,12 +67,14 @@ table th {
 }
 .redScore {
     color: red;
+    font-size: 20px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
 }
 .blueScore {
     display: flex;
+    font-size: 20px;
     flex-direction: column;
     align-items: flex-end;
     color: blue;
@@ -129,4 +131,12 @@ table th {
 }
 .teamName {
     font-size: 14px;
+}
+.match-key {
+    margin: 0;
+}
+.match-key-icon {
+    width: 14px;
+    height: auto;
+    margin-right: 5px;
 }

@@ -36,6 +36,9 @@ export default function Matches() {
                                 <h3 className="event-small"><FontAwesomeIcon icon={faTrophy} /> Ranking Score (RS): { e.rp ? Number(e.rp).toFixed(2) : 'N/A'}</h3>
                             </>
                         }
+                        { e.qualMatches.length > 0 && 
+                            <h4 className='match-key'><FontAwesomeIcon icon={faCircle} className='match-key-icon' style={{color: '#ff1f1fff'}} />- Ranking Point</h4>
+                        }
                         <table className='matches-table'>
                             <thead>
                                 <tr className="header-row">

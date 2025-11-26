@@ -5,3 +5,10 @@
     border-radius: 12px;
     padding: 12px;
 }
+.generate-ai {
+    background-color: rgb(150, 241, 89);
+    transition: transform 0.3s ease;
+}
+.generate-ai:hover {
+    transform: scale(1.05);
+}
