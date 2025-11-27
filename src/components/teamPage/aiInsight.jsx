@@ -11,7 +11,7 @@ export default function AIInsight() {
             number: teamData.number,
             loading: true,
         });
-        extraDataExtraction();
+        extraDataExtraction(teamData.number);
     }
 
     return (
@@ -21,7 +21,34 @@ export default function AIInsight() {
             ) : ( aiRequestStatus.loading ) ? (
                 <h2>AI Insight Loading...</h2>
             ) : ( !aiRequestStatus.loading ) ? (
-                <h2>{aiRequestStatus.data.analysis.summary}</h2>
+                <div className='ai-insight-card'>
+                    <div className='ai-insight-header'>
+                        <h2>AI Insight</h2>
+                        <img alt="Insight Icon" class="insight-icon" width="30" height="30" src="/insight.png"/>
+                    </div>
+                    <div className="ai-insight-content">
+                        <div className="ai-insight-data">
+                            <div className="ai-score-section">
+                                <div className="ai-score"></div>
+                            </div>
+                            <div className="ai-analysis-section">
+                                <div className="strength-section">
+                                    <h3 className="section-title">Strengths</h3>
+                                    <div className="section-content strengths">
+                                        
+                                    </div>
+                                </div>
+                                <div className="weakness-section">
+                                    <h3 className="section-title">Areas for Improvement</h3>
+                                    <div className="section-content weaknesses">
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <h2>{aiRequestStatus.data.analysis.summary}</h2>
+                    </div>
+                </div>
             ) : (
                 <h2>What</h2>
             )}

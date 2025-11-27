@@ -12,3 +12,47 @@
 .generate-ai:hover {
     transform: scale(1.05);
 }
+.ai-insight-card {
+    background-color: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px #0000001a;
+    margin-bottom: 1rem;
+}
+.ai-insight-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    border-bottom: 2px solid #f0f0f0;
+    padding-bottom: 0.5rem;
+}
+.ai-insight-header h2 {
+    margin: 0;
+    color: #333;
+    font-size: 1.25rem;
+}
+.insight-icon {
+    opacity: 0.8;
+}
+.ai-insight-content {
+    min-height: 200px;
+}
+.ai-insight-data {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+.ai-score-section {
+    text-align: center;
+    padding: 1rem;
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    border-radius: 8px;
+}
+.ai-score {
+    color: rgb(255, 152, 0);
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0;
+    text-align: center;
+}
