@@ -24,7 +24,7 @@ export default function AIInsight() {
                 <div className='ai-insight-card'>
                     <div className='ai-insight-header'>
                         <h2>AI Insight</h2>
-                        <img alt="Insight Icon" class="insight-icon" width="30" height="30" src="/insight.png"/>
+                        <img alt="Insight Icon" className="insight-icon" width="30" height="30" src="/insight.png"/>
                     </div>
                     <div className="ai-insight-content">
                         <div className="ai-insight-data">
@@ -46,7 +46,6 @@ export default function AIInsight() {
                                 </div>
                             </div>
                         </div>
-                        <h2>{aiRequestStatus.data.analysis.summary}</h2>
                     </div>
                 </div>
             ) : (
