@@ -15,6 +15,12 @@ const teamSchema = new mongoose.Schema({
         losses: {type: Number},
         ties: {type: Number}
     },
+    analysis: {
+        score: {type: String},
+        strengths: {type: [String]},
+        weaknesses: {type: [String]},
+        summary: {type: String}
+    },
     opr: { type: indexOPRSchema }
 });
 

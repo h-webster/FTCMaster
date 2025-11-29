@@ -2,17 +2,34 @@ import { useData } from "../../contexts/DataContext";
 import { aiRequest } from "./openApi";
 
 export const useExtraGetting = () => {
-    const { teamData, setAiRequestStatus } = useData();
+    const { teamData, setAiRequestStatus, setError} = useData();0
     const extraDataExtraction = async (teamNum) => {
         console.log(`Getting extra data for team ${teamNum}...`);
         let formattedTeamData = formatForAI();
-        let aiResponse = await aiRequest(formattedTeamData);
-        console.log("AI Response: " + JSON.stringify(aiResponse));
-        setAiRequestStatus({
-            number: teamNum,
-            loading: false,
-            data: aiResponse  
-        })
+        let aiResponse ="";
+        try {
+            aiResponse = await aiRequest(formattedTeamData);
+            console.log("AI Response: " + JSON.stringify(aiResponse));
+            setAiRequestStatus({
+                number: teamNum,
+                loading: false,
+                data: aiResponse  
+            })   
+        } catch (error) {
+            console.error(error.message);
+            if (error.message === 'RATE_LIMIT_EXCEEDED' || error.statusCode === 429) {
+                setError({
+                    msg: 'Request limit reached. Please try again in an hour.',
+                    type: "ai"
+                });
+            } else {
+                setError({
+                    msg: 'Failed to analyze team: ' + error.message,
+                    type: "ai"
+                })
+            }
+        }
+        
     }
 
     const removeFieldsJSON = (obj, fieldName) => {

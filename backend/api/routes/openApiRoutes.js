@@ -5,8 +5,16 @@ const router = express.Router();
 
 const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
+const rateLimit = require('express-rate-limit');
+
+const openaiLimiter = rateLimit({
+    windowMs: 60 * 60 * 1000, // 1 hour
+    max: 2,
+    message: {error: 'Request limit reached. Try again in an hour.'}
+})
+
 // POST 
-router.post('/openai', async (req, res) => {
+router.post('/openai', openaiLimiter, async (req, res) => {
     try {
         const { data } = req.body;
         const completion = await client.chat.completions.create({

@@ -49,10 +49,52 @@
     background: linear-gradient(135deg, #f8f9fa, #e9ecef);
     border-radius: 8px;
 }
+.ai-score-section p {
+    text-align: left;
+}
 .ai-score {
     color: rgb(255, 152, 0);
     font-size: 1.5rem;
     font-weight: 700;
     margin: 0;
     text-align: center;
+}
+
+.ai-analysis-section {
+    display: flex;
+    gap: 1rem;
+    padding: 10px;
+}
+
+.strength-section, .weakness-section {
+    flex: 1;
+} 
+
+.section-title {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #333;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 0.25rem;
+}
+
+.strengths {
+    color: #2e7d32 !important;
+}
+
+.weaknesses {
+    color: #d32f2f !important;
+}
+
+.section-content {
+    line-height: 1.6;
+    color: #555;
+}
+
+.section-content li {
+    margin-bottom: 0.5rem;
+}
+.error {
+    color: red;
 }

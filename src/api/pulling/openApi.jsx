@@ -11,10 +11,14 @@ export const aiRequest = async (teamData) => {
             body: JSON.stringify({ data: teamData})
         });
         const data = response.json();
+
+        if (response.status === 429) {
+            throw new Error('RATE_LIMIT_EXCEEDED');
+        }
         console.log("Finished request to openapi!");
         return data;
     } catch (error) {
-        console.error('Error saving team data: ', error);
+        console.error('Error doing ai request: ', error);
         throw error;
     }
 }
