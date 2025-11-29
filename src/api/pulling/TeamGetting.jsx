@@ -7,7 +7,7 @@ import { Setup } from "../SetupTeamData";
 import { getOPR } from "./OPR";
 
 export const useTeamGetting = () => {
-    const { teamList, setTeamList, teamData, setTeamData, teamMap, setTeamMap, setLoadingTeamList } = useData();
+    const { teamList, setTeamList, teamData, setTeamData, teamMap, setTeamMap, setLoadingTeamList, setAiRequestStatus } = useData();
     const [teamNumber, setTeamNumber] = useState(0);
     const [teamCache, setTeamCache] = useState();
     const [opr, setOPR] = useState();
@@ -25,6 +25,14 @@ export const useTeamGetting = () => {
         } else {
             console.log("Team found in cache!");
             console.log(team);
+            if ('analysis' in team) {
+                setAiRequestStatus({
+                    number: teamNumber,
+                    loading: false,
+                    data: team,
+                    preloaded: true
+                });
+            }
             setTeamData(team);
         }
     }
@@ -54,24 +62,29 @@ export const useTeamGetting = () => {
         setEvents(eventData);
     }
     const finalizeTeamData = () => {
+        console.log("Finalize");
         const teamInfo = teamList.find(team => team.number == teamNumber);
         const newTeamData = {
             version: 1,
             number: teamNumber,
             info: teamInfo,
             events: events,
-            opr: opr
+            opr: opr,  
         };
         Setup(newTeamData, teamMap);
         setTeamData(newTeamData);
     }
     useEffect(() => {
+        console.log(teamNumber);
         if (teamNumber != 0 && teamNumber != undefined) {
+            console.log("running team cache");
             teamCachePull();
         }
+        console.log("aa");
     }, [teamNumber])
     useEffect(() => {
         if (teamData == null) {
+            console.log("LIST PULLLL");
             teamListPull();
         }
     }, [teamData])
@@ -79,7 +92,7 @@ export const useTeamGetting = () => {
         if (teamList != undefined && teamList.length > 0 && teamNumber != 0) {
             setLoadingTeamList(false);
             teamMapPull();
-        }
+        }  
     }, [teamList])
     useEffect(() => {
         if (teamMap != undefined && teamMap != null) {

@@ -116,9 +116,9 @@ export const Setup = (teamData, teamMap) => {
         for (const rank of event.rankings) {
             console.log(rank);
             if (rank.number == teamData.number) {
-                performance.wins = rank.wins;
-                performance.losses = rank.losses;
-                performance.ties = rank.ties;
+                performance.wins += rank.wins;
+                performance.losses += rank.losses;
+                performance.ties += rank.ties;
             }
 
         }

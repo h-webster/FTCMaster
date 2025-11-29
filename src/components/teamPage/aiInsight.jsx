@@ -1,15 +1,34 @@
 import { useEffect } from "react";
 import { useData } from "../../contexts/DataContext";
 import './aiInsight.css';
+import { useParams } from "react-router-dom";
+import { saveRequest } from "../../api/pulling/openApi";
 import { useExtraGetting } from "../../api/pulling/ExtraGetting";
 export default function AIInsight() {
     const { loadingExtras, aiRequestStatus, setAiRequestStatus, teamData, error, setError } = useData();
     const { extraDataExtraction } = useExtraGetting();
-    
+    const { teamNumber } = useParams();
     useEffect(() => {
         setError(null);
-        setAiRequestStatus(null);
+        if (aiRequestStatus != null && 'number' in aiRequestStatus) {
+            if (aiRequestStatus.number != teamNumber) {
+                setAiRequestStatus(null);
+            }
+        } else {
+            setAiRequestStatus(null);
+        }
     }, []);
+    useEffect(() => {
+        if (aiRequestStatus != null) {
+            if ('loading' in aiRequestStatus && !('preloaded' in aiRequestStatus)) {
+                if (!aiRequestStatus.loading) {
+                    saveRequest(aiRequestStatus.data.analysis, teamData.number);    
+                }
+            }
+        }
+        console.log(aiRequestStatus);
+    }, [aiRequestStatus]);
+
     const generateAiInsight = () => {
         setAiRequestStatus({
             number: teamData.number,

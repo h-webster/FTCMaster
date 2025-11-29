@@ -103,4 +103,38 @@ router.get('/teamcache/:number', async (req, res) => {
     }
 });
 
+router.patch('/teamcache/:number/field', async (req, res) => {
+    try {
+        const teamNumber = parseInt(req.params.number);
+        const { fieldName, fieldValue } = req.body;
+
+        if (!fieldName) {
+            return res.status(400).json({ error: 'fieldName is required' });
+        }
+
+        if (fieldValue === undefined) {
+            return res.status(400).json({ error: 'fieldValue is required' });
+        }
+
+        // Find team and update/add the field
+        const updatedTeam = await Team.findOneAndUpdate(
+            { number: teamNumber },
+            { $set: { [fieldName]: fieldValue } },
+            { new: true, upsert: true }
+        );
+
+        if (!updatedTeam) {
+            return res.status(404).json({ error: 'Team not found' });
+        }
+
+        res.json({
+            message: 'Field updated successfully',
+            team: updatedTeam
+        });
+    } catch (error) {
+        console.error('Field update failed:', error);
+        res.status(500).json({ error: error.message });
+    }
+})
+
 module.exports = router;

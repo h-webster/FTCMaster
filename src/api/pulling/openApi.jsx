@@ -23,3 +23,24 @@ export const aiRequest = async (teamData) => {
     }
 }
 
+export const saveRequest = async (ai, teamNumber) => {
+    console.log("Saving ai insight to mongo..." + JSON.stringify(ai));
+    try {
+        const response = await fetch(`${API_BASE_URL}/teamcache/${teamNumber}/field`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ fieldName: "analysis", fieldValue: ai})
+        });
+
+        const data = await response.json();
+
+        console.log("Saved AI REQUEST!!");
+        return data;
+    } catch (error) {
+        console.error('Error doing save ai request: ', error);
+        throw error;
+    }
+}
+

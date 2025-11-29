@@ -9,7 +9,7 @@ const rateLimit = require('express-rate-limit');
 
 const openaiLimiter = rateLimit({
     windowMs: 60 * 60 * 1000, // 1 hour
-    max: 2,
+    max: 5,
     message: {error: 'Request limit reached. Try again in an hour.'}
 })
 

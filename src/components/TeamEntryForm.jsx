@@ -48,7 +48,7 @@ export default function TeamEntryForm() {
                 <h1>FTCMaster</h1>
                 <label htmlFor="team-name">Enter Team Number/Name:</label>
                 <div className='input-container'>
-                    <input type="text" id="team-name" name="team-name" onChange={inputChange} onFocus={() => setInputFocused(true)} onBlur={() => setInputFocused(false)} />
+                    <input type="text" id="team-name" name="team-name" autocomplete="off" onChange={inputChange} onFocus={() => setInputFocused(true)} onBlur={() => setInputFocused(false)} />
                     { inputFocused &&
                         <div className='search-results'>
                             { loadingTeamList || !searchResults ? (
