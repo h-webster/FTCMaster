@@ -11,7 +11,16 @@ export const Setup = (teamData, teamMap) => {
         ties: 0
     };
         
-    for (const event of teamData.events) {    
+    for (const event of teamData.events) {   
+        const dateStart = new Date(event.dateStart);
+        const now = new Date();
+
+        if (dateStart > now || event.matches.length == 0) {
+            // date hasnt passed yet so skip
+            event.done = false;
+            console.log(event);
+            continue;
+        }
         const qualMatches = event.matches.filter(match => 
             match.tournamentLevel == "QUALIFICATION" &&
             match.teams.some(team => team.teamNumber === teamData.info.number)
@@ -34,7 +43,6 @@ export const Setup = (teamData, teamMap) => {
             }
             // RP
             let scoreDetails = event.qualScores.find(qualScore => qualScore.matchNumber == qMatch.matchNumber);
-            console.log(scoreDetails);
             let blueAlliance = scoreDetails.alliances.find(alliance => alliance.alliance == "Blue") || null;
             let redAlliance = scoreDetails.alliances.find(alliance => alliance.alliance == "Red") || null;
 
