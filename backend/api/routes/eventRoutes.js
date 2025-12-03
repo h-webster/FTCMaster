@@ -12,7 +12,7 @@ router.use(databaseMiddleware);
 router.post('/allevents', async (req, res) => {
     try {
         const { events } = req.body;
-
+        console.log("All events: " + JSON.stringify(events[0]));
         if (!Array.isArray(events) || events.length == 0) {
             return res.status(400).json({ error: 'Events array is required' });
         }

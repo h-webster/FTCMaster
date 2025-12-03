@@ -26,19 +26,25 @@ export const useAdminEventExtraction = () => {
             console.log("Inserting team rankings into event rankings listings...");
             let i = -1;
 
-            for (const event of events) {
+            for (let event of events) {
                 i += 1;
                 console.log("EVENT: " + event.name);
-                // if event is done then skip
+                
+                //if event is done then skip
                 let mongoEvent = null;
                 if (i < mongoEventList.length) {
                     mongoEvent = mongoEventList[i];
                     console.log(mongoEvent);
                     if (mongoEvent.done) {
                         console.log("Already done so skip!");
+                        events[i] = JSON.parse(JSON.stringify(mongoEvent));
+                        console.log("Event: "+ JSON.stringify(event));
                         continue;
                     }
                 }
+                
+                
+                
                 event.done = false;
                 console.log(`Getting team listings for event: ${event.code}... ${i}/${events.length}`);
                 const eventListingsData = await getEventTeamListings(event.code);

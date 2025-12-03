@@ -7,10 +7,12 @@ import './Team.css';
 import Header from "./Header";
 import { saveTeam } from "../api/pulling/TeamCache";
 import TeamInfo from "./teamPage/TeamInfo";
+import { useTeamPulling } from "../api/pulling/TeamPull";
 export default function Team() {
     const { loading, setLoading, teamData, loadingExtras, setLoadingExtras} = useData();
     const { teamNumber } = useParams();
     const { teamExtraction } = useTeamGetting();
+    const { teamPull } = useTeamPulling();
 
     useEffect(() => {
         // Fetch team data based on team number
@@ -18,6 +20,11 @@ export default function Team() {
         setLoading(true);
         setLoadingExtras(true);
         teamExtraction(teamNumber);
+        for (let i = 0; i < 10; i++) {
+            console.log("======================")
+        }
+        teamPull(teamNumber);
+
     }, [teamNumber]);
 
     useEffect(() => {
