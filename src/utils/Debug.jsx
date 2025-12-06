@@ -5,9 +5,10 @@ export function Debug(msg) {
    }
 }
 
-export function Debug_Data(msg) {
+export function Debug_Data(msg, code) {
     let debugging = true;
     if (debugging) {
         console.log(msg);
+        console.log("Debug Code: " + code);
     }
 }

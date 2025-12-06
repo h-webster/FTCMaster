@@ -112,10 +112,10 @@ export const Setup = (teamData, teamMap) => {
                 team.name = teamMap.get(team.teamNumber);
             }
 
-            if (qMatch.alliance == "Red") {
-                totalPlayoffPoints += qMatch.scoreRedFinal;
+            if (pMatch.alliance == "Red") {
+                totalPlayoffPoints += pMatch.scoreRedFinal;
             } else {
-                totalPlayoffPoints += qMatch.scoreBlueFinal;
+                totalPlayoffPoints += pMatch.scoreBlueFinal;
             }
         } 
         totalQuals += qualMatches.length;

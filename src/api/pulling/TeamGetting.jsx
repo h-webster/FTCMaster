@@ -7,6 +7,7 @@ import { Setup } from "../SetupTeamData";
 import { getOPR } from "./OPR";
 
 export const useTeamGetting = () => {
+    /*
     const { teamList, setTeamList, teamData, setTeamData, teamMap, setTeamMap, setLoadingTeamList, setAiRequestStatus } = useData();
     const [teamNumber, setTeamNumber] = useState(0);
     const [teamCache, setTeamCache] = useState();
@@ -83,6 +84,7 @@ export const useTeamGetting = () => {
         console.log("aa");
     }, [teamNumber])
     useEffect(() => {
+        
         if (teamData == null) {
             console.log("LIST PULLLL");
             teamListPull();
@@ -114,4 +116,5 @@ export const useTeamGetting = () => {
         }
     }, [events])
     return { teamExtraction };
+    */
 }

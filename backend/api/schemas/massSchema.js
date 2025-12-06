@@ -16,7 +16,7 @@ const indexRankingSchema = new mongoose.Schema({
     ties: {type: Number, required: true },
     rankScore: {type: Number, required: true }, // sort order 1
     tieBreaker: {type: Number, required: true }, // sort order 2 (Tie breaker score)
-    npMax: {type: Number, required: true }, // sort order 4 (Non-penalty max score) i think
+    npMax: {type: Number, required: true }, // sort order 4 (Auto score) i think
     played: {type: Number, required: true }
 });
 

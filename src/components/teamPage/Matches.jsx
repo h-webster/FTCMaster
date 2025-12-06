@@ -32,7 +32,7 @@ export default function Matches() {
                         </h3>
                         { e.done &&
                             <>
-                                <h3 className='event-small'><FontAwesomeIcon icon={faRankingStar} /> Qualification Position: {teamRank?.rank || 'N/A'}/{e.rankings.length}</h3>
+                                <h3 className='event-small'><FontAwesomeIcon icon={faRankingStar} /> League Relevant Position: {teamRank?.rank || 'N/A'}/{e.rankings.length}</h3>
                                 <h3 className="event-small"><FontAwesomeIcon icon={faTrophy} /> Ranking Score (RS): { e.rp ? Number(e.rp).toFixed(2) : 'N/A'}</h3>
                             </>
                         }
