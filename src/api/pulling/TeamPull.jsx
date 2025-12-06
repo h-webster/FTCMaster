@@ -1,8 +1,11 @@
 import { Debug, Debug_Data } from "../../utils/Debug"
 import { getEventsByTeamNumber } from "./Events";
+import { getOPR } from "./OPR";
+import { getTeamList } from "./TeamList";
 
 export const useTeamPulling = () => {
     let team = {};
+    let teamMap = null;
     const teamPull = async (teamNumber) => {
         team = {
 
@@ -14,10 +17,14 @@ export const useTeamPulling = () => {
                 ties: 0,
                 avgRP: 0,
             },
-            events: []
+            events: [],
+            opr: {}
         };
-        Debug("Starting team pull...");   
+        Debug("Starting team pull...");  
+        const teamList = await pullTeamList(); 
+        teamMap = new Map(teamList.map(team => [team.number, team.name]));
         await pullEvents();
+        await pullOpr();
         Debug_Data(team, "FINAL_TEAM_PULL_001");
         return team;
     }
@@ -29,7 +36,7 @@ export const useTeamPulling = () => {
         }
         console.log("");
         const eventData = await getEventsByTeamNumber(team.number);
-        Debug_Data("Event Data: " + JSON.stringify(eventData), "TEAM_PULL_002");
+        //Debug_Data("Event Data: " + JSON.stringify(eventData), "TEAM_PULL_002");
         
         let totalQualPoints = 0;
         let totalPlayoffPoints = 0;
@@ -76,7 +83,8 @@ export const useTeamPulling = () => {
                 }
                 let alliance = "";
                 let found = false;
-                for (let matchTeam of match.teams) {
+                for (let matchTeam of matchPerformance.teams) {
+                    matchTeam.name = teamMap.get(matchTeam.teamNumber); 
                     if (matchTeam.teamNumber == team.number) {
                         found = true;
                         if (matchTeam.station == "Red1" || matchTeam.station == "Red2" || matchTeam.station == "Red3") {
@@ -185,7 +193,23 @@ export const useTeamPulling = () => {
         }
     }
     const pullOpr = async () => {
-        
+        Debug("Pulling OPR...");
+        if (!('number' in team)) {
+            console.warn("No number exists in team!");
+            return null;
+        }
+
+        const oprData = await getOPR(team.number);
+        if (oprData != null && 'tot' in oprData){
+            team.opr = oprData;
+        } else {
+            team.opr = {};
+        }
+    }
+    const pullTeamList = async () => {
+        Debug("Pulling team list...");
+        const data = await getTeamList();
+        return data;
     }
 
     return {teamPull};

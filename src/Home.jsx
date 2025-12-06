@@ -9,7 +9,6 @@ export default function Home() {
     const navigate = useNavigate();
 
     
-    const { teamExtraction } = useTeamGetting();
     useEffect(() => {
         if (loadingStatus.includes("Loading team") && loading) {
             const match = loadingStatus.match(/\d+/);
