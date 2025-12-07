@@ -8,7 +8,7 @@ export const useTeamPulling = () => {
     let teamMap = null;
     const teamPull = async (teamNumber) => {
         team = {
-
+            name: "",
             number: teamNumber,
             points: [],
             performance: {
@@ -23,8 +23,11 @@ export const useTeamPulling = () => {
         Debug("Starting team pull...");  
         const teamList = await pullTeamList(); 
         teamMap = new Map(teamList.map(team => [team.number, team.name]));
+        team.name = teamMap.get(Number(teamNumber));
+
         await pullEvents();
         await pullOpr();
+        await pullAI();
         Debug_Data(team, "FINAL_TEAM_PULL_001");
         return team;
     }
@@ -49,6 +52,7 @@ export const useTeamPulling = () => {
                 dateStart: event.dateStart,
                 dateEnd: event.dateEnd,
                 name: event.name,
+                done: event.done,
                 code: event.code,
                 wins: 0,
                 losses: 0,
@@ -56,7 +60,9 @@ export const useTeamPulling = () => {
                 rank: 0,
                 matches: [],
                 quals: [],
+                qualScores: [],
                 playoffs: [],
+                playoffScores: [],
                 rp: 0
             };
 
@@ -151,7 +157,9 @@ export const useTeamPulling = () => {
                     matchPerformance.blueRP = blueRP;
                     matchPerformance.redRP = redRP;
                     eventPerformance.rp += (alliance == "Red") ? redRP : blueRP;
+                    eventPerformance.totTeams = event.rankings.length;
                     eventPerformance.quals.push(matchPerformance);
+                    eventPerformance.qualScores.push(scoreDetails);
                 } else if (match.tournamentLevel == "PLAYOFF") {
                     totalPlayoffs++;
                     let scoreDetails = event.qualScores.find(qualScore => qualScore.matchNumber == match.matchNumber);
@@ -169,6 +177,7 @@ export const useTeamPulling = () => {
                     }
 
                     eventPerformance.playoffs.push(matchPerformance);
+                    eventPerformance.playoffScores.push(scoreDetails);
                 } else {
                     console.warn("Unknown tournament level: " + match.tournamentLevel);
                 }
@@ -181,7 +190,7 @@ export const useTeamPulling = () => {
             if (eventPerformance.rp > 0) {
                 eventPerformance.rp = eventPerformance.rp / (eventPerformance.quals.length);
             }
-            if (team.length > 0) {
+            if (team.events.length > 0) {
                 team.pointAveragePlayoff = Math.round((totalPlayoffPoints / totalPlayoffs)*10)/10;
                 team.pointAverage = Math.round((totalQualPoints / totalQuals)*10)/10;
             }
@@ -209,7 +218,17 @@ export const useTeamPulling = () => {
     const pullTeamList = async () => {
         Debug("Pulling team list...");
         const data = await getTeamList();
+        for (const listTeam of data) {
+            if (listTeam.number == team.number) {
+                team.info = listTeam;
+            }
+        }
+        Debug_Data(data, "TEAMLISTULKL");
         return data;
+    }
+    const pullAI = async () => {
+        Debug("Pulling ai...")
+        asdan sdasndjasnd
     }
 
     return {teamPull};

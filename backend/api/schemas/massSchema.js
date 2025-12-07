@@ -115,16 +115,29 @@ const indexOPRSchema = new mongoose.Schema({
     count: {type: Number }
 });
 
+const indexAISchema = new mongoose.Schema({
+    number: {type: Number, required: true, unique: true},
+    analysis: {
+        score: {type: String},
+        strengths: {type: [String]},
+        weaknesses: {type: [String]},
+        summary: {type: String}
+    }
+});
+
 
 const IndexTeam = mongoose.model('AllTeams', indexTeamSchema);
 const IndexEvent = mongoose.model('AllEvents', indexEventSchema);
 const IndexOPR = mongoose.model('AllOPRs', indexOPRSchema);
+const IndexAI = mongoose.model('AllAIs', indexAISchema); 
 
 module.exports = {
     IndexTeam,
     IndexEvent,
     IndexOPR,
+    IndexAI,
     indexEventSchema,
     indexTeamSchema,
-    indexOPRSchema
+    indexOPRSchema,
+    indexAISchema
 };

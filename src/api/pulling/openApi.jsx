@@ -26,12 +26,12 @@ export const aiRequest = async (teamData) => {
 export const saveRequest = async (ai, teamNumber) => {
     console.log("Saving ai insight to mongo..." + JSON.stringify(ai));
     try {
-        const response = await fetch(`${API_BASE_URL}/teamcache/${teamNumber}/field`, {
-            method: 'PATCH',
+        const response = await fetch(`${API_BASE_URL}/ai`, {
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ fieldName: "analysis", fieldValue: ai})
+            body: JSON.stringify({ number: teamNumber, analyis: ai})
         });
 
         const data = await response.json();
@@ -44,3 +44,14 @@ export const saveRequest = async (ai, teamNumber) => {
     }
 }
 
+export const getAI = async (teamNumber) => {
+    try {
+        const response = await fetch(`${API_BASE_URL}/ai/${teamNumber}`);
+        const data = await response.json();
+        console.log("GOT AI REQUEST");
+        return data;
+    } catch (error) {
+        console.error('Error getting ai request: ', error);
+        throw error;
+    }
+}
