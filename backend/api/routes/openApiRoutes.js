@@ -89,11 +89,16 @@ Consider: win/loss ratio, point consistency, auto vs teleop performance, tournam
 })
 
 // Service function
-const upsertTeamInsight = async (number, analysis) => {
+const upsertTeamInsight = async (number, analysis, eventsDone) => {
     try {
         const insight = await IndexAI.findOneAndUpdate(
             { number },
-            { analysis },
+            { 
+                $set: {
+                    analysis,
+                    eventsDone
+                }
+            },
             { 
                 upsert: true,      // Create if doesn't exist
                 new: true,         // Return updated document
@@ -108,8 +113,8 @@ const upsertTeamInsight = async (number, analysis) => {
 
 router.post('/ai', async (req, res) => {
     try {
-        const { number, analysis } = req.body;
-        const insight = await upsertTeamInsight(number, analysis);
+        const { number, analysis, eventsDone } = req.body;
+        const insight = await upsertTeamInsight(number, analysis, eventsDone);
         res.json(insight);
     } catch (error) {
         res.status(500).json({ error: error.message });
@@ -118,6 +123,7 @@ router.post('/ai', async (req, res) => {
 
 router.get('/ai/:number', async (req, res) => {
     try {
+        let number = req.params.number;
         const insight = await IndexAI.findOne({number});
         res.json(insight);
     } catch (error) {

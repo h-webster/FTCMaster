@@ -23,7 +23,7 @@ export const aiRequest = async (teamData) => {
     }
 }
 
-export const saveRequest = async (ai, teamNumber) => {
+export const saveRequest = async (ai, teamNumber, done) => {
     console.log("Saving ai insight to mongo..." + JSON.stringify(ai));
     try {
         const response = await fetch(`${API_BASE_URL}/ai`, {
@@ -31,7 +31,7 @@ export const saveRequest = async (ai, teamNumber) => {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ number: teamNumber, analyis: ai})
+            body: JSON.stringify({ number: teamNumber, eventsDone: done, analysis: ai.analyis})
         });
 
         const data = await response.json();

@@ -31,6 +31,11 @@ export default function Team() {
                 setTeamData(newTeamData);
             }
         }
+        if (teamData && 'number' in teamData && teamNumber != teamData.number) {
+            hasFetched.current = false;
+        }
+        if (teamData == null || !('number' in teamData) || teamNumber != teamData.number){
+        }
         fetchTeamData();
     }, [teamNumber]);
 

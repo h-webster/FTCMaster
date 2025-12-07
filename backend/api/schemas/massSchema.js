@@ -117,6 +117,7 @@ const indexOPRSchema = new mongoose.Schema({
 
 const indexAISchema = new mongoose.Schema({
     number: {type: Number, required: true, unique: true},
+    eventsDone: {type: Number },
     analysis: {
         score: {type: String},
         strengths: {type: [String]},

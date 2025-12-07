@@ -1,5 +1,6 @@
 import { Debug, Debug_Data } from "../../utils/Debug"
 import { getEventsByTeamNumber } from "./Events";
+import { getAI } from "./openApi";
 import { getOPR } from "./OPR";
 import { getTeamList } from "./TeamList";
 
@@ -17,6 +18,7 @@ export const useTeamPulling = () => {
                 ties: 0,
                 avgRP: 0,
             },
+            eventsDone: 0,
             events: [],
             opr: {}
         };
@@ -65,6 +67,9 @@ export const useTeamPulling = () => {
                 playoffScores: [],
                 rp: 0
             };
+            if (event.done) {
+                team.eventsDone++;
+            }
 
             if (event.matches.length == 0) {
                 eventPerformance.unfinished = true;
@@ -153,7 +158,7 @@ export const useTeamPulling = () => {
                         blueRP++;
                         redRP++;
                     }
-
+                    matchPerformance.alliance = alliance;
                     matchPerformance.blueRP = blueRP;
                     matchPerformance.redRP = redRP;
                     eventPerformance.rp += (alliance == "Red") ? redRP : blueRP;
@@ -227,8 +232,14 @@ export const useTeamPulling = () => {
         return data;
     }
     const pullAI = async () => {
-        Debug("Pulling ai...")
-        asdan sdasndjasnd
+        Debug("Pulling ai...");
+        const aiData = await getAI(team.number);
+        if (aiData == null || aiData.eventsDone < team.eventsDone) {
+            // no/outdated ai data
+            team.analysis = null;
+        } else {
+        }
+        Debug_Data(aiData, "Pull_AI_DATA");
     }
 
     return {teamPull};
