@@ -4,30 +4,17 @@ import './aiInsight.css';
 import { useParams } from "react-router-dom";
 import { saveRequest } from "../../api/pulling/openApi";
 import { useExtraGetting } from "../../api/pulling/ExtraGetting";
+import { Debug_Data } from "../../utils/Debug";
 export default function AIInsight() {
     const { loadingExtras, aiRequestStatus, setAiRequestStatus, teamData, error, setError } = useData();
     const { extraDataExtraction } = useExtraGetting();
     const { teamNumber } = useParams();
+
     useEffect(() => {
-        setError(null);
-        if (aiRequestStatus != null && 'number' in aiRequestStatus) {
-            if (aiRequestStatus.number != teamNumber) {
-                setAiRequestStatus(null);
-            }
-        } else {
-            setAiRequestStatus(null);
+        if ((aiRequestStatus != null) && 'data' in aiRequestStatus && aiRequestStatus.number == teamNumber && !aiRequestStatus.loading) { 
+            saveRequest(aiRequestStatus.data, aiRequestStatus.number, teamData.eventsDone);
         }
-    }, []);
-    useEffect(() => {
-        if (aiRequestStatus != null) {
-            if ('loading' in aiRequestStatus && !('preloaded' in aiRequestStatus)) {
-                if (!aiRequestStatus.loading) {
-                    saveRequest(aiRequestStatus.data.analysis, teamData.number);    
-                }
-            }
-        }
-        console.log(aiRequestStatus);
-    }, [aiRequestStatus]);
+    }, [aiRequestStatus]) 
 
     const generateAiInsight = () => {
         setAiRequestStatus({
@@ -42,7 +29,7 @@ export default function AIInsight() {
         if (numScore >= 6) return '#ff9800'; // Orange
         return '#f44336'; // Red
     };
-
+    console.log(aiRequestStatus);
     return (
         <div className='ai-insight'>
             { teamData.events.length == 0 ? (

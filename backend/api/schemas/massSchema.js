@@ -16,7 +16,7 @@ const indexRankingSchema = new mongoose.Schema({
     ties: {type: Number, required: true },
     rankScore: {type: Number, required: true }, // sort order 1
     tieBreaker: {type: Number, required: true }, // sort order 2 (Tie breaker score)
-    npMax: {type: Number, required: true }, // sort order 4 (Non-penalty max score) i think
+    npMax: {type: Number, required: true }, // sort order 4 (Auto score) i think
     played: {type: Number, required: true }
 });
 
@@ -115,16 +115,30 @@ const indexOPRSchema = new mongoose.Schema({
     count: {type: Number }
 });
 
+const indexAISchema = new mongoose.Schema({
+    number: {type: Number, required: true, unique: true},
+    eventsDone: {type: Number },
+    analysis: {
+        score: {type: String},
+        strengths: {type: [String]},
+        weaknesses: {type: [String]},
+        summary: {type: String}
+    }
+});
+
 
 const IndexTeam = mongoose.model('AllTeams', indexTeamSchema);
 const IndexEvent = mongoose.model('AllEvents', indexEventSchema);
 const IndexOPR = mongoose.model('AllOPRs', indexOPRSchema);
+const IndexAI = mongoose.model('AllAIs', indexAISchema); 
 
 module.exports = {
     IndexTeam,
     IndexEvent,
     IndexOPR,
+    IndexAI,
     indexEventSchema,
     indexTeamSchema,
-    indexOPRSchema
+    indexOPRSchema,
+    indexAISchema
 };

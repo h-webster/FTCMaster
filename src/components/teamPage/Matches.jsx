@@ -15,7 +15,7 @@ export default function Matches() {
             .sort((a, b) => new Date(b.dateStart) - new Date(a.dateStart))
             .map((e, idx) => {
 
-                const teamRank = e.rankings.find(team => team.number == teamData.number);
+                const teamRank = e.rank;
                 return (
                     <div className="event" key={idx}>
                         <h2 className='event-title'>{e.name}</h2>
@@ -32,11 +32,11 @@ export default function Matches() {
                         </h3>
                         { e.done &&
                             <>
-                                <h3 className='event-small'><FontAwesomeIcon icon={faRankingStar} /> Qualification Position: {teamRank?.rank || 'N/A'}/{e.rankings.length}</h3>
+                                <h3 className='event-small'><FontAwesomeIcon icon={faRankingStar} /> League Relevant Position: {teamRank || 'N/A'}/{e.totTeams}</h3>
                                 <h3 className="event-small"><FontAwesomeIcon icon={faTrophy} /> Ranking Score (RS): { e.rp ? Number(e.rp).toFixed(2) : 'N/A'}</h3>
                             </>
                         }
-                        { e.qualMatches.length > 0 && 
+                        { e.quals.length > 0 && 
                             <h4 className='match-key'><FontAwesomeIcon icon={faCircle} className='match-key-icon' style={{color: '#ff1f1fff'}} />- Ranking Point</h4>
                         }
                         <table className='matches-table'>
@@ -49,18 +49,18 @@ export default function Matches() {
                                 </tr>
                             </thead>
                             <tbody>
-                                {(e.qualMatches && e.qualMatches.length > 0) &&
+                                {(e.quals && e.quals.length > 0) &&
                                     <>
                                         <tr><td colSpan={4} className="quals-display">Qualifications</td></tr>
-                                        {e.qualMatches.map((m, jdx) => (
+                                        {e.quals.map((m, jdx) => (
                                             <Match key={jdx} m={m} event={e} teamData={teamData} nav={navigate} type="qualification" />
                                         ))}
                                     </>
                                 }
-                                {(e.playoffMatches && e.playoffMatches.length > 0) &&
+                                {(e.playoffs && e.playoffs.length > 0) &&
                                     <>
                                         <tr><td colSpan={4} className="quals-display">Playoffs</td></tr>
-                                        {e.playoffMatches.map((m, jdx) => (
+                                        {e.playoffs.map((m, jdx) => (
                                             <Match key={jdx} m={m} event={e} teamData={teamData} nav={navigate} type="playoff" />
                                         ))}
                                     </>
@@ -79,13 +79,20 @@ const openTeam = (teamNumber, nav) => {
 }
 
 const Match = ({m, teamData, event, nav, type}) => {
-    let scoreDetails = event.qualScores.find(qualScore => qualScore.matchNumber == m.matchNumber);
-    let blueAlliance = scoreDetails.alliances.find(alliance => alliance.alliance == "Blue") || null;
-    let redAlliance = scoreDetails.alliances.find(alliance => alliance.alliance == "Red") || null;
-
+    let scoreDetails;
+    let matchNum;
+    if (type == "playoff") {
+        scoreDetails = event.playoffScores.find(playoffScore => playoffScore.matchSeries == m.series);
+        matchNum = "M-"+m.series;
+    } else if (type == "qualification") {
+        scoreDetails = event.qualScores.find(qualScore => qualScore.matchNumber == m.matchNumber);
+        matchNum = "Q-"+m.matchNumber;
+    } else {
+        console.warn("unknown tournament level type");
+    }
     return (
         <tr>
-            <td>{m.matchNumber}</td>
+            <td>{matchNum}</td>
             <td>
                 <div className="score">
                     <div className="redScore">
@@ -120,17 +127,17 @@ const Match = ({m, teamData, event, nav, type}) => {
                 <div className="teamShow">
                     {m.teams.filter(team => team.station.startsWith("Red")).map((team, kdx) => {
                         const isCurrentTeam = team.teamNumber == teamData.number;
-                        const fontWeight = isCurrentTeam ? 'bold' : 'normal';
+                        const textDecoration = isCurrentTeam ? 'underline' : 'none';
                         return (
                             <button onClick={() => openTeam(team.teamNumber, nav)} key={kdx} className='team'>
-                                <p className="teamNumber" style={{ fontWeight }}>
+                                <p className="teamNumber" style={{ textDecoration }}>
                                     {team.teamNumber}
                                 </p>
-                                <p className="teamName" style={{ fontWeight }}>
+                                <p className="teamName" style={{ textDecoration }}>
                                     {team.name}
                                 </p>
                             </button>
-                        );
+                        ); 
                     })}   
                 </div> 
             </td>
@@ -138,17 +145,17 @@ const Match = ({m, teamData, event, nav, type}) => {
                 <div className="teamShow">
                     {m.teams.filter(team => team.station.startsWith("Blue")).map((team, kdx) => {
                         const isCurrentTeam = team.teamNumber == teamData.number;
-                        const fontWeight = isCurrentTeam ? 'bold' : 'normal';
+                        const textDecoration = isCurrentTeam ? 'underline' : 'none';
                         return (
                             <button onClick={() => openTeam(team.teamNumber, nav)} key={kdx} className='team'>
-                                <p className="teamNumber" style={{ fontWeight }}>
+                                <p className="teamNumber" style={{ textDecoration }}>
                                     {team.teamNumber}
                                 </p>
-                                <p className="teamName" style={{ fontWeight }}>
+                                <p className="teamName" style={{ textDecoration }}>
                                     {team.name}
                                 </p>
                             </button>
-                        );
+                        ); 
                     })}
                 </div>
             </td>
