@@ -15,12 +15,20 @@ export default function TeamInfo() {
                     <h1>Team #{teamData.number} - {teamData.info.name}</h1> 
                 }
             </div>
-            <div className="dashboard-content">
-                <SimpleStats/>
-                <AIInsight/>
-                <TeamCharts/>
-                <Matches/>
-            </div>
+            {teamData.events.length > 0 ? (
+                <div className="dashboard-content">
+                    <SimpleStats/>
+                    <AIInsight/>
+                    <TeamCharts/>
+                    <Matches/>
+                </div>
+            ) : (
+                <div className="dashboard-content">
+                    <SimpleStats/>
+                    <h2>This team has played no events</h2>
+                </div>
+            )}
+                
         </div>
     );
 }

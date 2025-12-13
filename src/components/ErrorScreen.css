@@ -1,0 +1,12 @@
+.error-menu {
+    background-color: #db5853;
+    width: 40%;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+body {
+    margin: 0;
+}

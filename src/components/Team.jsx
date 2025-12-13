@@ -9,6 +9,7 @@ import { saveTeam } from "../api/pulling/TeamCache";
 import TeamInfo from "./teamPage/TeamInfo";
 import { useTeamPulling } from "../api/pulling/TeamPull";
 import { Debug, Debug_Data } from "../utils/Debug";
+import {ErrorScreen} from "./ErrorScreen";
 export default function Team() {
     const { loading, setLoading, teamData, loadingExtras, setLoadingExtras, setTeamData } = useData();
     const { teamNumber } = useParams();
@@ -49,6 +50,15 @@ export default function Team() {
         return <LoadingScreen/>;
     }
     else if (teamData != null) {
+        if (!('name' in teamData) || teamData.name == undefined) {
+            return (
+                <div className="team-screen">
+                    <Header/>
+                    <ErrorScreen msg="Unknown team number." />
+                </div>
+            );
+        }
+        
         return (
             <div className="team-screen">
                 <Header/>
