@@ -2,10 +2,8 @@ const API_BASE_URL = 'https://ftcmasterbackend.vercel.app/api';
 
 export default async function handler(req, res) {
   // Verify the request is from Vercel Cron
-  const isVercelCron = req.headers['x-vercel-cron'];
-  const providedSecret = req.query.secret;
-  
-  if (!isVercelCron || providedSecret !== process.env.CRON_SECRET) {
+  const authHeader = req.headers.authorization;
+  if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
     return res.status(401).json({ error: 'Unauthorized' });
   } 
  // UNCOMMENT THIS SIUNDAJSDBJASDBJASHDBASJHDBASJDBASDJHABSDJASBD

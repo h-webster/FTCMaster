@@ -7,7 +7,7 @@
   ],
   
   "crons": [{
-    "path": "/api/mass-event-extraction?secret=f3dac2a8-3acb-4383-8b4c-a665f7102e7d",
+    "path": "/api/mass-event-extraction",
     "schedule": "0 2 * * *"
  }]
 }
