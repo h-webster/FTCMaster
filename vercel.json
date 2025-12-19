@@ -7,7 +7,7 @@
   ],
   
   "crons": [{
-    "path": "/api/mass-event-extraction",
+    "path": "/api/cron-events-1",
     "schedule": "0 2 * * *"
  }]
 }

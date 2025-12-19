@@ -1,3 +1,4 @@
+
 const express = require('express');
 const { insertEvents } = require('../utils/batchInsert');
 const { IndexEvent } = require('../schemas/massSchema');
