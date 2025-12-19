@@ -45,6 +45,7 @@ async function processEventRange(startIndex, endIndex) {
   const INSERT_BATCH = 10;
   for (let i = 0; i < processedEvents.length; i += INSERT_BATCH) {
     const batch = processedEvents.slice(i, i + INSERT_BATCH);
+    console.log("Batch " + i);
     await upsertEvents(batch);
   }
   
