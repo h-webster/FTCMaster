@@ -9,56 +9,65 @@ const router = express.Router();
 // Use shared database middleware
 router.use(databaseMiddleware);
 router.post('/allevents', async (req, res) => {
-    try {
-        const { events } = req.body;
-        console.log(`Processing ${events.length} events`);
-        
-        if (!Array.isArray(events) || events.length == 0) {
-            return res.status(400).json({ error: 'Events array is required' });
-        }
+  try {
+    const { events } = req.body;
+    console.log(`Processing ${events.length} events`);
 
-        // Validate events have code field
-        const invalidEvents = events.filter(e => !e.code);
-        if (invalidEvents.length > 0) {
-            console.error('Events missing code field:', invalidEvents.length);
-            return res.status(400).json({ 
-                error: 'All events must have a code field',
-                invalidCount: invalidEvents.length 
-            });
-        }
-
-        // Use bulkWrite for efficient upserts
-        const bulkOps = events.map(event => ({
-            updateOne: {
-                filter: { code: event.code }, // Match by event code
-                update: { $set: event },       // Update all fields
-                upsert: true                   // Insert if doesn't exist
-            }
-        }));
-
-        const result = await IndexEvent.bulkWrite(bulkOps, { ordered: false });
-
-        console.log(`Upsert complete: ${result.upsertedCount} new, ${result.modifiedCount} updated`);
-
-        res.json({
-            message: 'Events updated successfully',
-            count: events.length,
-            upserted: result.upsertedCount,
-            modified: result.modifiedCount,
-            matched: result.matchedCount
-        });
-    } catch (error) {
-        console.error('All event save failed:', error);
-        console.error('Error details:', error.message);
-        console.error('Error stack:', error.stack);
-        res.status(500).json({ 
-            message: 'Database operation failed', 
-            error: error.message,
-            details: error.writeErrors ? error.writeErrors.map(e => e.errmsg) : null
-        });
+    if (!Array.isArray(events) || events.length === 0) {
+      return res.status(400).json({ error: 'Events array is required' });
     }
-});
 
+    // Validate events have code field
+    const invalidEvents = events.filter(e => !e.code);
+    if (invalidEvents.length > 0) {
+      console.error('Events missing code field:', invalidEvents.length);
+      return res.status(400).json({
+        error: 'All events must have a code field',
+        invalidCount: invalidEvents.length
+      });
+    }
+
+    let upsertedCount = 0;
+    let modifiedCount = 0;
+    const failedEvents = [];
+
+    // Upsert one event at a time
+    for (const event of events) {
+      try {
+        const result = await IndexEvent.updateOne(
+          { code: event.code },
+          { $set: event },
+          { upsert: true }
+        );
+
+        if (result.upsertedCount > 0) upsertedCount++;
+        if (result.modifiedCount > 0) modifiedCount++;
+      } catch (err) {
+        console.error(`Failed to upsert event ${event.code}:`, err.message);
+        failedEvents.push({ code: event.code, error: err.message });
+      }
+    }
+
+    console.log(`Upsert complete: ${upsertedCount} new, ${modifiedCount} updated`);
+    if (failedEvents.length > 0) {
+      console.warn(`${failedEvents.length} events failed to upsert`);
+    }
+
+    res.json({
+      message: 'Events processed',
+      count: events.length,
+      upserted: upsertedCount,
+      modified: modifiedCount,
+      failed: failedEvents
+    });
+  } catch (error) {
+    console.error('All event save failed:', error);
+    res.status(500).json({
+      message: 'Database operation failed',
+      error: error.message
+    });
+  }
+});
 // DELETE
 router.delete('/allevents', async (req, res) => {
     try {
