@@ -46,6 +46,7 @@ async function processEventRange(startIndex, endIndex) {
   for (let i = 0; i < processedEvents.length; i += INSERT_BATCH) {
     const batch = processedEvents.slice(i, i + INSERT_BATCH);
     console.log("Batch " + i);
+    
     await upsertEvents(batch);
   }
   
@@ -178,9 +179,18 @@ async function upsertEvents(events) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ events }),
   });
-  if (!response.ok) throw new Error(`Failed to upsert: ${response.status}`);
+
+  if (!response.ok) {
+    const text = await response.text();
+    console.error("Upsert failed payload size:",
+      Buffer.byteLength(JSON.stringify(events)) / 1024 / 1024, "MB"
+    );
+    throw new Error(`Failed to upsert: ${response.status} - ${text}`);
+  }
+
   return await response.json();
 }
+
 
 
 // ==========================================
