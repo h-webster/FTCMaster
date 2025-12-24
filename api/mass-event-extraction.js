@@ -2,10 +2,8 @@ const API_BASE_URL = 'https://ftcmasterbackend.vercel.app/api';
 
 export default async function handler(req, res) {
   // Verify the request is from Vercel Cron
-  const isVercelCron = req.headers['x-vercel-cron'];
-  const providedSecret = req.query.secret;
-  
-  if (!isVercelCron || providedSecret !== process.env.CRON_SECRET) {
+  const authHeader = req.headers.authorization;
+  if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
     return res.status(401).json({ error: 'Unauthorized' });
   } 
  // UNCOMMENT THIS SIUNDAJSDBJASDBJASHDBASJHDBASJDBASDJHABSDJASBD
@@ -158,10 +156,19 @@ async function cronEventExtraction() {
     console.log("Clearing event list...");
     await clearAllEvents();
     console.log("Done clearing all events!");
+    console.log("Inserting events into database in batches...");
+    const BATCH_SIZE = 10; // Adjust this if needed
+    let totalInserted = 0;
     
-    console.log("Inserting events into database...");
-    await insertEvents(events);
-    console.log("Done inserting events into database!");
+    for (let i = 0; i < events.length; i += BATCH_SIZE) {
+      const batch = events.slice(i, i + BATCH_SIZE);
+      console.log(`Inserting batch ${Math.floor(i / BATCH_SIZE) + 1}/${Math.ceil(events.length / BATCH_SIZE)} (${batch.length} events)...`);
+      await insertEvents(batch);
+      totalInserted += batch.length;
+      console.log(`Inserted ${totalInserted}/${events.length} events so far...`);
+    }
+    
+    console.log("Done inserting all events into database!"); 
     
     return {
       success: true,

@@ -83,7 +83,7 @@ const indexMatchesSchema = new mongoose.Schema({
 
 const indexEventSchema = new mongoose.Schema({
     name: {type: String},
-    code: {type: String},
+    code: {type: String, unique: true, index: true},
     done: {type: Boolean, default: false},
     typeName: {type: String,  default: 'Unknown' },
     dateStart: {type: String,  default: 'Unknown' },
