@@ -1,6 +1,6 @@
 import Header from "./Header";
 import './About.css';
-
+import { Analytics } from "@vercel/analytics/react";
 export default function About() {
   return (
     <div className="about-screen">

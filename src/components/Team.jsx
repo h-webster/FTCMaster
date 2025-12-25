@@ -10,6 +10,7 @@ import TeamInfo from "./teamPage/TeamInfo";
 import { useTeamPulling } from "../api/pulling/TeamPull";
 import { Debug, Debug_Data } from "../utils/Debug";
 import {ErrorScreen} from "./ErrorScreen";
+import { Analytics } from "@vercel/analytics/react";
 export default function Team() {
     const { loading, setLoading, teamData, loadingExtras, setLoadingExtras, setTeamData } = useData();
     const { teamNumber } = useParams();
