@@ -4,6 +4,7 @@ import LoadingScreen from './components/LoadingScreen';
 import TeamEntryForm from './components/TeamEntryForm';
 import { useTeamGetting } from './api/pulling/TeamGetting';
 import { useNavigate } from 'react-router-dom';
+import { Analytics } from "@vercel/analytics/react";
 import { faL } from '@fortawesome/free-solid-svg-icons';
 export default function Home() {
     const { loading, loadingStatus, teamData, setTeamData } = useData();
@@ -34,6 +35,7 @@ export default function Home() {
     return (
         <div>
             <TeamEntryForm />
+            <Analytics/>
         </div>
     );
 }

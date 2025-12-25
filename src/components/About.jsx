@@ -31,6 +31,7 @@ export default function About() {
         <h3><u>Help me!</u></h3>
         <p>I'm a grade 12 student and am obviously not a perfect seasoned developer and FTCMaster may have its issues and is constantly growing. If you would like to support the development of FTCMaster, please consider contributing to the project on <a href="https://github.com/h-Webster/FTC-Master" target="_blank">GitHub</a> or providing feedback on your experience using the tool.</p>
       </div>
+      <Analytics/>
     </div>
   );
 }

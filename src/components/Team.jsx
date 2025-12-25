@@ -63,6 +63,7 @@ export default function Team() {
             <div className="team-screen">
                 <Header/>
                 <TeamInfo/>
+                <Analytics/>
             </div>
         );
     }
