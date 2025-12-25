@@ -1,5 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght@6..144,1..1000&display=swap');
 .loading-screen {
-    background-color: rgb(220, 220, 220);
+    background-color: rgb(255, 255, 255);
     width: 100vw;
     height: 100vh;
     position: fixed;
@@ -10,10 +11,12 @@
     gap: 0;
     top: 0;
     left: 0;
-    font-size: 75px;
+    font-size: 45px;
     color: black;
 }
-
+.alt {
+    font-family: "Google Sans Flex", sans-serif;
+}
 .loading-screen * {
     margin: 0;
 }
