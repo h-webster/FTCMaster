@@ -1,4 +1,4 @@
-import handler from "./api/event-extract.js"; // adjust path
+import handler from "./api/opr-extract.js"; // adjust path
 
 // mock req/res objects
 const req = {};

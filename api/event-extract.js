@@ -10,7 +10,6 @@ let MAX_PERCENT = 10;
 
 export default async function handler(req, res) {
   try {
-    // random chance gate (optional)
     console.log("Getting all events from mongodb...");
     let mongoEventList = await makeRequest("eventlist");
     console.log("Got events from mongo!");
