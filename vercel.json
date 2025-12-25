@@ -5,15 +5,8 @@
       "destination": "/"
     }
   ],
-  
-  "crons": [
-    {
-      "path": "/api/event-extract",
-      "schedule": "0 * * * *"
-    },
-    {
-      "path": "/api/opr-extract",
-      "schedule": "5 * * * *"
-    }
- ]
+  "crons": [{
+    "path": "/api/event-extract",
+    "schedule": "0 2 * * *"
+ }]
 }
