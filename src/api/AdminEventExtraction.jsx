@@ -28,6 +28,7 @@ export const useAdminEventExtraction = () => {
 
             for (let event of events) {
                 i += 1;
+                
                 console.log("EVENT: " + event.name);
                 
                 //if event is done then skip
