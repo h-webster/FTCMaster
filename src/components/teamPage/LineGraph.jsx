@@ -8,13 +8,15 @@ export const PointsGraph = ({data}) => {
         matchNumber: index + 1,
         points: points
     }));
+    const chartDataWithFit = getBestFitLine(chartData);
+  
   return (
     <div className="outer-line-graph">
       <h2 className="line-graph-title">Points Over Time</h2>
       <div className='line-graph'>
         <ResponsiveContainer width="100%" height={200}>
           <LineChart
-            data={chartData}
+            data={chartDataWithFit}
             margin={{
               top: 20,
               right: 30,
@@ -49,9 +51,37 @@ export const PointsGraph = ({data}) => {
               dot={{ fill: '#8884d8', strokeWidth: 2, r: 4 }}
               activeDot={{ r: 6 }}
             />
+            <Line
+              type="linear"
+              dataKey="bestFit"
+              stroke="#ff7300"
+              strokeWidth={2}
+              dot={false}
+              tooltipType="none"
+            />
           </LineChart>
         </ResponsiveContainer>
       </div>
     </div>
   );
+};
+
+const getBestFitLine = (data) => {
+  const n = data.length;
+  let sumX = 0, sumY = 0, sumXY = 0, sumXX = 0;
+
+  data.forEach(d => {
+    sumX += d.matchNumber;
+    sumY += d.points;
+    sumXY += d.matchNumber * d.points;
+    sumXX += d.matchNumber * d.matchNumber;
+  });
+
+  const slope = (n * sumXY - sumX * sumY) / (n * sumXX - sumX * sumX);
+  const intercept = (sumY - slope * sumX) / n;
+
+  return data.map(d => ({
+    ...d,
+    bestFit: slope * d.matchNumber + intercept
+  }));
 };

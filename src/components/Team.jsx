@@ -12,7 +12,7 @@ import { Debug, Debug_Data } from "../utils/Debug";
 import {ErrorScreen} from "./ErrorScreen";
 import { Analytics } from "@vercel/analytics/react";
 export default function Team() {
-    const { loading, setLoading, teamData, loadingExtras, setLoadingExtras, setTeamData } = useData();
+    const { loading, setLoading, teamData, loadingExtras, setLoadingExtras, setTeamData, setAiRequestStatus } = useData();
     const { teamNumber } = useParams();
     const { teamPull } = useTeamPulling();
     const hasFetched = React.useRef(false);

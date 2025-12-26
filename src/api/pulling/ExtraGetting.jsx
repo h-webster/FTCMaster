@@ -1,8 +1,9 @@
 import { useData } from "../../contexts/DataContext";
-import { aiRequest } from "./openApi";
+import { Debug, Debug_Data } from "../../utils/Debug";
+import { aiRequest, getAI } from "./openApi";
 
 export const useExtraGetting = () => {
-    const { teamData, setAiRequestStatus, setError} = useData();0
+    const { teamData, setAiRequestStatus, setError} = useData();
     const extraDataExtraction = async (teamNum) => {
         console.log(`Getting extra data for team ${teamNum}...`);
         let formattedTeamData = formatForAI();

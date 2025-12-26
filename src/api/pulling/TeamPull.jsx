@@ -3,8 +3,11 @@ import { getEventsByTeamNumber } from "./Events";
 import { getAI } from "./openApi";
 import { getOPR } from "./OPR";
 import { getTeamList } from "./TeamList";
+import { useData } from "../../contexts/DataContext";
 
 export const useTeamPulling = () => {
+    const { setAiRequestStatus } = useData();
+
     let team = {};
     let teamMap = null;
     const teamPull = async (teamNumber) => {
@@ -233,11 +236,14 @@ export const useTeamPulling = () => {
     }
     const pullAI = async () => {
         Debug("Pulling ai...");
+        setAiRequestStatus(null);
         const aiData = await getAI(team.number);
-        if (aiData == null || aiData.eventsDone < team.eventsDone) {
-            // no/outdated ai data
-            team.analysis = null;
-        } else {
+        if (aiData) {
+            setAiRequestStatus({
+                number: team.number,
+                loading: false,
+                data: aiData
+            });
         }
         Debug_Data(aiData, "Pull_AI_DATA");
     }

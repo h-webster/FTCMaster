@@ -8,7 +8,7 @@ export const DataProvider = ({ children }) => {
     const [loadingTeamList, setLoadingTeamList] = useState(true);
     const [teamList, setTeamList] = useState([]);
     const [loadingExtras, setLoadingExtras] = useState(false);
-    const [loadingStatus, setLoadingStatus] = useState('Loading aksdjadjadn mkasdm');
+    const [loadingStatus, setLoadingStatus] = useState('');
     const [aiRequestStatus, setAiRequestStatus] = useState(null);
     const [error, setError] = useState(null);
     const [teamMap, setTeamMap] = useState(null);

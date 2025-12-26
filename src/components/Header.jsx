@@ -16,7 +16,7 @@ export default function Header() {
 
   return (
     <div className='header'>
-      <img className="big-img" src="bot.png"/>
+      <img className="big-img" src="/bot.png"/>
       <h1 className='big-text'>FTCMaster</h1>
       <button className='home-btn' onClick={goHome}>Home</button>
       <button className='home-btn' onClick={goAbout}>About</button>

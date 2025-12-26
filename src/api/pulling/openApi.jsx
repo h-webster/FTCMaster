@@ -31,7 +31,7 @@ export const saveRequest = async (ai, teamNumber, done) => {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ number: teamNumber, eventsDone: done, analysis: ai.analyis})
+            body: JSON.stringify({ number: teamNumber, eventsDone: done, analysis: ai.analysis})
         });
 
         const data = await response.json();
