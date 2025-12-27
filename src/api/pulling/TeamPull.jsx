@@ -170,7 +170,7 @@ export const useTeamPulling = () => {
                     eventPerformance.qualScores.push(scoreDetails);
                 } else if (match.tournamentLevel == "PLAYOFF") {
                     totalPlayoffs++;
-                    let scoreDetails = event.qualScores.find(qualScore => qualScore.matchNumber == match.matchNumber);
+                    let scoreDetails = event.playoffScores.find(playoffScore => playoffScore.matchSeries == match.series);
                     let blueAlliance = scoreDetails.alliances.find(alliance => alliance.alliance == "Blue") || null;
                     let redAlliance = scoreDetails.alliances.find(alliance => alliance.alliance == "Red") || null;
                     
