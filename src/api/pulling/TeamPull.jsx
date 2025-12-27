@@ -183,6 +183,7 @@ export const useTeamPulling = () => {
                     } else {
                         totalPlayoffPoints += match.scoreRedFinal;
                     }
+                    matchPerformance.alliance = alliance;
 
                     eventPerformance.playoffs.push(matchPerformance);
                     eventPerformance.playoffScores.push(scoreDetails);
