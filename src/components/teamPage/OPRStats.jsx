@@ -12,7 +12,7 @@ export const OPRStats = ({ data }) => {
     return (
         <div className='chart-card'>
             <h2>Best OPR Stats</h2>
-            { data.opr == null ? (
+            { (data.opr == null || !('tot' in data.opr)) ? (
                 <div className="quick-stats">
                     No opr stats
                 </div>

@@ -64,6 +64,8 @@ table th {
     flex-direction: row;
     justify-content: space-evenly;
     align-items: center;
+    width: 100%;
+    height: 100%;
 }
 .redScore {
     color: red;
@@ -139,4 +141,71 @@ table th {
     width: 14px;
     height: auto;
     margin-right: 5px;
+}
+.center-text {
+    text-align: center;
+}
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(163, 163, 163, 0.308);
+    z-index: 1000;
+}
+.modal-box {
+    background-color: rgb(236, 236, 236);
+    border: 3px solid black;
+    border-radius: 25px;
+    width: 30%;
+    padding: 15px;
+}
+.blank {
+    visibility: hidden;
+}
+.details-table {
+    background-color: inherit;
+}
+.red-col {
+    background-color: #fb5353;
+}
+.blue-col {
+    background-color: #3f60f5;
+}
+.details-table tr:hover {
+    filter: brightness(0.85);
+}
+.details-table tr, .details-table td, .details-table th {
+    border: none;
+}
+.details-table td:first-child {
+    background-color: rgb(236, 236, 236);
+}
+.details-table td:nth-child(2) {
+    background-color: #ff9c9c;
+    color: red;
+}
+.details-table th:nth-child(2), .details-table th:nth-child(3) {
+    width: 20%;
+}
+.details-table td:nth-child(3) {
+    background-color: #92a6ff;
+    color: blue;
+}
+.total-row {
+    background-color: rgb(207, 207, 207);
+}
+.total-row td:first-child {
+    background-color: rgb(207, 207, 207);
+}
+.total-row td:nth-child(2) {
+    background-color: #ee9090;
+}
+.total-row td:nth-child(3) {
+    background-color: #8294e4;
+}
+.close-button {
+    margin-top: 20px;
+    background-color: #df6b6b;
 }

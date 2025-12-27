@@ -9,7 +9,7 @@
     justify-content: flex-start;
     background-color: rgb(223, 223, 24);
     left: 0;
-    z-index: 999;
+    z-index: 500;
     color: black;
 }
 .display {
