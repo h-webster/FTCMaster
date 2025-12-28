@@ -7,10 +7,14 @@ import { useNavigate } from "react-router-dom";
 import MatchDetails from "./MatchDetails";
 
 export default function Matches() {
-    const { teamData} = useData();
+    const { teamData, setLoadingStatus} = useData();
     const navigate = useNavigate();
     const [activeMatch, setActiveMatch] = useState(null);
-
+    
+    const openTeam = (teamNumber) => {
+        setLoadingStatus(`Loading team ${teamNumber}...`);
+        navigate(`/teams/${teamNumber}`);
+    }
     return (
         <div className='matches'>
             {teamData.events
@@ -35,6 +39,7 @@ export default function Matches() {
                             <>
                                 <h3 className='event-small'><FontAwesomeIcon icon={faRankingStar} /> League Relevant Position: {teamRank || 'N/A'}/{e.totTeams}</h3>
                                 <h3 className="event-small"><FontAwesomeIcon icon={faTrophy} /> Ranking Score (RS): { e.rp ? Number(e.rp).toFixed(2) : 'N/A'}</h3>
+                                <h3 className="event-small">W-L-T: {e.wins}-{e.losses}-{e.ties}</h3>
                             </>
                         }
                         { e.quals.length > 0 && 
@@ -66,7 +71,7 @@ export default function Matches() {
                                                     randomization: scores.randomization
                                                 };
                                                 return (
-                                                    <Match key={jdx} m={m} event={e} teamData={teamData} nav={navigate} type="qualification" onOpen={() => setActiveMatch({match: m, score: score})} />
+                                                    <Match key={jdx} m={m} event={e} teamData={teamData} nav={navigate} type="qualification" onOpen={() => setActiveMatch({match: m, score: score})} onOpenTeam={openTeam}/>
                                                 );
                                             })} 
                                         </>
@@ -84,7 +89,7 @@ export default function Matches() {
                                                     randomization: scores.randomization
                                                 }; 
                                                 return (
-                                                    <Match key={jdx} m={m} event={e} teamData={teamData} nav={navigate} type="playoff" onOpen={() => setActiveMatch({match: m, score: score})}/>
+                                                    <Match key={jdx} m={m} event={e} teamData={teamData} nav={navigate} type="playoff" onOpen={() => setActiveMatch({match: m, score: score})} onOpenTeam={openTeam}/>
                                                 )
                                             })}
                                         </>
@@ -121,12 +126,10 @@ export default function Matches() {
     );
 }
 
-const openTeam = (teamNumber, nav) => {
-    nav(`/teams/${teamNumber}`);
-}
 
 
-const Match = ({m, teamData, event, nav, type, onOpen}) => {
+
+const Match = ({m, teamData, event, nav, type, onOpen, onOpenTeam}) => {
 
     let scoreDetails;
     let matchNum;
@@ -179,7 +182,7 @@ const Match = ({m, teamData, event, nav, type, onOpen}) => {
                             const isCurrentTeam = team.teamNumber == teamData.number;
                             const textDecoration = isCurrentTeam ? 'underline' : 'none';
                             return (
-                                <button onClick={() => openTeam(team.teamNumber, nav)} key={kdx} className='team'>
+                                <button onClick={() => onOpenTeam(team.teamNumber)} key={kdx} className='team'>
                                     <p className="teamNumber" style={{ textDecoration }}>
                                         {team.teamNumber}
                                     </p>
@@ -197,7 +200,7 @@ const Match = ({m, teamData, event, nav, type, onOpen}) => {
                             const isCurrentTeam = team.teamNumber == teamData.number;
                             const textDecoration = isCurrentTeam ? 'underline' : 'none';
                             return (
-                                <button onClick={() => openTeam(team.teamNumber, nav)} key={kdx} className='team'>
+                                <button onClick={() => onOpenTeam(team.teamNumber)} key={kdx} className='team'>
                                     <p className="teamNumber" style={{ textDecoration }}>
                                         {team.teamNumber}
                                     </p>

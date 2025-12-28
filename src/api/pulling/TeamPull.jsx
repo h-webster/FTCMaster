@@ -51,6 +51,7 @@ export const useTeamPulling = () => {
         let totalPlayoffs = 0;
         let totalQuals = 0;
         
+        let highScore = 0;
         for (let i = 0; i < eventData.length; i++) {
             const event = eventData[i];
             const eventPerformance = {
@@ -134,12 +135,12 @@ export const useTeamPulling = () => {
                     if (redAlliance.patternRP) { redRP++; }
                     if (redAlliance.goalRP) { redRP++; }
 
-                    if (alliance == "Blue") {
-                        team.points.push(match.scoreBlueFinal);
-                        totalQualPoints += match.scoreBlueFinal;
-                    } else {
-                        team.points.push(match.scoreRedFinal);
-                        totalQualPoints += match.scoreRedFinal;
+                    let myPoints = (alliance == "Blue") ? match.scoreBlueFinal : match.scoreRedFinal;
+                    team.points.push(myPoints);
+                    totalQualPoints += myPoints;
+                    
+                    if (myPoints > highScore) {
+                        highScore = myPoints;
                     }
 
                     if (match.scoreBlueFinal > match.scoreRedFinal) {
@@ -178,11 +179,12 @@ export const useTeamPulling = () => {
                         console.warn("Invalid blue alliance or red alliance");
                     }
 
-                    if (alliance == "Blue") {
-                        totalPlayoffPoints += match.scoreBlueFinal;
-                    } else {
-                        totalPlayoffPoints += match.scoreRedFinal;
+                    let myPoints = (alliance == "Blue") ? match.scoreBlueFinal : match.scoreRedFinal;
+                    totalPlayoffPoints += myPoints;
+                    if (myPoints > highScore) {
+                        highScore = myPoints;
                     }
+                    
                     matchPerformance.alliance = alliance;
 
                     eventPerformance.playoffs.push(matchPerformance);
@@ -206,6 +208,7 @@ export const useTeamPulling = () => {
             team.performance.avgRP += eventPerformance.rp;
             team.events.push(eventPerformance);
         }
+        team.performance.highScore = highScore;
         if (team.events.length > 0) {
             team.performance.avgRP = team.performance.avgRP / team.events.length;
         }
