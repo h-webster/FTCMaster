@@ -20,7 +20,7 @@ const regions = [
 // % RANGE (0–10%)
 let MIN_TEAM = 0;
 let MAX_TEAM = 0;
-const RANGE = 10;
+const RANGE = 50;
 
 export default async function handler(req, res) {
     MIN_TEAM = Math.floor(Math.random() * (regions.length - (RANGE + 1)));
