@@ -3,12 +3,35 @@ import { useData } from './contexts/DataContext';
 import LoadingScreen from './components/LoadingScreen';
 import TeamEntryForm from './components/TeamEntryForm';
 import { useTeamGetting } from './api/pulling/TeamGetting';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Analytics } from "@vercel/analytics/react";
 import { faL } from '@fortawesome/free-solid-svg-icons';
+
+const BASE_URL = "https://www.ftcmaster.org/";
 export default function Home() {
     const { loading, loadingStatus, teamData, setTeamData } = useData();
+    const { pathname } = useLocation();
     const navigate = useNavigate();
+
+    useEffect(() => {
+        let link = document.querySelector("link[rel='canonical']");
+        if (!link) {
+            link = document.createElement("link");
+            link.rel = "canonical";
+            document.head.appendChild(link);
+        }
+        link.href = `${BASE_URL}${pathname}`;
+    }, [pathname]);
+
+    useEffect(() => {
+        let desc = document.querySelector("meta[name='description']");
+        if (!desc) {
+            desc = document.createElement("meta");
+            desc.name = "description";
+            document.head.appendChild(desc);
+        }
+        desc.content = "FTCMaster is your ultimate scouting resource for FTC robotics competitions, team info, and strategy insights.";
+    }, []);
 
     useEffect(() => {
         if (loadingStatus.includes("Loading team") && loading) {

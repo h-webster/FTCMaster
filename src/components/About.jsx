@@ -1,7 +1,32 @@
 import Header from "./Header";
 import './About.css';
 import { Analytics } from "@vercel/analytics/react";
+import { useLocation } from "react-router-dom";
 export default function About() {
+  const { pathname} = useLocation();
+
+  useEffect(() => {
+    let desc = document.querySelector("meta[name='description']");
+    if (!desc) {
+        desc = document.createElement("meta");
+        desc.name = "description";
+        document.head.appendChild(desc);
+    }
+    desc.content = "Learn about FTCMaster, a resource for FTC robotics teams, competitions, and strategy insights. Visualize powerful metrics";
+  }, []);
+  useEffect(() => {
+    // Check if a canonical link already exists
+    let link = document.querySelector("link[rel='canonical']");
+
+    if (!link) {
+      link = document.createElement("link");
+      link.rel = "canonical";
+      document.head.appendChild(link);
+    }
+
+    // Set the href to the full URL
+    link.href = `${BASE_URL}${pathname}`;
+  }, [pathname]);
   return (
     <div className="about-screen">
       <Header />
