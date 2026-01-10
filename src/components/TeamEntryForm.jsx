@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { useData } from '../contexts/DataContext.jsx';
 import { getTeamList } from '../api/pulling/TeamList.jsx';
 import { createAutocomplete, runSearch } from '../TeamSearch.js';
+import MatchPredictor from './MatchPredict.jsx';
 
 
 export default function TeamEntryForm() {
@@ -73,7 +74,10 @@ export default function TeamEntryForm() {
                 </div>
             </form>
             { process.env.NODE_ENV != 'production' && (
-               <Admin />
+                <> 
+                    <Admin />
+                    <MatchPredictor />
+               </>
             )}
         </div>
     );
