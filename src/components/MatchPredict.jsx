@@ -1,7 +1,7 @@
 import { useState } from "react";
 import './MatchPredict.css';
 import { handlePredict } from "../api/ml/matchPredict";
-export default function MatchPredictor() {
+export default function MatchPredictor({comingSoon}) {
     const [redTeams, setRedTeams] = useState("");
     const [blueTeams, setBlueTeams] = useState("");
     const [result, setResult] = useState(null);
@@ -11,24 +11,32 @@ export default function MatchPredictor() {
         setResult(prediction);
         console.log(prediction);
     }
+
+    
     return (
         <>
             <div className="match-predict">
                 <h2 className="predict-title">Match Predictor</h2>
-                <label>Red Teams</label>
-                <input 
-                    type="text"
-                    value={redTeams}
-                    onChange={e => setRedTeams(e.target.value)}
-                />
-                <label>Blue Teams</label>
-                <input 
-                    type="text"
-                    value={blueTeams}
-                    onChange={e => setBlueTeams(e.target.value)}
-                />
-                <button onClick={handlePredictClick}>Predict Match</button>
-            </div>
+                { comingSoon ? (
+                    <h3 className="coming-soon">Coming Soon</h3>
+                ) : (
+                    <>
+                        <label>Red Teams</label>
+                        <input 
+                            type="text"
+                            value={redTeams}
+                            onChange={e => setRedTeams(e.target.value)}
+                        />
+                        <label>Blue Teams</label>
+                        <input 
+                            type="text"
+                            value={blueTeams}
+                            onChange={e => setBlueTeams(e.target.value)}
+                        />
+                        <button onClick={handlePredictClick}>Predict Match</button>
+                    </>
+                )}
+              </div>
         </>       
     );
 }

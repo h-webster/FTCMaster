@@ -78,9 +78,9 @@ export default function TeamEntryForm() {
                 { process.env.NODE_ENV != 'production' && (
                     <> 
                         {/*<Admin />*/}
-                        <MatchPredictor />
-                </>
+                    </>
                 )}
+                <MatchPredictor comingSoon={process.env.NODE_ENV != 'production'}/>
             </div>
         </div>
     );
