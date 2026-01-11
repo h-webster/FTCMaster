@@ -80,7 +80,7 @@ export default function TeamEntryForm() {
                         {/*<Admin />*/}
                     </>
                 )}
-                <MatchPredictor comingSoon={process.env.NODE_ENV != 'production'}/>
+                <MatchPredictor comingSoon={process.env.NODE_ENV == 'production'}/>
             </div>
         </div>
     );
