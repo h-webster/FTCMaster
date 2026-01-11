@@ -8,8 +8,16 @@
   justify-content: center;
   align-items: center;
 }
+.team-entry-main {
+    padding-top: 20vh;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    gap: 10vh;
+}
 
-.team-entry-form {
+.team-entry-form, .match-predict {
     width: 20%;
     padding: 36px 32px 28px 32px;
     border-radius: 16px;
@@ -19,12 +27,22 @@
     align-items: center;
     min-width: 320px;
     position: relative;
-    color: rgb(39, 39, 39)
+    color: rgb(39, 39, 39);
 }
 
 h1 {
     font-size: 2.1em;
+    
 }
+
+.cool-title {
+    color: black;
+    background: linear-gradient(to left top, rgb(255, 123, 0), rgb(255, 230, 0));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent; 
+} 
 
 input {
     background: none;

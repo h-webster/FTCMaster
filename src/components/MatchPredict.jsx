@@ -12,21 +12,23 @@ export default function MatchPredictor() {
         console.log(prediction);
     }
     return (
-        <div className="match-predict">
-            <h2>Match Predictor</h2>
-            <label>Red Teams</label>
-            <input 
-                type="text"
-                value={redTeams}
-                onChange={e => setRedTeams(e.target.value)}
-            />
-            <label>Blue Teams</label>
-            <input 
-                type="text"
-                value={blueTeams}
-                onChange={e => setBlueTeams(e.target.value)}
-            />
-            <button onClick={handlePredictClick}>Predict Match</button>
-        </div>       
+        <>
+            <div className="match-predict">
+                <h2 className="predict-title">Match Predictor</h2>
+                <label>Red Teams</label>
+                <input 
+                    type="text"
+                    value={redTeams}
+                    onChange={e => setRedTeams(e.target.value)}
+                />
+                <label>Blue Teams</label>
+                <input 
+                    type="text"
+                    value={blueTeams}
+                    onChange={e => setBlueTeams(e.target.value)}
+                />
+                <button onClick={handlePredictClick}>Predict Match</button>
+            </div>
+        </>       
     );
 }

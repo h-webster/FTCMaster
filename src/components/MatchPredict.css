@@ -1,3 +1,20 @@
 .match-predict {
-    color: black;
+    text-align: center;
+}
+
+.predict-title {
+    margin: 0;
+    background: linear-gradient(to left, rgb(255, 24, 24), rgb(2, 2, 255));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+}
+
+hr {
+    width: 50%;
+    background: linear-gradient(to left, rgb(255, 24, 24), rgb(2, 2, 255));
+    border: 0;
+    height: 2px;
+    margin-bottom: 20px;
 }

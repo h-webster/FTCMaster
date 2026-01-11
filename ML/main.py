@@ -1,10 +1,25 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel # for validating JSON data
 import pandas as pd
 import joblib
 from typing import List
 
 app = FastAPI()
+
+
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:5173",
+        "https://ftc-master-b59g.vercel.app"
+        "https://www.ftcmaster.org"
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"]
+)
 
 # load ML model
 model = joblib.load("match_predictor.pkl")
