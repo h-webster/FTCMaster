@@ -24,6 +24,31 @@ export const getOPR = async (teamNum) => {
     }
 }
 
+export const getAllOPR = async () => {
+    console.log("Getting OPR list from mongo");
+    try {
+        const response = await fetch(`${API_BASE_URL}/oprlist`);
+        if (!response.ok) {
+            let text;
+            try {
+                text = await response.text();
+            } catch (e) {
+                text = '<no response body>';
+            }
+            console.error(`Backend returned ${response.status}:`, text);
+            throw new Error(`Backend error ${response.status}: ${text}`);
+        }
+        const data = await response.json();
+        console.log("Got data!!: " + JSON.stringify(data));
+        return data;
+    } catch (error) {
+        console.error("Error fetching OPR:", error);
+        throw error;
+    }
+}
+
+
+
 export const getOPRCount = async () => {
     const query = `
         query TeamsSearch($season: Int!, $number: Int!) {

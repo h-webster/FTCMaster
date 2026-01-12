@@ -1,0 +1,17 @@
+.selected-team {
+    border: 1px solid #afafaf;
+    border-radius: 6px;
+    font-size: 1.1em;
+    padding: 8px 12px;
+    background: none;
+    text-align: center;
+    color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.selected-team button {
+    margin-left: 5px;
+    background-color: rgba(199, 110, 110, 0.753);
+}

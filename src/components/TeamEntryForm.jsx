@@ -3,7 +3,7 @@ import './TeamEntryForm.css';
 import Admin from './Admin.jsx';
 import React, { useEffect, useState } from 'react';
 import { useData } from '../contexts/DataContext.jsx';
-import { getTeamList } from '../api/pulling/TeamList.jsx';
+import { getActiveTeamList, getTeamList } from '../api/pulling/TeamList.jsx';
 import { createAutocomplete, runSearch } from '../TeamSearch.js';
 import MatchPredictor from './MatchPredict.jsx';
 
@@ -18,6 +18,8 @@ export default function TeamEntryForm() {
             setLoadingTeamList(true);
             const fetchTeams = async () => {
                 const data = await getTeamList();
+                const activeData = await getActiveTeamList(data);
+                console.log(activeData);
                 setTeamList(data);
                 createAutocomplete(data);
                 setLoadingTeamList(false);

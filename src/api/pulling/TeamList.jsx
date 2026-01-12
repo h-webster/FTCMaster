@@ -13,3 +13,25 @@ export const getTeamList = async () => {
         throw error;
     }
 }
+
+export const getActiveTeamList = async (teamList) => {
+    console.log("Getting active team list...");
+    try {
+        const responseOPR = await fetch(`${API_BASE_URL}/oprlist`);
+        const dataOPR = await responseOPR.json();
+        const oprSet = new Set(dataOPR.map(team => team.number));
+
+        const activeList = [];
+        for (const t of teamList) {
+            if (oprSet.has(t.number)) {
+                activeList.push(t);
+            }
+        }
+
+
+        return activeList;
+    } catch (error) {
+        console.error('Error fetching active team data:', error);
+        throw error;
+    }
+}

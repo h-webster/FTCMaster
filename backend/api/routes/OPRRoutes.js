@@ -26,6 +26,16 @@ router.get('/oprlist/:number', async (req, res) => {
     }
 });
 
+router.get('/oprlist', async (req, res) => {
+    try {
+        const team = await IndexOPR.find({});
+        res.json(team);
+    } catch (error) {
+        console.error('OPR retrieval failed:', error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
 // POST
 router.post('/oprlist', async (req, res) => {
     try {
