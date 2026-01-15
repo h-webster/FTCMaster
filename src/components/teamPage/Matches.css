@@ -65,6 +65,8 @@ table th {
     justify-content: space-evenly;
     align-items: center;
     width: 100%;
+    background-color: #fafafa;
+    color: #4f4f4f;
     height: 100%;
 }
 .redScore {

@@ -13,5 +13,17 @@
 
 .selected-team button {
     margin-left: 5px;
-    background-color: rgba(199, 110, 110, 0.753);
+    background-color: rgba(196, 88, 88, 0.753);
+    padding: 0;
+    width: 35%;
+    border-radius: 2px;
+}
+
+.input-container {
+    margin-bottom: 10px;
+}
+.selected-team {
+    padding: 8px 12px;
+    font-size: 1.1em;
+    width: 180px;
 }

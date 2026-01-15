@@ -193,7 +193,9 @@ class FastTeamAutocomplete {
 }
 let autocomplete;
 let activeComplete;
-
+export function haveActiveAutocomplete() {
+    return activeComplete != null;
+}
 export function createAutocomplete(teamsArray) {
     autocomplete = new FastTeamAutocomplete(teamsArray);
 }

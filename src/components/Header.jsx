@@ -14,11 +14,19 @@ export default function Header() {
     navigate('/');
   }
 
+  const goLookup = () => {
+    navigate('/lookup');
+  }
+  const goPredict = () => {
+    navigate('/predict');
+  }
   return (
     <div className='header'>
       <img className="big-img" alt="logo" src="/bot.png"/>
       <h1 className='big-text'>FTCMaster</h1>
       <button className='home-btn' onClick={goHome}>Home</button>
+      <button className='home-btn' onClick={goLookup}>Team Lookup</button>
+      <button className='home-btn' onClick={goPredict}>Match Predictor</button>
       <button className='home-btn' onClick={goAbout}>About</button>
     </div>
   );

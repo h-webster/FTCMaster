@@ -1,6 +1,7 @@
 .team-entry-screen {
   background-color: white;
   top: 0;
+  position: fixed;
   width: 100vw;
   height: 100vh;
   display: flex;
@@ -8,7 +9,6 @@
   align-items: center;
 }
 .team-entry-main {
-    padding-top: 20vh;
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -16,7 +16,7 @@
     gap: 10vh;
 }
 
-.team-entry-form, .match-predict {
+.team-entry-form {
     padding: 36px 32px 28px 32px;
     border-radius: 16px;
     box-shadow: 0 4px 24px rgba(0,0,0,0.08);

@@ -1,11 +1,27 @@
 .match-predict {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     text-align: center;
-    margin-top: 20vh;
-    margin-bottom: 20vh;
+    width: 100vw;
+    height: 100vh;
 }
+.card {
+    padding: 36px 32px 28px 32px;
+    border-radius: 16px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 320px;
+    position: relative;
+    color: rgb(39, 39, 39);
+}
+
 
 .predict-title {
     margin: 0;
+    font-size: 2em;
     background: linear-gradient(to left, rgb(255, 24, 24), rgb(2, 2, 255));
     -webkit-background-clip: text;
     background-clip: text;
@@ -34,4 +50,22 @@ hr {
     display: flex;
     text-align: left;
     flex-direction: column
+}
+
+.blue {
+    color:rgb(2, 2, 255);
+}
+.red {
+    color: rgb(255, 24, 24);
+}
+
+.predict {
+    color: white;
+    background-color: #2d9cec;
+}
+
+.predict:hover {
+    background-color: #4bb4ff;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(37, 99, 235, 0.35);
 }

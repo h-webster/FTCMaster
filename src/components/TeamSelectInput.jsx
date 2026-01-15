@@ -14,11 +14,18 @@ export default function TeamSelectInput({ value, onSelect, onClear, teamList }) 
     setResults(res || []);
   };
 
+  const unSelect = () => {
+    setQuery("");
+    setResults([]);
+    setFocused(false);
+    onClear();
+  }
+
   if (value !== null) {
     return (
       <div className="selected-team">
         <span>{value}</span>
-        <button onClick={onClear}>✕</button>
+        <button onClick={unSelect}>✕</button>
       </div>
     );
   }

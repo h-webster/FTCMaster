@@ -5,6 +5,7 @@ import { DataProvider } from "./contexts/DataContext";
 import Team  from "./components/Team";
 import About from "./components/About";
 import TeamLookup from "./components/TeamLookup";
+import MatchPredictor from "./components/MatchPredict";
 
 export default function App() {
   return (
@@ -14,6 +15,7 @@ export default function App() {
         <Route path="/lookup" element={<TeamLookup/>} />
         <Route path="/about" element={<About />} />
         <Route path="/teams/:teamNumber" element={<Team />} />
+        <Route path="/predict" element={<MatchPredictor/>} />
       </Routes>
       <Analytics />
     </DataProvider>

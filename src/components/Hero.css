@@ -6,29 +6,32 @@
     justify-content: center;
     align-items: center;
     text-align: center;
+    color: rgb(61, 59, 59);
 }
 
 .title {
     font-size: 5vw; 
-    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.363);   
+  /*  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.363);   */
     margin: 0;
 }
 
+.buttons {
+    display: flex;
+    gap: 10px;
+}
 .buttons button {
-    padding: 0.6rem 1.25rem;
+    padding: 0.8rem 1.35rem;
     border-radius: 10px;
     border: none;
-    background: #2563eb;
     color: white;
     font-weight: 500;
     cursor: pointer;
-    transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.15s ease;
+    transition: background-color 0.2s ease, transform 0.15s ease, box-shadow 0.15s ease;
     box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
 }
 
 
 .buttons button:hover {
-    background: #1d4ed8;
     transform: translateY(-1px);
     box-shadow: 0 6px 16px rgba(37, 99, 235, 0.35);
 }
@@ -36,4 +39,20 @@
 .buttons button:active {
     transform: translateY(0);
     box-shadow: 0 3px 8px rgba(37, 99, 235, 0.25);
+}
+
+.predict {
+    background-color: #2d9cec;
+}
+
+.predict:hover {
+    background-color: #4bb4ff;
+}
+
+.lookup {
+    background-color: #f49416;
+}
+
+.lookup:hover {
+    background-color: #ffad42;
 }

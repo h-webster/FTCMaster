@@ -6,6 +6,7 @@ import { useData } from '../contexts/DataContext.jsx';
 import { getActiveTeamList, getTeamList } from '../api/pulling/TeamList.jsx';
 import { createActiveAutocomplete, createAutocomplete, runSearch } from '../TeamSearch.js';
 import MatchPredictor from './MatchPredict.jsx';
+import { Analytics } from '@vercel/analytics/react';
 
 
 export default function TeamEntryForm() {
@@ -83,8 +84,8 @@ export default function TeamEntryForm() {
                         {/*<Admin />*/}
                     </>
                 )}
-                <MatchPredictor comingSoon={process.env.NODE_ENV == 'production'}/>
             </div>
+            <Analytics/>
         </div>
     );
 }
