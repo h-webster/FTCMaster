@@ -63,56 +63,62 @@ export default function MatchPredictor({ comingSoon }) {
     }
   }, []);
 
-  if (comingSoon) return <h3>Coming Soon</h3>;
+return (
+  <>
+    <Header />
+    <div className="match-predict">
+      <div className="card">
+        <h2 className="predict-title">Match Predictor</h2>
 
-  return (
-    <>
-      <Header/>
-      <div className="match-predict">
-        <div className="card">
-          <h2 className="predict-title">Match Predictor</h2>
-          <div className="sides">
-            <div className="side red">
-              <h3 className="red">Red Alliance</h3>
-              <TeamSelectInput
-                value={redTeams[0]}
-                onSelect={n => setRedTeams([n, redTeams[1]])}
-                onClear={() => onClear(1)}
-              />
-              <TeamSelectInput
-                value={redTeams[1]}
-                onSelect={n => setRedTeams([redTeams[0], n])}
-                onClear={() => onClear(2)}
-              />
+        {comingSoon ? (
+          <h3>Coming soon</h3>
+        ) : (
+          <div>
+            <div className="sides">
+              <div className="side red">
+                <h3 className="red">Red Alliance</h3>
+                <TeamSelectInput
+                  value={redTeams[0]}
+                  onSelect={n => setRedTeams([n, redTeams[1]])}
+                  onClear={() => onClear(1)}
+                />
+                <TeamSelectInput
+                  value={redTeams[1]}
+                  onSelect={n => setRedTeams([redTeams[0], n])}
+                  onClear={() => onClear(2)}
+                />
+              </div>
+
+              <h3 className="vs">vs</h3>
+
+              <div className="side">
+                <h3 className="blue">Blue Alliance</h3>
+                <TeamSelectInput
+                  value={blueTeams[0]}
+                  onSelect={n => setBlueTeams([n, blueTeams[1]])}
+                  onClear={() => onClear(3)}
+                />
+                <TeamSelectInput
+                  value={blueTeams[1]}
+                  onSelect={n => setBlueTeams([blueTeams[0], n])}
+                  onClear={() => onClear(4)}
+                />
+              </div>
             </div>
-            <h3 className="vs">vs</h3>
-            <div className="side">
-              <h3 className="blue">Blue Alliance</h3>
-              <TeamSelectInput
-                value={blueTeams[0]}
-                onSelect={n => setBlueTeams([n, blueTeams[1]])}
-                onClear={() => onClear(3)}
-              />
-              <TeamSelectInput
-                value={blueTeams[1]}
-                onSelect={n => setBlueTeams([blueTeams[0], n])}
-                onClear={() => onClear(4)}
-              />
-            </div>
+
+            <button
+              disabled={[...redTeams, ...blueTeams].includes(null)}
+              onClick={predict}
+              className="predict"
+            >
+              Predict Match
+            </button>
           </div>
-          
-
-          <button
-            disabled={[...redTeams, ...blueTeams].includes(null)}
-            onClick={predict}
-            className="predict"
-          >
-            Predict Match
-          </button>
-        </div>
+        )}
       </div>
-      <Analytics/>
-    </>
-   
-  );
+    </div>
+    <Analytics />
+  </>
+);
+  
 }
