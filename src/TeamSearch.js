@@ -192,9 +192,14 @@ class FastTeamAutocomplete {
     }
 }
 let autocomplete;
-// Example usage function
+let activeComplete;
+
 export function createAutocomplete(teamsArray) {
     autocomplete = new FastTeamAutocomplete(teamsArray);
+}
+
+export function createActiveAutocomplete(activeTeams) {
+    activeComplete = new FastTeamAutocomplete(activeTeams);    
 }
 
 export function runSearch(query) {
@@ -203,5 +208,14 @@ export function runSearch(query) {
         return null;
     }
     const result = autocomplete.search(query);
+    return result.results;
+}
+
+export function runActiveSearch(query) {
+    if (activeComplete == null) {
+        console.log("Null autocomplete");
+        return null;
+    }
+    const result = activeComplete.search(query);
     return result.results;
 }

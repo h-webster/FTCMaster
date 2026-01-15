@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { runSearch } from "../TeamSearch";
+import { runActiveSearch } from "../TeamSearch";
 import './TeamSelectInput.css';
 
 export default function TeamSelectInput({ value, onSelect, onClear, teamList }) {
@@ -10,7 +10,7 @@ export default function TeamSelectInput({ value, onSelect, onClear, teamList }) 
   const handleChange = (e) => {
     const v = e.target.value;
     setQuery(v);
-    const res = runSearch(v);
+    const res = runActiveSearch(v);
     setResults(res || []);
   };
 
@@ -37,7 +37,9 @@ export default function TeamSelectInput({ value, onSelect, onClear, teamList }) 
       {focused && (
         <div className="search-results">
           {results.length === 0 ? (
-            <div className="result">No results</div>
+            <div className="result">
+              <h2 className="name">No results.</h2>
+            </div>
           ) : (
             results.map(team => (
               <div

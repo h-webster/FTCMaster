@@ -4,12 +4,14 @@ import Home from "./Home";
 import { DataProvider } from "./contexts/DataContext";
 import Team  from "./components/Team";
 import About from "./components/About";
+import TeamLookup from "./components/TeamLookup";
 
 export default function App() {
   return (
     <DataProvider>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/lookup" element={<TeamLookup/>} />
         <Route path="/about" element={<About />} />
         <Route path="/teams/:teamNumber" element={<Team />} />
       </Routes>

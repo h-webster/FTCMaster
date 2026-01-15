@@ -4,7 +4,7 @@ import Admin from './Admin.jsx';
 import React, { useEffect, useState } from 'react';
 import { useData } from '../contexts/DataContext.jsx';
 import { getActiveTeamList, getTeamList } from '../api/pulling/TeamList.jsx';
-import { createAutocomplete, runSearch } from '../TeamSearch.js';
+import { createActiveAutocomplete, createAutocomplete, runSearch } from '../TeamSearch.js';
 import MatchPredictor from './MatchPredict.jsx';
 
 
@@ -22,6 +22,7 @@ export default function TeamEntryForm() {
                 console.log(activeData);
                 setTeamList(data);
                 createAutocomplete(data);
+                createActiveAutocomplete(activeData);
                 setLoadingTeamList(false);
             }
             fetchTeams();
@@ -50,7 +51,7 @@ export default function TeamEntryForm() {
             <div className="team-entry-main">
 
                 <form className='team-entry-form'>
-                    <h1 className='cool-title'>FTCMaster</h1>
+                    <h1 className='cool-title'>Team Lookup</h1>
                     <label htmlFor="team-name">Enter Team Number/Name:</label>
                     <div className='input-container'>
                         <input type="text" id="team-name" name="team-name" autoComplete="off" onChange={inputChange} onFocus={() => setInputFocused(true)} onBlur={() => setInputFocused(false)} />

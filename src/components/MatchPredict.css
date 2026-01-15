@@ -1,5 +1,7 @@
 .match-predict {
     text-align: center;
+    margin-top: 20vh;
+    margin-bottom: 20vh;
 }
 
 .predict-title {
@@ -17,4 +19,19 @@ hr {
     border: 0;
     height: 2px;
     margin-bottom: 20px;
+}
+
+.sides {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+}
+
+.side {
+    display: flex;
+    text-align: left;
+    flex-direction: column
 }

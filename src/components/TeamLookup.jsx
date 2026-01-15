@@ -1,16 +1,14 @@
 import React, {useEffect, useState} from 'react';
-import { useData } from './contexts/DataContext';
-import LoadingScreen from './components/LoadingScreen';
-import TeamEntryForm from './components/TeamEntryForm';
-import { useTeamGetting } from './api/pulling/TeamGetting';
+import { useData } from '../contexts/DataContext';
+import TeamEntryForm from './TeamEntryForm';
+import { useTeamGetting } from '../api/pulling/TeamGetting';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Analytics } from "@vercel/analytics/react";
 import { faL } from '@fortawesome/free-solid-svg-icons';
-import Header from './components/Header';
-import Hero from './components/Hero';
+import LoadingScreen from './LoadingScreen';
 
 const BASE_URL = "https://www.ftcmaster.org/";
-export default function Home() {
+export default function TeamLookup() {
     const { loading, loadingStatus, teamData, setTeamData } = useData();
     const { pathname } = useLocation();
     const navigate = useNavigate();
@@ -35,10 +33,32 @@ export default function Home() {
         desc.content = "FTCMaster is your ultimate scouting resource for FTC robotics competitions, team info, and strategy insights.";
     }, []);
 
+    useEffect(() => {
+        if (loadingStatus.includes("Loading team") && loading) {
+            const match = loadingStatus.match(/\d+/);
+            if (match) {
+                const teamNumber = match[0];
+                console.log("Resetting team data and navigating..");
+                setTeamData(null);
+
+                // React will batch these but teamData will be null when the new page renders
+                navigate(`/teams/${teamNumber}`);
+            }
+            else {
+                console.log("No team number found in loading status. WHAT");
+            }
+            //teamExtraction();
+        }
+    }, [loadingStatus, loading, navigate]);
+    
+    if (loading) {
+        return <LoadingScreen/>
+    }
+
+
     return (
         <div>
-            <Header/>
-            <Hero/> 
+            <TeamEntryForm />
             <Analytics/>
         </div>
     );

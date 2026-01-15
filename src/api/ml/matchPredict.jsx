@@ -3,8 +3,8 @@ import axios from "axios";
 export const handlePredict = async (redTeams, blueTeams) => {
     try {
         const response = await axios.post(`${API_BASE_URL}/predict`, {
-            redTeams: redTeams.split(",").map(t => parseInt(t.trim())),
-            blueTeams : blueTeams.split(",").map(t => parseInt(t.trim()))
+            redTeams: redTeams,
+            blueTeams : blueTeams
         });
         return response.data;
     } catch (err) {
