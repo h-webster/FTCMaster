@@ -33,18 +33,18 @@ jobs:
     - name: Check if CSV changed
       id: check_changes
       run: |
-        git diff --quiet opr_flat.csv || echo "changed=true" >> $GITHUB_OUTPUT
+        git diff --quiet opr.csv || echo "changed=true" >> $GITHUB_OUTPUT
     
     - name: Commit and push if changed
       if: steps.check_changes.outputs.changed == 'true'
       run: |
         git config --global user.name 'github-actions[bot]'
         git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-        git add opr_flat.csv
+        git add opr.csv
         git commit -m "🤖 Update OPR data - $(date +'%Y-%m-%d %H:%M UTC')"
         git push
     
     - name: No changes detected
       if: steps.check_changes.outputs.changed != 'true'
       run: |
-        echo "No changes to opr_flat.csv - skipping commit"
+        echo "No changes to opr.csv - skipping commit"

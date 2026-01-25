@@ -41,7 +41,8 @@ def update_opr_csv():
         
          # Convert to DataFrame and save
         df = pd.DataFrame(flattened_data)
-        df.to_csv('opr_flat.csv', index=False)
+        output_path = os.path.join(os.path.dirname(__file__), 'opr.csv')
+        df.to_csv(output_path, index=False)
         
         print(f"[{datetime.now()}] Successfully updated opr_flat.csv with {len(df)} teams")
         print(f"Columns: {list(df.columns)}")
