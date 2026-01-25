@@ -43,7 +43,7 @@ def update_opr_csv():
         output_path = os.path.join(os.path.dirname(__file__), 'opr.csv')
         df.to_csv(output_path, index=False)
         
-        print(f"[{datetime.now()}] Successfully updated opr_flat.csv with {len(df)} teams")
+        print(f"[{datetime.now()}] Successfully updated opr.csv with {len(df)} teams")
         print(f"Columns: {list(df.columns)}")
         print(f"Sample data:\n{df.head()}")
         
