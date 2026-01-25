@@ -73,7 +73,7 @@ return (
         {comingSoon ? (
           <h3>Coming soon</h3>
         ) : (
-          <div>
+          <div className="predict-display">
             <div className="sides">
               <div className="side red">
                 <h3 className="red">Red Alliance</h3>
@@ -113,6 +113,19 @@ return (
             >
               Predict Match
             </button>
+
+            { result && 
+              <>
+                <hr/>
+                <div className="results">
+                  <h2>Predicted Winner: <span className={result.winner == "Red" ? "red" : "blue"}> {result.winner}</span></h2>
+                  <div className="chances">
+                    <h3 className="redChance"><span className="red">Red's</span> chance to win: <span className="red">{(result.probabilities.Red * 100).toFixed(1)}%</span></h3>
+                    <h3 className="blueChance"><span className="blue">Blue's</span> chance to win: <span className="blue">{(result.probabilities.Blue * 100).toFixed(1)}%</span></h3>
+                  </div>
+                </div>
+             </>
+            }
           </div>
         )}
       </div>

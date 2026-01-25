@@ -23,5 +23,6 @@ dist-ssr
 *.sln
 *.sw?
 
+.env
 backend/.env
 ML/.env

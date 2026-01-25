@@ -28,13 +28,18 @@
     -webkit-text-fill-color: transparent;
     color: transparent;
 }
-
+.predict-display {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    gap: 20px;
+    align-items: flex-start;
+}
 hr {
-    width: 50%;
+    width: 80%;
     background: linear-gradient(to left, rgb(255, 24, 24), rgb(2, 2, 255));
     border: 0;
     height: 2px;
-    margin-bottom: 20px;
 }
 
 .sides {
@@ -60,7 +65,9 @@ hr {
 }
 
 .predict {
+    font-size: 1.5em;
     color: white;
+    align-self: center;
     background-color: #2d9cec;
 }
 
@@ -68,4 +75,21 @@ hr {
     background-color: #4bb4ff;
     transform: translateY(-1px);
     box-shadow: 0 6px 16px rgba(37, 99, 235, 0.35);
+}
+.red {
+    color: #ff4040;
+}
+.blue {
+    color: #4bb4ff;
+}
+.results {
+    width: 100%;
+}
+.chances {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.chances h3 {
+    margin: 0;
 }

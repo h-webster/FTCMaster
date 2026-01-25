@@ -15,7 +15,7 @@ export default function App() {
         <Route path="/lookup" element={<TeamLookup/>} />
         <Route path="/about" element={<About />} />
         <Route path="/teams/:teamNumber" element={<Team />} />
-        <Route path="/predict" element={<MatchPredictor comingSoon={true}/>} />
+        <Route path="/predict" element={<MatchPredictor comingSoon={process.env.NODE_ENV == "dev"}/>} />
       </Routes>
       <Analytics />
     </DataProvider>

@@ -35,7 +35,8 @@ export default async function handler(req, res) {
         const mongoEvent = mongoEventList.find(e => e.code === event.code);
 
         //console.log(mongoEvent);
-        if (mongoEvent.done) {
+
+        if (mongoEvent && mongoEvent.done) {
             console.log("Already done so skip!");
             subset[i] = JSON.parse(JSON.stringify(mongoEvent));
             //console.log("Event: "+ JSON.stringify(event));
