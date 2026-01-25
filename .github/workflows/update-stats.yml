@@ -22,7 +22,7 @@ jobs:
     
     - name: Install dependencies
       run: |
-        pip install pymongo pandas
+        pip install pymongo pandas python-dotenv
     
     - name: Run update script
       env:

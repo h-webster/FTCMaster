@@ -6,7 +6,6 @@ from dotenv import load_dotenv
 load_dotenv()
 
 MONGO_URI = os.getenv("MONGO_URI")
-print(MONGO_URI)
 DB_NAME = "myFirstDatabase"
 OPR_COLLECTION = "alloprs"
 MATCH_COLLECTION = "allevents"
