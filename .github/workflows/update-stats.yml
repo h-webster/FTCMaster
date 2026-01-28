@@ -30,21 +30,25 @@ jobs:
       run: |
         python ML/update_stats.py
     
-    - name: Check if CSV changed
+    - name: Check if CSVs changed
       id: check_changes
       run: |
-        git diff --quiet ML/opr.csv || echo "changed=true" >> $GITHUB_OUTPUT
+        if git diff --quiet ML/opr.csv ML/matches.csv; then
+          echo "changed=false" >> $GITHUB_OUTPUT
+        else
+          echo "changed=true" >> $GITHUB_OUTPUT
+        fi
     
     - name: Commit and push if changed
       if: steps.check_changes.outputs.changed == 'true'
       run: |
         git config --global user.name 'github-actions[bot]'
         git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-        git add ML/opr.csv
-        git commit -m "🤖 Update OPR data - $(date +'%Y-%m-%d %H:%M UTC')"
+        git add ML/opr.csv ML/matches.csv
+        git commit -m "🤖 Update stats data - $(date +'%Y-%m-%d %H:%M UTC')"
         git push
     
     - name: No changes detected
       if: steps.check_changes.outputs.changed != 'true'
       run: |
-        echo "No changes to ML/opr.csv - skipping commit"
+        echo "No changes to stats CSVs - skipping commit"
