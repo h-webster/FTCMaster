@@ -1,7 +1,7 @@
 name: Update Stats Daily
 on:
   schedule:
-    - cron: '*/5 * * * *'
+    - cron: '0 14 * * *'
   workflow_dispatch:
 permissions:
   contents: write 
