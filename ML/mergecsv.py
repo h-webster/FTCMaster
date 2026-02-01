@@ -1,7 +1,7 @@
 import pandas as pd
 
-df_matches = pd.read_csv("matches_flat.csv")
-df_opr = pd.read_csv("opr_flat.csv")
+df_matches = pd.read_csv("matches.csv")
+df_opr = pd.read_csv("opr.csv")
 
 def sum_opr(teams, column):
     return df_opr[df_opr["number"].isin(teams)][column].sum()

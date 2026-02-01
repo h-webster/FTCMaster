@@ -2,7 +2,7 @@ import pandas as pd
 import joblib
 
 # Load OPR CSV
-df_opr = pd.read_csv("opr_flat.csv").set_index("number")
+df_opr = pd.read_csv("opr.csv").set_index("number")
 
 # Load trained model
 model = joblib.load("match_predictor.pkl")
