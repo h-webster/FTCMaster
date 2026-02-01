@@ -13,8 +13,6 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "http://localhost:5173",
-        "https://ftc-master-b59g.vercel.app",
-        "https://www.ftcmaster.org"
     ],
     allow_credentials=True,
     allow_methods=["*"],
