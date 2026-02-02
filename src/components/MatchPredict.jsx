@@ -16,7 +16,10 @@ export default function MatchPredictor({ comingSoon }) {
   const { loadingTeamList, setLoadingTeamList, teamList, setTeamList, loading, setLoading, setLoadingStatus } = useData();
 
   const predict = async () => {
+    setLoading(true);
+    setLoadingStatus("Predicting match...");
     const res = await handlePredict(redTeams, blueTeams);
+    setLoading(false);
     console.log(res);
     setResult(res);
   };
