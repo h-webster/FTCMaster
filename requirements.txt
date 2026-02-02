@@ -1,8 +1,6 @@
 fastapi
 mangum
-pandas
 joblib
 scikit-learn
 pydantic
 pymongo
-python-dotenv
