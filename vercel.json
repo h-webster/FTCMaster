@@ -1,7 +1,7 @@
 {
   "builds": [
     {
-      "src": "api/index.py",
+      "src": "ml/index.py",
       "use": "@vercel/python"
     },
     {
@@ -15,7 +15,7 @@
   "rewrites": [
     {
       "source": "/mlapi/:path*",
-      "destination": "/api/index.py"
+      "destination": "/ml/index.py"
     },
     {
       "source": "/(.*)",

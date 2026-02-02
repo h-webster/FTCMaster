@@ -11,7 +11,9 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://www.ftcmaster.org", "http://localhost:5173"],
+    allow_origins=[
+        "http://localhost:5173",
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"]
@@ -19,56 +21,70 @@ app.add_middleware(
 
 # MongoDB connection
 client = MongoClient(os.getenv("MONGO_URI"))
-db = client["ftc_data"]
-opr_collection = db["team_opr"]
+db = client["myFirstDatabase"]
+opr_collection = db["alloprs"]
 
-# Load model
-model = joblib.load("match_predictor.pkl")
+# Load ML model
+base_path = os.path.dirname(__file__)
+model = joblib.load(os.path.join(base_path, "..", "ML", "match_predictor.pkl"))
 
 class MatchInput(BaseModel):
     redTeams: List[int]
     blueTeams: List[int]
 
-def get_team_opr(team_number: int, stat: str):
-    """Get OPR stat for a team from MongoDB"""
-    team = opr_collection.find_one({"number": team_number})
-    return team.get(stat, 0) if team else 0
+def get_team_opr(team_number: int):
+    """Fetch a single team's OPR data from MongoDB"""
+    return opr_collection.find_one({"number": team_number})
 
-def sum_opr(teams: List[int], stat: str):
-    """Sum OPR values for multiple teams"""
-    return sum(get_team_opr(team, stat) for team in teams)
+def sum_opr(teams: List[int], nested_field: str):
+    """
+    Sum OPR values for a list of teams.
+    nested_field uses dot notation e.g. 'tot.value', 'auto.value'
+    """
+    total = 0
+    parts = nested_field.split(".")
+    for team in teams:
+        doc = get_team_opr(team)
+        if doc:
+            val = doc
+            for p in parts:
+                val = val.get(p, 0)
+            total += val
+    return total
 
 @app.get("/")
 def root():
-    return {"status": "FTC Match Predictor API"}
+    return {"status": "FTC Match Predictor API is running"}
 
 @app.get("/teams/{team_number}")
 def get_team(team_number: int):
-    """Get team OPR data"""
+    """Get a team's OPR data"""
     team = opr_collection.find_one({"number": team_number}, {"_id": 0})
     return team or {"error": "Team not found"}
 
 @app.post("/predict")
 def predict(match: MatchInput):
-    red_tot = sum_opr(match.redTeams, "tot_value")
-    blue_tot = sum_opr(match.blueTeams, "tot_value")
-    red_auto = sum_opr(match.redTeams, "auto_value")
-    blue_auto = sum_opr(match.blueTeams, "auto_value")
-    red_teleop = sum_opr(match.redTeams, "teleop_value")
-    blue_teleop = sum_opr(match.blueTeams, "teleop_value")
-    red_endgame = sum_opr(match.redTeams, "endgame_value")
-    blue_endgame = sum_opr(match.blueTeams, "endgame_value")
-    
-    features = [[
+    features = ["tot_diff", "auto_diff", "teleop_diff", "endgame_diff"]
+
+    red_tot = sum_opr(match.redTeams, "tot.value")
+    blue_tot = sum_opr(match.blueTeams, "tot.value")
+    red_auto = sum_opr(match.redTeams, "auto.value")
+    blue_auto = sum_opr(match.blueTeams, "auto.value")
+    red_teleop = sum_opr(match.redTeams, "teleop.value")
+    blue_teleop = sum_opr(match.blueTeams, "teleop.value")
+    red_endgame = sum_opr(match.redTeams, "endgame.value")
+    blue_endgame = sum_opr(match.blueTeams, "endgame.value")
+
+    new_match = [[
         red_tot - blue_tot,
         red_auto - blue_auto,
         red_teleop - blue_teleop,
         red_endgame - blue_endgame
     ]]
-    
-    pred_class = model.predict(features)[0]
-    pred_prob = model.predict_proba(features)[0]
-    
+
+    pred_class = model.predict(new_match)[0]
+    pred_prob = model.predict_proba(new_match)[0]
+
     return {
         "winner": "Red" if pred_class == 1 else "Blue",
         "probabilities": {
@@ -81,4 +97,5 @@ def predict(match: MatchInput):
         }
     }
 
+# Vercel handler
 handler = Mangum(app)
