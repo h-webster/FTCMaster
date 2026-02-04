@@ -26,7 +26,7 @@ opr_collection = db["alloprs"]
 
 # Load ML model
 base_path = os.path.dirname(__file__)
-model = joblib.load(os.path.join(base_path, "..", "ML", "match_predictor.pkl"))
+model = joblib.load(os.path.join(base_path, "match_predictor.pkl"))
 
 class MatchInput(BaseModel):
     redTeams: List[int]
