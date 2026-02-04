@@ -98,4 +98,4 @@ def predict(match: MatchInput):
     }
 
 # Vercel handler
-handler = Mangum(app)
+app_handler = Mangum(app)
