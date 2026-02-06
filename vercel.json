@@ -1,35 +1,11 @@
 {
-  "builds": [
+  "rewrites": [
     {
-      "src": "ML/index.py",
-      "use": "@vercel/python",
-      "config": {
-        "maxLambdaSize": "15mb"
-      }
-    },
-    {
-      "src": "package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "dist"
-      }
+      "source": "/(.*)",
+      "destination": "/"
     }
   ],
-  "routes": [
-    {
-      "src": "/mlapi/(.*)",
-      "dest": "ML/index.py"
-    },
-    {
-      "src": "/assets/(.*)",
-      "dest": "/assets/$1"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
-    }
-  ],
-  "crons": [
+ "crons": [
     {
       "path": "/api/event-extract",
       "schedule": "0 2 * * *"
@@ -38,5 +14,5 @@
       "path": "/api/opr-extract",
       "schedule": "0 2 * * *"
     }
-  ]
+ ] 
 }
