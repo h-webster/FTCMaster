@@ -81,6 +81,7 @@ Consider: win/loss ratio, point consistency, auto vs teleop performance, tournam
             }
         });
         const parse = JSON.parse(completion.choices[0].message.content);
+
         res.json({ analysis: parse });
     } catch (err) {
         console.error(err);

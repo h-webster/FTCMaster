@@ -7,6 +7,7 @@ export const useExtraGetting = () => {
     const extraDataExtraction = async (teamNum) => {
         console.log(`Getting extra data for team ${teamNum}...`);
         let formattedTeamData = formatForAI();
+        console.log(formattedTeamData);
         let aiResponse ="";
         try {
             aiResponse = await aiRequest(formattedTeamData);
