@@ -44,13 +44,13 @@ export const useTeamPulling = () => {
         }
         console.log("");
         const eventData = await getEventsByTeamNumber(team.number);
+        eventData.sort((a, b) => new Date(a.dateStart) - new Date(b.dateStart));
         //Debug_Data("Event Data: " + JSON.stringify(eventData), "TEAM_PULL_002");
         
         let totalQualPoints = 0;
         let totalPlayoffPoints = 0;
         let totalPlayoffs = 0;
         let totalQuals = 0;
-        
         let highScore = 0;
         for (let i = 0; i < eventData.length; i++) {
             const event = eventData[i];
@@ -80,6 +80,30 @@ export const useTeamPulling = () => {
                 team.events.push(eventPerformance);
                 continue;
             }
+
+            event.matches.sort((a, b) => {
+                // sort rank quals earlier than playoffs
+                if (a.tournamentLevel !== b.tournamentLevel) {
+                    if (a.tournamentLevel === "QUALIFICATION") return -1;
+                    if (b.tournamentLevel === "QUALIFICATION") return 1;
+                }
+
+                // sort qual
+                if (a.tournamentLevel === "QUALIFICATION") {
+                    return a.matchNumber - b.matchNumber;
+                }
+
+
+                // sort playoff
+                if (a.tournamentLevel === "PLAYOFF") {
+                    if (a.series !== b.series) {
+                        return a.series - b.series;
+                    }
+                    return a.matchNumber - b.matchNumber;
+                }
+
+                return 0;
+            });
 
             // put all teams into eventRankings to eventaully find event ranking position
             for (let k = 0; k < event.rankings.length; k++) {
