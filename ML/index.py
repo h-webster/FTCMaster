@@ -6,19 +6,21 @@ from pymongo import MongoClient
 import joblib
 from typing import List
 import os
-
+from dotenv import load_dotenv
 app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "http://localhost:5173",
+        "https://www.ftcmaster.org/",
+        ""
     ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"]
 )
-
+load_dotenv()
 # MongoDB connection
 client = MongoClient(os.getenv("MONGO_URI"))
 db = client["myFirstDatabase"]
