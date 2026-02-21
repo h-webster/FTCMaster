@@ -81,7 +81,7 @@ export default function TeamEntryForm() {
                 </form>
                 { process.env.NODE_ENV != 'production' && (
                     <> 
-                        {/*<Admin />*/}
+                        <Admin />
                     </>
                 )}
             </div>
