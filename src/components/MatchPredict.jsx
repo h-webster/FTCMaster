@@ -8,6 +8,7 @@ import { useData } from "../contexts/DataContext";
 import { getActiveTeamList, getTeamList } from "../api/pulling/TeamList";
 import { createActiveAutocomplete, createAutocomplete, haveActiveAutocomplete } from "../TeamSearch";
 import LoadingScreen from "./LoadingScreen";
+import { SimpleStatTooltip } from "./teamPage/SimpleStatTooltip";
 
 export default function MatchPredictor({ comingSoon }) {
   const [redTeams, setRedTeams] = useState([null, null]);
@@ -74,6 +75,7 @@ export default function MatchPredictor({ comingSoon }) {
       <Header />
       <div className="match-predict">
         <div className="card">
+          <hr className="colorful-hr"/>
           <h2 className="predict-title">Match Predictor</h2>
 
           {comingSoon ? (
@@ -115,7 +117,7 @@ export default function MatchPredictor({ comingSoon }) {
               <button
                 disabled={[...redTeams, ...blueTeams].includes(null)}
                 onClick={predict}
-                className="predict"
+                className="predict-button"
               >
                 Predict Match
               </button>
@@ -126,8 +128,16 @@ export default function MatchPredictor({ comingSoon }) {
                   <div className="results">
                     <h2>Predicted Winner: <span className={result.winner == "Red" ? "red" : "blue"}> {result.winner}</span></h2>
                     <div className="chances">
-                      <h3 className="redChance"><span className="red">Red's</span> chance to win: <span className="red">{(result.probabilities.Red * 100).toFixed(1)}%</span></h3>
-                      <h3 className="blueChance"><span className="blue">Blue's</span> chance to win: <span className="blue">{(result.probabilities.Blue * 100).toFixed(1)}%</span></h3>
+                      <SimpleStatTooltip
+                        tooltipText={`<span class="red">Red</span> Teams Total NP: ${result.oprs.red.total.toFixed(1)}<br>Team ${redTeams[0]}: ${result.teamoprs[redTeams[0]].toFixed(1)} <br>Team ${redTeams[1]} : ${result.teamoprs[redTeams[1]].toFixed(1)}`}
+                        position="top">
+                        <h3 className="redChance"><span className="red">Red's</span> chance to win: <span className="red">{(result.probabilities.Red * 100).toFixed(1)}%</span></h3>
+                      </SimpleStatTooltip> 
+                      <SimpleStatTooltip
+                        tooltipText={`<span class="blue">Blue</span> Teams Total NP: ${result.oprs.blue.total.toFixed(1)}<br>Team ${blueTeams[0]}: ${result.teamoprs[blueTeams[0]].toFixed(1)} <br>Team ${blueTeams[1]} : ${result.teamoprs[blueTeams[1]].toFixed(1)}`}
+                        position="top">
+                        <h3 className="blueChance"><span className="blue">Blue's</span> chance to win: <span className="blue">{(result.probabilities.Blue * 100).toFixed(1)}%</span></h3>
+                      </SimpleStatTooltip>
                     </div>
                   </div>
               </>
