@@ -36,10 +36,11 @@ export default function About() {
       <div className="about-box">
         <h2 className="about-title">About FTCMaster</h2>
         <h3><u>What is FTCMaster?</u></h3>
-        <p>FTCMaster is a comprehensive tool for analyzing and visualizing FTC team data and history.
-        It was developed by <a href="https://h-webster.github.io/" target="_blank">Harrison</a>, who is apart of <a href="https://ftcmaster.org/teams/25702" target="_blank">Rundle Robotics Castle 25702. </a>
-        FTCMaster is aimed to help teams find unique data and advanced insights to help support team scouting and strategy. For example in FTC INTO THE DEEP 2024-2025, the website made predictions on what role a team will play in an alliance (specimen or sample).
-        </p>
+        <p>FTCMaster is a comprehensive tool for analyzing and visualizing FTC team data and history, as well as generating match predictions.
+        It was developed by <a href="https://h-webster.github.io/" target="_blank">Harrison</a>, who is a part of <a href="https://ftcmaster.org/teams/25702" target="_blank">Rundle Robotics Castle 25702</a>.
+        FTCMaster is designed to help teams discover unique data and advanced insights to support scouting and strategy.
+        For example, during FTC INTO THE DEEP 2024–2025, the website made predictions about the role a team would play in an alliance (specimen or sample).
+        </p> 
         <br />
         <br />
         <h3><u>Future Plans</u></h3>
