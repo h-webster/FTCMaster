@@ -25,7 +25,7 @@ export default function TeamSelectInput({ value, onSelect, onClear, teamList }) 
     return (
       <div className="selected-team">
         <span>{value}</span>
-        <button onClick={unSelect}>✕</button>
+        <button className="un-select" onClick={unSelect}>✕</button>
       </div>
     );
   }

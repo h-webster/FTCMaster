@@ -83,7 +83,7 @@ export default function MatchPredictor({ comingSoon }) {
           ) : (
             <div className="predict-display">
               <div className="sides">
-                <div className="side red">
+                <div className="side red red-side">
                   <h3 className="red">Red Alliance</h3>
                   <TeamSelectInput
                     value={redTeams[0]}
@@ -99,7 +99,7 @@ export default function MatchPredictor({ comingSoon }) {
 
                 <h3 className="vs">vs</h3>
 
-                <div className="side">
+                <div className="side blue-side">
                   <h3 className="blue">Blue Alliance</h3>
                   <TeamSelectInput
                     value={blueTeams[0]}

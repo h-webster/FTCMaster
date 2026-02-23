@@ -60,6 +60,7 @@ hr {
 
 
 .sides {
+    padding-top: 40px;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -69,9 +70,21 @@ hr {
 }
 
 .side {
+    padding: 2px 30px 15px 20px;
     display: flex;
     text-align: left;
-    flex-direction: column
+    flex-direction: column;
+    border-radius: 20px;
+}
+
+.red-side {
+    border-top: 2px solid red;
+    background-color: rgba(255, 231, 231, 0.76);
+}
+
+.blue-side {
+    border-top: 2px solid rgb(0, 0, 255);
+    background-color: rgba(233, 231, 255, 0.76);
 }
 
 .blue {
