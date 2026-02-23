@@ -4,14 +4,14 @@ import './TeamSelectInput.css';
 
 export default function TeamSelectInput({ value, onSelect, onClear, teamList }) {
   const [query, setQuery] = useState("");
-  const [results, setResults] = useState([]);
+  const [results, setResults] = useState(null);
   const [focused, setFocused] = useState(false);
 
   const handleChange = (e) => {
     const v = e.target.value;
     setQuery(v);
     const res = runActiveSearch(v);
-    setResults(res || []);
+    setResults(res);
   };
 
   const unSelect = () => {
@@ -43,9 +43,13 @@ export default function TeamSelectInput({ value, onSelect, onClear, teamList }) 
 
       {focused && (
         <div className="search-results">
-          {results.length === 0 ? (
+          {!results ? (
             <div className="result">
-              <h2 className="name">No results.</h2>
+              <h2 className="name">Loading...</h2>
+            </div>
+          ) : (results.length == 0) ? (
+            <div className="result">
+              <h2 className="name">No Results</h2>
             </div>
           ) : (
             results.map(team => (

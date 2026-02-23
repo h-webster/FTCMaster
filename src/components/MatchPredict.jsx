@@ -129,12 +129,18 @@ export default function MatchPredictor({ comingSoon }) {
                     <h2>Predicted Winner: <span className={result.winner == "Red" ? "red" : "blue"}> {result.winner}</span></h2>
                     <div className="chances">
                       <SimpleStatTooltip
-                        tooltipText={`<span class="red">Red</span> Teams Total NP: ${result.oprs.red.total.toFixed(1)}<br>Team ${redTeams[0]}: ${result.teamoprs[redTeams[0]].toFixed(1)} <br>Team ${redTeams[1]} : ${result.teamoprs[redTeams[1]].toFixed(1)}`}
+                        tooltipText={`
+                        <span class="red">Red</span> Teams Total NP: ${result.oprs.red.total.toFixed(1)}
+                        <br>Team ${result.teams.red[0]}: ${result.teamoprs[result.teams.red[0]].toFixed(1)} 
+                        <br>Team ${result.teams.red[1]} : ${result.teamoprs[result.teams.red[1]].toFixed(1)}`}
                         position="top">
                         <h3 className="redChance"><span className="red">Red's</span> chance to win: <span className="red">{(result.probabilities.Red * 100).toFixed(1)}%</span></h3>
                       </SimpleStatTooltip> 
                       <SimpleStatTooltip
-                        tooltipText={`<span class="blue">Blue</span> Teams Total NP: ${result.oprs.blue.total.toFixed(1)}<br>Team ${blueTeams[0]}: ${result.teamoprs[blueTeams[0]].toFixed(1)} <br>Team ${blueTeams[1]} : ${result.teamoprs[blueTeams[1]].toFixed(1)}`}
+                        tooltipText={`
+                        <span class="blue">Blue</span> Teams Total NP: ${result.oprs.blue.total.toFixed(1)}
+                        <br>Team ${result.teams.blue[0]}: ${result.teamoprs[result.teams.blue[0]].toFixed(1)} 
+                        <br>Team ${result.teams.blue[1]} : ${result.teamoprs[result.teams.blue[1]].toFixed(1)}`}
                         position="top">
                         <h3 className="blueChance"><span className="blue">Blue's</span> chance to win: <span className="blue">{(result.probabilities.Blue * 100).toFixed(1)}%</span></h3>
                       </SimpleStatTooltip>
