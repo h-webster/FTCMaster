@@ -24,7 +24,7 @@ export default async function handler(req, res) {
     // deterministic slicing
     const start = Math.floor((MIN_PERCENT / 100) * events.length);
     const end = Math.floor((MAX_PERCENT / 100) * events.length);
-    const subset = events.slice(start, end);
+    const subset = events;
     
 
     console.log("GETTING events from " + start + "-" + end);
