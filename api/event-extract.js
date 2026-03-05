@@ -5,7 +5,7 @@ const API_BASE_URL =
 
 // % RANGE (0–10%)
 let MIN_PERCENT = 0;
-const RANGE = 55;
+const RANGE = 100;
 let MAX_PERCENT = 10;
 
 export default async function handler(req, res) {
