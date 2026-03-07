@@ -1,11 +1,8 @@
 .team-screen {
-  background-color: white;
-  top: 0;
-  padding: 20px;
-  padding-top: 50px;
-  width: 100vw;
-  height: 100%;
+  width: 100%;
+  min-height: 100vh;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
+  padding: 100px 10px 22px;
 }

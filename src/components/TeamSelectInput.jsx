@@ -42,7 +42,7 @@ export default function TeamSelectInput({ value, onSelect, onClear, teamList }) 
       />
 
       {focused && (
-        <div className="search-results">
+        <div className="search-results msr">
           {!results ? (
             <div className="result">
               <h2 className="name">Loading...</h2>

@@ -1,60 +1,70 @@
 .team-info {
-    max-width: 1080px;
-    width: 80vw;
-    margin: 12vh auto 40px;
-    padding: 24px;
-    background: #fff;
-    border-radius: 16px;
-    box-shadow: 0 4px 24px #00000014;
-    color: #222;
+  max-width: 1140px;
+  width: 100%;
+  margin: 0 auto 24px;
+  padding: 22px;
+  background: var(--panel-strong);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  box-shadow: var(--shadow-soft);
+  color: var(--ink);
 }
 
 .team-header {
-    border-bottom: 2px solid rgba(114, 114, 114, 0.562);
-    margin-bottom: 32px;
+  border-bottom: 1px solid #d6e2ec;
+  margin-bottom: 28px;
+}
+
+.team-header h1 {
+  margin: 0 0 16px;
+  font-size: clamp(1.35rem, 3.3vw, 2rem);
 }
 
 .dashboard-content {
-    width: 100%;
+  width: 100%;
 }
 
 .simple-stats {
-    width: 100%;
-    background-color: #f7f7f7;
-    border-radius: 12px;
-    padding: 12px;
-    box-sizing: border-box
+  width: 100%;
+  background: #f4f9fd;
+  border: 1px solid #d9e6f1;
+  border-radius: 12px;
+  padding: 12px;
 }
+
 .simple-stats h3 {
-    margin: 1px;
-    font-weight: 400;
+  margin: 2px;
+  font-weight: 500;
 }
+
 .simple-stat-container {
-    position: relative;
-    display: inline-block;
+  position: relative;
+  display: inline-block;
 }
+
 .hasTooltip {
-    font-weight: 600 !important;
+  font-weight: 700 !important;
 }
+
 .hasTooltip:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 .tooltip {
   position: absolute;
-  background: #333;
-  color: white;
+  background: #0f2436;
+  color: #fff;
   padding: 8px 12px;
-  border-radius: 6px;
+  border-radius: 8px;
   font-size: 0.9em;
   z-index: 1000;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  box-shadow: 0 10px 24px rgba(15, 36, 54, 0.24);
   white-space: nowrap;
   line-height: 1.4;
 }
 
 .tooltip::before {
-  content: '';
+  content: "";
   position: absolute;
   border: 5px solid transparent;
 }
@@ -70,7 +80,7 @@
   top: 100%;
   left: 50%;
   transform: translateX(-50%);
-  border-top-color: #333;
+  border-top-color: #0f2436;
 }
 
 .tooltip-bottom {
@@ -84,7 +94,7 @@
   bottom: 100%;
   left: 50%;
   transform: translateX(-50%);
-  border-bottom-color: #333;
+  border-bottom-color: #0f2436;
 }
 
 .tooltip-left {
@@ -98,7 +108,7 @@
   left: 100%;
   top: 50%;
   transform: translateY(-50%);
-  border-left-color: #333;
+  border-left-color: #0f2436;
 }
 
 .tooltip-right {
@@ -112,7 +122,5 @@
   right: 100%;
   top: 50%;
   transform: translateY(-50%);
-  border-right-color: #333;
+  border-right-color: #0f2436;
 }
-
-

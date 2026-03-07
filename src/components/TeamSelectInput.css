@@ -1,30 +1,32 @@
 .selected-team {
-    border: 1px solid #444444;
-    border-radius: 6px;
-    font-size: 1.1em;
-    padding: 8px 12px;
-    background: none;
-    text-align: center;
-    color: black;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  font-size: 1.05rem;
+  padding: 8px 10px;
+  background: #fff;
+  color: var(--ink);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 7px;
+  width: 230px;
+  margin-bottom: 10px;
 }
 
 .selected-team button {
-    margin-left: 5px;
-    background-color: rgba(196, 88, 88, 0.753);
-    padding: 0;
-    width: 30%;
-    border-radius: 20px;
+  margin-left: 0;
+  color: #fff;
+  background: linear-gradient(135deg, #f06b63, #d73f36);
+  border: 0;
+  border-radius: 999px;
+  padding: 1px 9px;
+  min-width: 0;
 }
 
 .input-container {
-    margin-bottom: 10px;
+  margin-bottom: 10px;
 }
-.selected-team {
-    padding: 8px 12px;
-    font-size: 1.1em;
-    width: 180px;
-    margin-bottom: 10px;
+
+.msr {
+  width: 280px;
 }

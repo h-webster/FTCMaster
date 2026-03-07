@@ -1,5 +1,11 @@
 .admin-buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.admin-buttons button {
+  border: 1px solid #c7d7e4;
+  background: #fff;
+  color: var(--ink);
 }

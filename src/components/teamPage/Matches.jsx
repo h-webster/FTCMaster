@@ -180,13 +180,13 @@ const Match = ({m, teamData, event, nav, type, onOpen, onOpenTeam}) => {
                     <div className="teamShow">
                         {m.teams.filter(team => team.station.startsWith("Red")).map((team, kdx) => {
                             const isCurrentTeam = team.teamNumber == teamData.number;
-                            const textDecoration = isCurrentTeam ? 'underline' : 'none';
+                            const currentTeamClass = (isCurrentTeam) ? "your-team" : "";
                             return (
-                                <button onClick={() => onOpenTeam(team.teamNumber)} key={kdx} className='team'>
-                                    <p className="teamNumber" style={{ textDecoration }}>
+                                <button onClick={() => onOpenTeam(team.teamNumber)} key={kdx} className='team'> 
+                                    <p className={`teamNumber ${currentTeamClass}`}>
                                         {team.teamNumber}
                                     </p>
-                                    <p className="teamName" style={{ textDecoration }}>
+                                    <p className={`teamName ${currentTeamClass}`}>
                                         {team.name}
                                     </p>
                                 </button>
@@ -198,13 +198,13 @@ const Match = ({m, teamData, event, nav, type, onOpen, onOpenTeam}) => {
                     <div className="teamShow">
                         {m.teams.filter(team => team.station.startsWith("Blue")).map((team, kdx) => {
                             const isCurrentTeam = team.teamNumber == teamData.number;
-                            const textDecoration = isCurrentTeam ? 'underline' : 'none';
+                            const currentTeamClass = (isCurrentTeam) ? "your-team" : "";
                             return (
                                 <button onClick={() => onOpenTeam(team.teamNumber)} key={kdx} className='team'>
-                                    <p className="teamNumber" style={{ textDecoration }}>
+                                    <p className={`teamNumber ${currentTeamClass}`}>
                                         {team.teamNumber}
                                     </p>
-                                    <p className="teamName" style={{ textDecoration }}>
+                                    <p className={`teamName ${currentTeamClass}`}>
                                         {team.name}
                                     </p>
                                 </button>

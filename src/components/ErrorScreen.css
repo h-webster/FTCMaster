@@ -1,12 +1,22 @@
 .error-menu {
-    background-color: #db5853;
-    width: 40%;
-    border-radius: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  background: linear-gradient(155deg, #fff1f0, #ffd7d4);
+  border: 1px solid #f0a39d;
+  width: min(720px, 92vw);
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 22px;
+  color: #8d1e17;
+  box-shadow: 0 10px 24px rgba(169, 37, 29, 0.18);
 }
-body {
-    margin: 0;
+
+.error-menu h1,
+.error-menu h2 {
+  margin: 0;
+}
+
+.error-menu h2 {
+  margin-top: 8px;
 }
