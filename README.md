@@ -1,16 +1,75 @@
-# React + Vite
+# FTCMaster
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+FTCMaster is a full‑stack scouting and analytics platform for FIRST Tech Challenge (FTC). It combines a React/Vite frontend, an Express/MongoDB backend, and serverless data‑ingestion jobs that pull official FTC event data. It also includes AI‑assisted scouting reports.
 
-Currently, two official plugins are available:
+## Features
+- Team lookup, event listings, and team detail pages
+- Event rankings, matches, and scoring data
+- OPR (offensive power rating) storage and querying
+- AI scouting reports generated from team performance data
+- Scheduled ingestion of FTC event data into MongoDB
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Architecture
+- Frontend: React + Vite SPA (client UI)
+- Backend: Express API with MongoDB (data cache and app API)
+- Serverless jobs: Vercel functions for data extraction and batching
+- AI analysis: OpenAI‑powered scouting summaries stored in MongoDB
+- ML backend: separate Python service (see below)
 
-## React Compiler
+## Repository Structure
+- `src/` React app (routes, components, contexts, UI logic)
+- `backend/` Express API, MongoDB schemas, and middleware
+- `api/` Vercel serverless functions (event/OPR ingestion)
+- `public/` static assets
+- `dist/` frontend build output (if present)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Related ML Backend (Python)
+The ML backend for match predictions lives in a separate repo:
+- [FTCMaster-ML](https://github.com/h-webster/FTCMaster-ML)
 
-## Expanding the ESLint configuration
+## Local Development
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### 1) Frontend
+Install and run the Vite dev server:
+```bash
+npm install
+npm run dev
+```
+Default dev server: `http://localhost:5173`
+
+### 2) Backend API
+From `backend/`:
+```bash
+npm install
+npm run dev
+```
+Default API server: `http://localhost:5000`
+
+### 3) Environment Variables
+Create `.env` files for both root and `backend/` as needed:
+- `FTC_USERNAME` / `FTC_TOKEN` for FTC API Basic Auth
+- `MONGODB_URI` for MongoDB connection
+- `OPENAI_API_KEY` for AI scouting endpoint
+- `NODE_ENV` / `PORT` as desired
+
+## API Overview (Backend)
+Routes are registered under `/api` in `backend/api/server.js`:
+- FTC API proxy and fetchers: `backend/api/routes/ftceventsRoutes.js`
+- Events cache: `backend/api/routes/eventRoutes.js`
+- Teams cache: `backend/api/routes/teamRoutes.js`
+- OPR storage: `backend/api/routes/OPRRoutes.js`
+- AI analysis and caching: `backend/api/routes/openApiRoutes.js`
+
+## Data Ingestion
+Serverless functions in `api/` pull event and match data, then batch‑upsert into MongoDB via the backend API. This is used for scheduled updates and fast client queries.
+
+## Build
+```bash
+npm run build
+npm run preview
+```
+
+## Notes
+- The backend applies CORS restrictions for production domains and local dev.
+- The FTC API calls require valid credentials from FIRST.
+- This was obviously ai generated readme (this is me writing)
