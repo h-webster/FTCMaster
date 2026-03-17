@@ -63,12 +63,6 @@ Routes are registered under `/api` in `backend/api/server.js`:
 ## Data Ingestion
 Serverless functions in `api/` pull event and match data, then batch‑upsert into MongoDB via the backend API. This is used for scheduled updates and fast client queries.
 
-## Build
-```bash
-npm run build
-npm run preview
-```
-
 ## Notes
 - The backend applies CORS restrictions for production domains and local dev.
 - The FTC API calls require valid credentials from FIRST.
